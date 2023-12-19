@@ -1,8 +1,5 @@
-using System;
-
+using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using UnityEngine.Pool;
 
 public class PlayerShoot : MonoBehaviour
 {
@@ -10,11 +7,42 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private BulletsData[] bulletsData;
     [SerializeField] private ObjectPool objectPool;
 
+    private bool IsFiring = false;
+
     private Transform cameraTransform;
 
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
+    }
+    
+    public void StartFiring() 
+    {
+        IsFiring = true;
+        StartCoroutine(ShootAuto());
+    }
+
+    public void StopFiring()
+    {
+        IsFiring = false;
+        StopCoroutine(ShootAuto());
+    }
+
+    private IEnumerator ShootAuto()
+    {
+        while (IsFiring && weaponData[0].CurrentAmmo > 0)
+        {
+            ShootGun();
+            yield return new WaitForSeconds(1f / weaponData[0].FireRate);
+        }
+    }
+
+    private void ShootBullet() 
+    {
+        if (!IsFiring)
+        {
+            ShootGun();
+        }
     }
 
     public void ShootGun()
@@ -23,12 +51,7 @@ public class PlayerShoot : MonoBehaviour
         {
             if (i < bulletsData.Length)
             {
-                //if (weaponData != null && bulletsData != null && weaponData.Length > 0 && bulletsData.Length > 0)
-                //{
-                //GameObject bullet = Instantiate(bulletsData[0].BulletPrefab, weaponData[0].BulletSpawnPoint.position,
-                //    Quaternion.identity, ObjectPool);
-                GameObject bullet = objectPool.Spawn(bulletsData[i].BulletPrefab,
-                    weaponData[i].BulletSpawnPoint.position, Quaternion.identity);
+                GameObject bullet = objectPool.Spawn(weaponData[i].BulletSpawnPoint.position, Quaternion.identity);
 
                 BulletsController bulletsController = bullet.GetComponent<BulletsController>();
 
@@ -37,7 +60,7 @@ public class PlayerShoot : MonoBehaviour
                 Vector3 target = cameraTransform.position + cameraTransform.forward * range;
 
                 RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, /*Mathf.Infinity*/range))
+                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
                 {
                     target = hit.point;
                     hitTarget = true;
@@ -56,7 +79,8 @@ public class PlayerShoot : MonoBehaviour
                 bulletsController.bulletsData[0].HitTarget = hitTarget;
 
                 bullet.transform.forward = target - bullet.transform.position;
-                //}
+
+                weaponData[0].CurrentAmmo--;
             }
         }
     }

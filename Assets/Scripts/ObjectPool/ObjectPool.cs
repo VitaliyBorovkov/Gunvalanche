@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
@@ -22,12 +23,12 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < PoolSize; i++)
         {
             GameObject obj = Instantiate(ObjectPrefab);
-            obj.SetActive(false);
             ObjectQueue.Enqueue(obj);
+            obj.SetActive(false);
         }
     }
 
-    public GameObject Spawn(GameObject prefab, Vector3 position, Quaternion rotation) 
+    public GameObject Spawn(Vector3 position, Quaternion rotation)
     {
         if (ObjectQueue.Count == 0)
         {
@@ -39,33 +40,24 @@ public class ObjectPool : MonoBehaviour
         obj.transform.rotation = rotation;
         obj.SetActive(true);
 
-        IPoolable poolable = obj.GetComponent<IPoolable>();
-        if (poolable != null)
-        {
-            poolable.OnSpawn();
-        }
-        
         return obj;
     }
 
-    public void Despawn(GameObject obj, float delay)
+    public void Despawn(GameObject obj)
     {
-        StartCoroutine(DespawnWithDelay(obj, delay));
-    }
-
-    private IEnumerator DespawnWithDelay(GameObject obj, float delay)
-    {
-        yield return new WaitForSeconds(delay);
-
         obj.SetActive(false);
 
-        IPoolable poolable = obj.GetComponent<IPoolable>();
-        if (poolable != null)
+        if (ObjectQueue.Count < PoolSize)
         {
-            poolable.OnDespawn();
+            ObjectQueue.Enqueue(obj);
         }
 
-        ObjectQueue.Enqueue(obj);
+        else
+        {
+            ObjectQueue.Dequeue();
+            ObjectQueue.Enqueue(obj);
+        }
+
     }
 
     private void ExpandPool()
@@ -75,8 +67,11 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < PoolSize - currentPoolSize; i++)
         {
             GameObject obj = Instantiate(ObjectPrefab);
-            obj.SetActive(false);
             ObjectQueue.Enqueue(obj);
+            obj.SetActive(false);
         }
     }
 }
+
+
+
