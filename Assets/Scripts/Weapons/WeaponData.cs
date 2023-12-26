@@ -12,9 +12,6 @@ public struct WeaponData
 
     public float FireRate;
     public float Range;
-    public float ReloadTime;
-
-    [HideInInspector]public bool isReloading;
 
     public GunsType GunsType;
 

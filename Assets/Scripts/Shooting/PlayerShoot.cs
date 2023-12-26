@@ -8,7 +8,6 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private ObjectPool objectPool;
 
     private bool IsFiring = false;
-
     private Transform cameraTransform;
 
     private void Awake()
