@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
@@ -30,6 +29,7 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject Spawn(Vector3 position, Quaternion rotation)
     {
+        Debug.Log("Spawning object");
         if (ObjectQueue.Count == 0)
         {
             ExpandPool();
@@ -45,7 +45,8 @@ public class ObjectPool : MonoBehaviour
 
     public void Despawn(GameObject obj)
     {
-        obj.SetActive(false);
+        Debug.Log("Despawning object");
+        //obj.SetActive(false);
 
         if (ObjectQueue.Count < PoolSize)
         {
@@ -54,8 +55,9 @@ public class ObjectPool : MonoBehaviour
 
         else
         {
-            ObjectQueue.Dequeue();
-            ObjectQueue.Enqueue(obj);
+            Destroy(obj);
+            //ObjectQueue.Dequeue();
+            //ObjectQueue.Enqueue(obj);
         }
 
     }
