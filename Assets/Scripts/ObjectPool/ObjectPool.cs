@@ -46,27 +46,16 @@ public class ObjectPool : MonoBehaviour
     public void Despawn(GameObject obj)
     {
         Debug.Log("Despawning object");
-        //obj.SetActive(false);
+        obj.SetActive(false);
 
-        if (ObjectQueue.Count < PoolSize)
-        {
-            ObjectQueue.Enqueue(obj);
-        }
-
-        else
-        {
-            Destroy(obj);
-            //ObjectQueue.Dequeue();
-            //ObjectQueue.Enqueue(obj);
-        }
-
+        ObjectQueue.Enqueue(obj);
     }
 
     private void ExpandPool()
     {
         int currentPoolSize = ObjectQueue.Count;
 
-        for (int i = 0; i < PoolSize - currentPoolSize; i++)
+        for (int i = 0; i < PoolSize; i++)
         {
             GameObject obj = Instantiate(ObjectPrefab);
             ObjectQueue.Enqueue(obj);
