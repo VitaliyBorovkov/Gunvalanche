@@ -5,17 +5,11 @@ using UnityEngine;
 
 public class BulletsController : MonoBehaviour
 {
-    [SerializeField] public BulletsData[] bulletsData;
+    [SerializeField] public BulletsData bulletData;
 
     private void Update()
     {
-        if (bulletsData != null && bulletsData.Length > 0)
-        {
-            foreach (var bulletData in bulletsData)
-            {
-                MoveBullet(bulletData);
-            }
-        }
+        MoveBullet(bulletData);
     }
 
     private void MoveBullet(BulletsData bulletData)

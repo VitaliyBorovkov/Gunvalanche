@@ -5,5 +5,4 @@ public class HealthConfig : ScriptableObject
 {
     public HealthData[] healthData;
 
-    
 }
