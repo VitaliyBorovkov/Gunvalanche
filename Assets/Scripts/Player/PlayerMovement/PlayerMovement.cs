@@ -34,9 +34,6 @@ public class PlayerMovement : MonoBehaviour
     public void Move(Vector2 input)
     {
         playerRun.moveInput = input;
-
-        //Debug.Log($"isRunning: {playerRun.isRunning}, holdingRunButton: {playerRun.isHoldingRunButton}, CanRun: {playerRun.CanRun()}");
-
         Vector3 moveDirection = transform.TransformDirection(new Vector3(input.x, 0f, input.y));
         float targetSpeed = playerRun.IsRunning() ? runSpeed : walkSpeed;
         controller.Move(targetSpeed * Time.deltaTime * moveDirection);
