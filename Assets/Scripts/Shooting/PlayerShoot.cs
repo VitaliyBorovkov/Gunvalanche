@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private WeaponData[] weaponData;
-    [SerializeField] private BulletsData[] bulletsData;
+    [SerializeField] private BulletsData bulletData;
     [SerializeField] private ObjectPool objectPool;
 
     private bool IsFiring = false;
@@ -46,41 +46,44 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootGun()
     {
-        for (int i = 0; i < weaponData.Length; i++)
+        if (weaponData.Length > 0)
         {
-            if (i < bulletsData.Length)
+            GameObject bullet = objectPool.Spawn(weaponData[0].BulletSpawnPoint.position, Quaternion.identity);
+
+            BulletsController bulletsController = bullet.GetComponent<BulletsController>();
+
+            float range = weaponData[0].Range;
+            bool hitTarget = false;
+            Vector3 target = cameraTransform.position + cameraTransform.forward * range;
+
+            RaycastHit hit;
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
             {
-                GameObject bullet = objectPool.Spawn(weaponData[i].BulletSpawnPoint.position, Quaternion.identity);
+                target = hit.point;
+                hitTarget = true;
 
-                BulletsController bulletsController = bullet.GetComponent<BulletsController>();
-
-                float range = weaponData[0].Range;
-                bool hitTarget = false;
-                Vector3 target = cameraTransform.position + cameraTransform.forward * range;
-
-                RaycastHit hit;
-                if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
+                if (hit.collider.CompareTag("Enemy"))
                 {
-                    target = hit.point;
-                    hitTarget = true;
-
-                    if (hit.collider.CompareTag("Enemy"))
+                    Debug.Log("Enemy is attacking");
+                    HealthController healthController = hit.collider.GetComponent<HealthController>();
+                    if (healthController != null)
                     {
-                        Debug.Log("Enemy is attacking");
-                        HealthController healthController = hit.collider.GetComponent<HealthController>();
-                        if (healthController != null)
-                        {
-                            healthController.TakeDamage(weaponData[1].Damage);
-                        }
+                        healthController.TakeDamage(weaponData[1].Damage);
                     }
                 }
-                bulletsController.bulletsData[0].Target = target;
-                bulletsController.bulletsData[0].HitTarget = hitTarget;
-
-                bullet.transform.forward = target - bullet.transform.position;
-
-                weaponData[0].CurrentAmmo--;
             }
+            bulletsController.bulletData.Target = target;
+            bulletsController.bulletData.HitTarget = hitTarget;
+
+            bullet.transform.forward = target - bullet.transform.position;
+
+            StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
+            weaponData[0].CurrentAmmo--;
         }
+    }
+    private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
+    {
+        yield return new WaitForSeconds(time);
+        objectPool.Despawn(bullet);
     }
 }
