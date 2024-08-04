@@ -9,6 +9,7 @@ public struct WeaponData
     public int Damage;
     public int MagazineSize;
     public int CurrentAmmo;
+    public int TotalAmmo;
 
     public float FireRate;
     public float Range;

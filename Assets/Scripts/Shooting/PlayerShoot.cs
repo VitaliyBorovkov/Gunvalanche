@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private WeaponData[] weaponData;
+    [SerializeField] public WeaponData[] weaponData;
     [SerializeField] private BulletsData bulletData;
     [SerializeField] private ObjectPool objectPool;
+    [SerializeField] private PlayerReload playerReload;
 
     private bool IsFiring = false;
     private Transform cameraTransform;
@@ -17,8 +18,11 @@ public class PlayerShoot : MonoBehaviour
     
     public void StartFiring() 
     {
-        IsFiring = true;
-        StartCoroutine(ShootAuto());
+        if (weaponData[0].CurrentAmmo > 0 && !playerReload.IsReloading())
+        {
+            IsFiring = true;
+            StartCoroutine(ShootAuto());
+        }
     }
 
     public void StopFiring()
@@ -34,15 +38,20 @@ public class PlayerShoot : MonoBehaviour
             ShootGun();
             yield return new WaitForSeconds(1f / weaponData[0].FireRate);
         }
-    }
 
-    private void ShootBullet() 
-    {
-        if (!IsFiring)
+        if (weaponData[0].CurrentAmmo <= 0)
         {
-            ShootGun();
+            StopFiring();
         }
     }
+
+    //private void ShootBullet() 
+    //{
+    //    if (!IsFiring)
+    //    {
+    //        ShootGun();
+    //    }
+    //}
 
     public void ShootGun()
     {
@@ -68,7 +77,7 @@ public class PlayerShoot : MonoBehaviour
                     HealthController healthController = hit.collider.GetComponent<HealthController>();
                     if (healthController != null)
                     {
-                        healthController.TakeDamage(weaponData[1].Damage);
+                        healthController.TakeDamage(weaponData[0].Damage);
                     }
                 }
             }
