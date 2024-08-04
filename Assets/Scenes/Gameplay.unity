@@ -1617,6 +1617,7 @@ GameObject:
   - component: {fileID: 1127846358}
   - component: {fileID: 1127846364}
   - component: {fileID: 1127846365}
+  - component: {fileID: 1127846366}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1858,12 +1859,13 @@ MonoBehaviour:
   - Name: Riffle
     Damage: 10
     MagazineSize: 30
-    CurrentAmmo: 100
+    CurrentAmmo: 30
+    TotalAmmo: 100
     FireRate: 10
     Range: 300
     GunsType: 1
     BulletSpawnPoint: {fileID: 2002687874}
-    GunPrefab: {fileID: 100082, guid: 296795d4e5a5f9f4bb9d5b352d9cc7fb, type: 3}
+    GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
   bulletData:
     BulletPrefab: {fileID: 3928528860053484037, guid: ebcbac358f80a0d428cf008935f4945a, type: 3}
     Name: Bullet
@@ -1871,6 +1873,19 @@ MonoBehaviour:
     DistanceToTarget: 0
     LifeTime: 2
   objectPool: {fileID: 2080529607}
+  playerReload: {fileID: 1127846366}
+--- !u!114 &1127846366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1127846352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea2acfdc9bf37242a5be9ce1dcb90ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1144816232 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1000014225362746, guid: a41a0379b3d57cd47984f898fd2c7059, type: 3}
