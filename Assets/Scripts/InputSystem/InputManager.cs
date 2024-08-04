@@ -77,7 +77,12 @@ public class InputManager : MonoBehaviour
         //fireAction.started += _ => playerShoot.ShootGun();
         fireAction.started += _ => playerShoot.StartFiring();
         fireAction.canceled += _ => playerShoot.StopFiring();
-        reloadAction.performed += _ => playerReload.Reload();
+        //reloadAction.performed += _ => playerReload.Reload();
+        reloadAction.performed += ctx =>
+        {
+            Debug.Log("Reload action performed");
+            playerReload.Reload();
+        };
 
     }
     

@@ -1,39 +1,57 @@
-using System;
+using System.Collections;
 using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
 {
-    [SerializeField] private WeaponData[] weaponData;
-    [SerializeField] private float reloadTime = 2f;
+    private PlayerShoot playerShoot;
 
-    private bool IsReloading = false;
+    private bool isReloading = false;
 
     public void Reload()
     {
-        if (!IsReloading)
+        playerShoot = GetComponent<PlayerShoot>();
+        
+        if (isReloading)
         {
-            StartReload();
+            Debug.Log("Already reloading");
+            return;
         }
+       
+        if (playerShoot.weaponData[0].CurrentAmmo == playerShoot.weaponData[0].MagazineSize)
+        {
+            Debug.Log("Magazine is full");
+            return;
+        }
+
+        if (playerShoot.weaponData[0].TotalAmmo <= 0)
+        {
+            Debug.Log("No ammo left to reload");
+            return;
+        }
+
+        Debug.Log("Starting reload");
+        StartCoroutine(ReloadRoutine());
     }
 
-    private void StartReload()
+    private IEnumerator ReloadRoutine()
     {
-        if (weaponData[0].CurrentAmmo < weaponData[0].MagazineSize)
-        {
-            IsReloading = true;
-            Debug.Log("Reloading...");
+        isReloading = true;
+        Debug.Log("Reloading...");
 
-            Invoke("FinishReload", reloadTime);
-        }
+        yield return new WaitForSeconds(2f);
+
+        int ammoNeeded = playerShoot.weaponData[0].MagazineSize - playerShoot.weaponData[0].CurrentAmmo;
+        int ammoToReload = Mathf.Min(ammoNeeded, playerShoot.weaponData[0].TotalAmmo);
+
+        playerShoot.weaponData[0].CurrentAmmo += ammoToReload;
+        playerShoot.weaponData[0].TotalAmmo -= ammoToReload;
+
+        isReloading = false;
+        Debug.Log("Reloaded: Current Ammo = " + playerShoot.weaponData[0].CurrentAmmo + ", Total Ammo = " + playerShoot.weaponData[0].TotalAmmo);
     }
 
-    private void FinishReload()
+    public bool IsReloading()
     {
-        if (weaponData != null)
-        {
-            weaponData[0].CurrentAmmo = weaponData[0].MagazineSize;
-            IsReloading = false;
-            Debug.Log("Reload complete!");
-        }
+        return isReloading;
     }
 }
