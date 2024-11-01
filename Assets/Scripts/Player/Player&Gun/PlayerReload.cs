@@ -3,51 +3,64 @@ using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
 {
-    private PlayerShoot playerShoot;
+    private PlayerInventory playerInventory;
 
     private bool isReloading = false;
 
-    public void Reload()
+    private void Awake()
     {
-        playerShoot = GetComponent<PlayerShoot>();
-        
-        if (isReloading)
-        {
-            Debug.Log("Already reloading");
-            return;
-        }
-       
-        if (playerShoot.weaponData[0].CurrentAmmo == playerShoot.weaponData[0].MagazineSize)
-        {
-            Debug.Log("Magazine is full");
-            return;
-        }
-
-        if (playerShoot.weaponData[0].TotalAmmo <= 0)
-        {
-            Debug.Log("No ammo left to reload");
-            return;
-        }
-
-        Debug.Log("Starting reload");
-        StartCoroutine(ReloadRoutine());
+        playerInventory = GetComponent<PlayerInventory>();
     }
 
-    private IEnumerator ReloadRoutine()
+    public void Reload()
+    {  
+        if (isReloading)
+        {
+            Debug.Log(" PlayerReload. Already reloading");
+            return;
+        }
+        
+        var currentWeapon = playerInventory.GetCurrentWeapon();
+        if (!currentWeapon.HasValue)
+        {
+            Debug.LogWarning(" PlayerReload. No current weapon selected.");
+            return;
+        }
+
+        WeaponData weaponData = currentWeapon.Value;
+
+        if (weaponData.CurrentAmmo == weaponData.MagazineSize)
+        {
+            Debug.Log(" PlayerReload. Magazine is full");
+            return;
+        }
+
+        if (weaponData.TotalAmmo <= 0)
+        {
+            Debug.Log(" PlayerReload. No ammo left to reload");
+            return;
+        }
+
+        Debug.Log(" PlayerReload. Starting reload");
+        StartCoroutine(ReloadRoutine(weaponData));
+    }
+
+    private IEnumerator ReloadRoutine(WeaponData weaponData)
     {
         isReloading = true;
-        Debug.Log("Reloading...");
+        Debug.Log(" PlayerReload. Reloading...");
 
         yield return new WaitForSeconds(2f);
 
-        int ammoNeeded = playerShoot.weaponData[0].MagazineSize - playerShoot.weaponData[0].CurrentAmmo;
-        int ammoToReload = Mathf.Min(ammoNeeded, playerShoot.weaponData[0].TotalAmmo);
+        int ammoNeeded = weaponData.MagazineSize - weaponData.CurrentAmmo;
+        int ammoToReload = Mathf.Min(ammoNeeded, weaponData.TotalAmmo);
 
-        playerShoot.weaponData[0].CurrentAmmo += ammoToReload;
-        playerShoot.weaponData[0].TotalAmmo -= ammoToReload;
+        weaponData.CurrentAmmo += ammoToReload;
+        weaponData.TotalAmmo -= ammoToReload;
 
         isReloading = false;
-        Debug.Log("Reloaded: Current Ammo = " + playerShoot.weaponData[0].CurrentAmmo + ", Total Ammo = " + playerShoot.weaponData[0].TotalAmmo);
+        Debug.Log(" PlayerReload. Reloaded: Current Ammo = " + weaponData.CurrentAmmo + ", Total Ammo = " 
+            + weaponData.TotalAmmo);
     }
 
     public bool IsReloading()
