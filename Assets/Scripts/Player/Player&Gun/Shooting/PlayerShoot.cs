@@ -3,65 +3,81 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] public WeaponData[] weaponData;
     [SerializeField] private BulletsData bulletData;
     [SerializeField] private ObjectPool objectPool;
     [SerializeField] private PlayerReload playerReload;
+    [SerializeField] private PlayerInventory playerInventory;
 
-    private bool IsFiring = false;
+    private bool isFiring = false;
     private Transform cameraTransform;
+    private WeaponData? currentWeapon;
 
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
+        currentWeapon = playerInventory.GetCurrentWeapon();
     }
     
     public void StartFiring() 
     {
-        if (weaponData[0].CurrentAmmo > 0 && !playerReload.IsReloading())
+        Debug.Log(" PlayerShoot. Current weapon: " + (currentWeapon?.Name ?? "None"));
+
+        if (currentWeapon != null && currentWeapon.Value.CurrentAmmo > 0 && !playerReload.IsReloading())
         {
-            IsFiring = true;
+            isFiring = true;
             StartCoroutine(ShootAuto());
+        }
+        else
+        {
+            Debug.Log(" PlayerShoot. Cannot start firing: weapon is null, out of ammo, or reloading.");
         }
     }
 
     public void StopFiring()
     {
-        IsFiring = false;
-        StopCoroutine(ShootAuto());
+        isFiring = false;
+        if (IsInvoking(nameof(ShootAuto)))
+        {
+            StopCoroutine(nameof(ShootAuto));
+        }
     }
 
     private IEnumerator ShootAuto()
     {
-        while (IsFiring && weaponData[0].CurrentAmmo > 0)
+        while (isFiring && currentWeapon != null && currentWeapon.Value.CurrentAmmo > 0)
         {
             ShootGun();
-            yield return new WaitForSeconds(1f / weaponData[0].FireRate);
+            yield return new WaitForSeconds(1f / currentWeapon.Value.FireRate);
         }
 
-        if (weaponData[0].CurrentAmmo <= 0)
+        if (currentWeapon != null && currentWeapon.Value.CurrentAmmo <= 0)
         {
+            Debug.Log(" PlayerShoot. Out of ammo, stopping firing.");
             StopFiring();
         }
     }
 
-    //private void ShootBullet() 
-    //{
-    //    if (!IsFiring)
-    //    {
-    //        ShootGun();
-    //    }
-    //}
-
     public void ShootGun()
     {
-        if (weaponData.Length > 0)
+        if (currentWeapon.HasValue && currentWeapon.Value.CurrentAmmo > 0)
         {
-            GameObject bullet = objectPool.Spawn(weaponData[0].BulletSpawnPoint.position, Quaternion.identity);
+            GameObject bullet = objectPool.Spawn(currentWeapon.Value.BulletSpawnPoint.position, Quaternion.identity);
+
+            if (bullet == null)
+            {
+                Debug.Log(" PlayerShoot. ObjectPool returned a null bullet.");
+                return;
+            }
 
             BulletsController bulletsController = bullet.GetComponent<BulletsController>();
 
-            float range = weaponData[0].Range;
+            if (bulletsController == null)
+            {
+                Debug.Log(" PlayerShoot. BulletsController component missing on bullet prefab.");
+                return;
+            }
+
+            float range = currentWeapon.Value.Range;
             bool hitTarget = false;
             Vector3 target = cameraTransform.position + cameraTransform.forward * range;
 
@@ -73,11 +89,11 @@ public class PlayerShoot : MonoBehaviour
 
                 if (hit.collider.CompareTag("Enemy"))
                 {
-                    Debug.Log("Enemy is attacking");
+                    Debug.Log(" PlayerShoot. Enemy is attacking");
                     HealthController healthController = hit.collider.GetComponent<HealthController>();
                     if (healthController != null)
                     {
-                        healthController.TakeDamage(weaponData[0].Damage);
+                        healthController.TakeDamage(currentWeapon.Value.Damage);
                     }
                 }
             }
@@ -87,7 +103,7 @@ public class PlayerShoot : MonoBehaviour
             bullet.transform.forward = target - bullet.transform.position;
 
             StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
-            weaponData[0].CurrentAmmo--;
+            playerInventory.UseAmmo(currentWeapon.Value.GunsType, 1);
         }
     }
     private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)

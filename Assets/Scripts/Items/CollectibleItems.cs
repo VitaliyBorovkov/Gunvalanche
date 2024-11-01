@@ -1,5 +1,4 @@
 using System;
-
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -18,6 +17,11 @@ public class CollectibleItems : MonoBehaviour
     }
 
     private void Update()
+    {
+        RotateAndFloat();
+    }
+
+    private void RotateAndFloat()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 

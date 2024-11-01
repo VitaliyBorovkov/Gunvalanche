@@ -12,6 +12,7 @@ public class HealthController : MonoBehaviour, IDamageable
         {
             for (int i = 0; i < Mathf.Min(healthData.Length, entityData.Length); i++)
             {
+                healthData[i].MaxHealth = entityData[i].Health;
                 healthData[i].CurrentHealth = entityData[i].Health;
             }
         }
@@ -29,7 +30,14 @@ public class HealthController : MonoBehaviour, IDamageable
 
         if (healthData[0].CurrentHealth <= 0)
         {
-            //healthData[1].OnEndedHealth.Invoke();
+            healthData[0].OnEndedHealth.Invoke();
         }
+    }
+
+    public void AddHealth(int amount)
+    {
+        healthData[0].CurrentHealth = Mathf.Min(healthData[0].CurrentHealth + amount,
+            healthData[0].MaxHealth);
+        Debug.Log(" HealthController. Health Restored: " + healthData[0].CurrentHealth);
     }
 }
