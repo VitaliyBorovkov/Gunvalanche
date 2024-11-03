@@ -32,4 +32,13 @@ public class HealthController : MonoBehaviour, IDamageable
             //healthData[1].OnEndedHealth.Invoke();
         }
     }
+
+    public void SetHealth(int health)
+    {
+        if (healthData != null && healthData.Length > 0)
+        {
+            healthData[0].CurrentHealth = health;
+            Debug.Log(" HealthController. Health set to: " + health);
+        }
+    }
 }
