@@ -68,7 +68,6 @@ public class InputManager : MonoBehaviour
         //aimAction.Enable();
         reloadAction.Enable();
 
-
         movementAction.performed += _ => playerMovement.Move(movementAction.ReadValue<Vector2>());
         jumpAction.performed += _ => playerJump.Jump();
         lookAction.performed += _ => playerLook.Look(lookAction.ReadValue<Vector2>());
@@ -77,13 +76,7 @@ public class InputManager : MonoBehaviour
         //fireAction.started += _ => playerShoot.ShootGun();
         fireAction.started += _ => playerShoot.StartFiring();
         fireAction.canceled += _ => playerShoot.StopFiring();
-        //reloadAction.performed += _ => playerReload.Reload();
-        reloadAction.performed += ctx =>
-        {
-            Debug.Log("Reload action performed");
-            playerReload.Reload();
-        };
-
+        reloadAction.performed += _ => playerReload.Reload();
     }
     
     private void OnDisable()
@@ -95,14 +88,9 @@ public class InputManager : MonoBehaviour
         //aimAction.Disable();
         reloadAction.Disable();
 
-
         movementAction.performed -= _ => playerMovement.Move(movementAction.ReadValue<Vector2>());
         jumpAction.performed -= _ => playerJump.Jump();
         lookAction.performed -= _ => playerLook.Look(lookAction.ReadValue<Vector2>());
-
-        //fireAction.canceled -= _ => playerShoot.ShootGun();
-
         reloadAction.performed -= _ => playerReload.Reload();
-
     }
 }

@@ -13,30 +13,30 @@ public class PlayerReload : MonoBehaviour
         
         if (isReloading)
         {
-            Debug.Log("Already reloading");
+            Debug.Log(" PlayerReload. Already reloading");
             return;
         }
        
         if (playerShoot.weaponData[0].CurrentAmmo == playerShoot.weaponData[0].MagazineSize)
         {
-            Debug.Log("Magazine is full");
+            Debug.Log(" PlayerReload. Magazine is full");
             return;
         }
 
         if (playerShoot.weaponData[0].TotalAmmo <= 0)
         {
-            Debug.Log("No ammo left to reload");
+            Debug.Log(" PlayerReload. No ammo left to reload");
             return;
         }
 
-        Debug.Log("Starting reload");
+        Debug.Log(" PlayerReload. Starting reload");
         StartCoroutine(ReloadRoutine());
     }
 
     private IEnumerator ReloadRoutine()
     {
         isReloading = true;
-        Debug.Log("Reloading...");
+        Debug.Log(" PlayerReload. Reloading...");
 
         yield return new WaitForSeconds(2f);
 
@@ -47,7 +47,7 @@ public class PlayerReload : MonoBehaviour
         playerShoot.weaponData[0].TotalAmmo -= ammoToReload;
 
         isReloading = false;
-        Debug.Log("Reloaded: Current Ammo = " + playerShoot.weaponData[0].CurrentAmmo + ", Total Ammo = " + playerShoot.weaponData[0].TotalAmmo);
+        Debug.Log(" PlayerReload. Reloaded: Current Ammo = " + playerShoot.weaponData[0].CurrentAmmo + ", Total Ammo = " + playerShoot.weaponData[0].TotalAmmo);
     }
 
     public bool IsReloading()

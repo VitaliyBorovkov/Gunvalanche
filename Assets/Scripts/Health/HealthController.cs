@@ -25,7 +25,7 @@ public class HealthController : MonoBehaviour, IDamageable
     public virtual void TakeDamage(int damage)
     {
         healthData[0].CurrentHealth -= damage;
-        Debug.Log("EnemyHealth" + healthData[0].CurrentHealth);
+        Debug.Log(" HealthController. EnemyHealth" + healthData[0].CurrentHealth);
 
         if (healthData[0].CurrentHealth <= 0)
         {

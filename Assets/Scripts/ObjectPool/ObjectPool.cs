@@ -29,7 +29,7 @@ public class ObjectPool : MonoBehaviour
 
     public GameObject Spawn(Vector3 position, Quaternion rotation)
     {
-        Debug.Log("Spawning object");
+        //Debug.Log(" ObjectPool. Spawning object");
         if (ObjectQueue.Count == 0)
         {
             ExpandPool();
@@ -45,7 +45,7 @@ public class ObjectPool : MonoBehaviour
 
     public void Despawn(GameObject obj)
     {
-        Debug.Log("Despawning object");
+        //Debug.Log(" ObjectPool. Despawning object");
         obj.SetActive(false);
 
         ObjectQueue.Enqueue(obj);
