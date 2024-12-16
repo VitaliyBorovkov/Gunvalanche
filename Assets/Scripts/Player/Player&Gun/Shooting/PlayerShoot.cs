@@ -45,13 +45,10 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    //private void ShootBullet() 
-    //{
-    //    if (!IsFiring)
-    //    {
-    //        ShootGun();
-    //    }
-    //}
+    public void SetObjectPool(ObjectPool pool)
+    {
+        objectPool = pool;
+    }
 
     public void ShootGun()
     {
