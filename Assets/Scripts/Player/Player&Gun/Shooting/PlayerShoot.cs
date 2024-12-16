@@ -68,14 +68,18 @@ public class PlayerShoot : MonoBehaviour
                 target = hit.point;
                 hitTarget = true;
 
-                if (hit.collider.CompareTag("Enemy"))
+                //if (hit.collider.CompareTag("Enemy"))
+                //{
+                //    Debug.Log("Enemy is attacking");
+                //    HealthController healthController = hit.collider.GetComponent<HealthController>();
+                //    if (healthController != null)
+                //    {
+                //        healthController.TakeDamage(weaponData[0].Damage);
+                //    }
+                //}
+                if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
                 {
-                    Debug.Log("Enemy is attacking");
-                    HealthController healthController = hit.collider.GetComponent<HealthController>();
-                    if (healthController != null)
-                    {
-                        healthController.TakeDamage(weaponData[0].Damage);
-                    }
+                    damageable.TakeDamage(weaponData[0].Damage);
                 }
             }
             bulletsController.bulletData.Target = target;
@@ -87,6 +91,7 @@ public class PlayerShoot : MonoBehaviour
             weaponData[0].CurrentAmmo--;
         }
     }
+
     private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
     {
         yield return new WaitForSeconds(time);
