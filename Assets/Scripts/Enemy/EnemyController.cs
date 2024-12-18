@@ -3,17 +3,16 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
+    [Header("Player Settings")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float attackRange = 2f;
 
+    [Header("Components")]
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
-    private void Start()
+    private void OnEnable()
     {
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        animator = GetComponent<Animator>();
-
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindWithTag("Player");
@@ -28,10 +27,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+
+        if (playerTransform == null)
+        {
+            Debug.LogError("PlayerTransform is not set.");
+        }
+    }
+
     private void Update()
     {
         if (playerTransform == null)
-        {
+        { 
             return;
         }
 
@@ -58,11 +68,22 @@ public class EnemyController : MonoBehaviour
 
     private void SetWalking(bool isWalking)
     {
-        animator.SetBool("isWalking", isWalking);
+        if (animator != null)
+        {
+            animator.SetBool("isWalking", isWalking);
+        }
     }
 
     private void SetAttacking(bool isAttacking)
     {
-        animator.SetBool("isAttacking", isAttacking);
+        if (animator != null)
+        {
+            animator.SetBool("isAttacking", isAttacking);
+        }
+    }
+
+    public void SetPlayerTransform(Transform player)
+    {
+        playerTransform = player;
     }
 }

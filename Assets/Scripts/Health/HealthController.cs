@@ -2,43 +2,51 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
 {
-    [SerializeField] private HealthData[] healthData;
-    [SerializeField] private EntityData[] entityData;
+    [SerializeField] private HealthData healthData;
+    [SerializeField] private EntityData entityData;
 
     private void OnEnable()
     {
-        if (healthData != null && entityData != null &&
-            healthData.Length > 0 && entityData.Length > 0)
-        {
-            for (int i = 0; i < Mathf.Min(healthData.Length, entityData.Length); i++)
-            {
-                healthData[i].CurrentHealth = entityData[i].Health;
-            }
-        }
+        healthData.CurrentHealth = entityData.Health;
+        Debug.Log($"{entityData.Name} spawned with {healthData.CurrentHealth} health.");
     }
 
     public int GetCurrentHealth()
     {
-        return healthData[0].CurrentHealth;
+        return healthData.CurrentHealth;
     }
 
     public virtual void TakeDamage(int damage)
     {
-        healthData[0].CurrentHealth -= damage;
-        Debug.Log(" HealthController. EnemyHealth" + healthData[0].CurrentHealth);
+        if (damage <= 0) return;
 
-        if (healthData[0].CurrentHealth <= 0)
+        healthData.CurrentHealth -= damage;
+        Debug.Log($"{entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
+
+        if (healthData.CurrentHealth <= 0)
         {
-            //healthData[1].OnEndedHealth.Invoke();
+            Die();
         }
     }
 
     public void SetHealth(int health)
     {
-        if (healthData != null && healthData.Length > 0)
-        {
-            healthData[0].CurrentHealth = health;
-            Debug.Log(" HealthController. Health set to: " + health);
-        }
+        healthData.CurrentHealth = Mathf.Clamp(health, 0, entityData.Health);
+        Debug.Log($"{entityData.Name} health set to: {healthData.CurrentHealth}");
+    }
+
+    protected virtual void Die()
+    {
+        Debug.Log($"{entityData.Name} has died.");
+        healthData.OnEndedHealth?.Invoke();
+
+        //EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
+        //if (spawner != null)
+        //{
+        //    spawner.OnEnemyDeath(gameObject);
+        //}
+
+
+        gameObject.SetActive(false);
     }
 }
