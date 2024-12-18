@@ -1353,38 +1353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a841432780ed1f14c85cac670ff06d9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1994162351
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1994162352}
-  m_Layer: 0
-  m_Name: SpawnPoint1
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1994162352
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1994162351}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.44, y: -6.03, z: 16.93}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1052632556}
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+
 --- !u!114 &2080529607 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7665375626359698592, guid: 86aff45d563826945a1a19dcc4d99472, type: 3}
@@ -1396,6 +1365,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dc0f1da098c6d04f9b416ffb03796d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+
 --- !u!1001 &3506682546025054226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1722,6 +1692,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 705507995}
   - {fileID: 1524958598}
+
   - {fileID: 1789803647}
   - {fileID: 4059566518797675768}
   - {fileID: 4445360409369549564}
