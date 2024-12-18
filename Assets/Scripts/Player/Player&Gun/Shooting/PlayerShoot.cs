@@ -77,10 +77,6 @@ public class PlayerShoot : MonoBehaviour
                 //        healthController.TakeDamage(weaponData[0].Damage);
                 //    }
                 //}
-                if (hit.collider.TryGetComponent<IDamageable>(out var damageable))
-                {
-                    damageable.TakeDamage(weaponData[0].Damage);
-                }
             }
             bulletsController.bulletData.Target = target;
             bulletsController.bulletData.HitTarget = hitTarget;
