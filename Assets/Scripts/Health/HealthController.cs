@@ -18,7 +18,12 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
-        if (damage <= 0) return;
+
+        if (damage <= 0)
+        {
+            return;
+        }
+
 
         healthData.CurrentHealth -= damage;
         Debug.Log($"{entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
@@ -39,12 +44,6 @@ public class HealthController : MonoBehaviour, IDamageable
     {
         Debug.Log($"{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
-
-        //EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
-        //if (spawner != null)
-        //{
-        //    spawner.OnEnemyDeath(gameObject);
-        //}
 
 
         gameObject.SetActive(false);
