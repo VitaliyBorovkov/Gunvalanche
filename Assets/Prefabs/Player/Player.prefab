@@ -450,7 +450,7 @@ MonoBehaviour:
     Health: 100
     WalkSpeed: 4
     RunSpeed: 10
-    Prefab: {fileID: 0}
+    Prefab: {fileID: 5586268211691920688}
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 1
   gravity: -9.81
@@ -518,7 +518,7 @@ MonoBehaviour:
     Damage: 10
     MagazineSize: 30
     CurrentAmmo: 30
-    TotalAmmo: 100
+    TotalAmmo: 1000
     FireRate: 10
     Range: 300
     GunsType: 1
