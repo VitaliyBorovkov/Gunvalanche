@@ -7,7 +7,6 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float attackRange = 2f;
 
-    [Header("Components")]
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
