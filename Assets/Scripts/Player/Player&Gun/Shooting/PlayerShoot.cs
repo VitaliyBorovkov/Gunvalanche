@@ -68,16 +68,15 @@ public class PlayerShoot : MonoBehaviour
                 target = hit.point;
                 hitTarget = true;
 
-                if (hit.collider.CompareTag("Enemy"))
-                {
-                    Debug.Log("Enemy is attacking");
-                    HealthController healthController = hit.collider.GetComponentInParent<HealthController>();
-                    if (healthController != null)
-                    {
-                        healthController.TakeDamage(weaponData[0].Damage);
-                        Debug.Log($"Damage applied: {weaponData[0].Damage}");
-                    }
-                }
+                //if (hit.collider.CompareTag("Enemy"))
+                //{
+                //    Debug.Log("Enemy is attacking");
+                //    HealthController healthController = hit.collider.GetComponent<HealthController>();
+                //    if (healthController != null)
+                //    {
+                //        healthController.TakeDamage(weaponData[0].Damage);
+                //    }
+                //}
             }
             bulletsController.bulletData.Target = target;
             bulletsController.bulletData.HitTarget = hitTarget;
