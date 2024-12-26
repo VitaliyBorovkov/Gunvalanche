@@ -448,8 +448,8 @@ MonoBehaviour:
   entityData:
     Name: Player
     Health: 100
-    WalkSpeed: 4
-    RunSpeed: 10
+    WalkSpeed: 3
+    RunSpeed: 6
     Prefab: {fileID: 5586268211691920688}
   playerVelocity: {x: 0, y: 0, z: 0}
   isGrounded: 1
@@ -563,9 +563,9 @@ MonoBehaviour:
         m_Calls: []
   entityData:
     Name: Player
-    Health: 100
+    Health: 1000
     WalkSpeed: 3
-    RunSpeed: 5
+    RunSpeed: 6
     Prefab: {fileID: 5586268211691920688}
 --- !u!1 &7291666146011075694
 GameObject:
