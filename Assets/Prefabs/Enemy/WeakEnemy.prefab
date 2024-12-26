@@ -862,7 +862,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7336182974141918638}
   - component: {fileID: 7844071335141549250}
-  - component: {fileID: 3433917929537760671}
   - component: {fileID: 7730203461770392063}
   - component: {fileID: 1848405981224325894}
   - component: {fileID: 2713205910797960544}
@@ -927,22 +926,6 @@ MonoBehaviour:
     WalkSpeed: 2
     RunSpeed: 4
     Prefab: {fileID: 5870442699430201994}
---- !u!114 &3433917929537760671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5870442699430201994}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fbe55d88c2e6ef1468ef91ee4f41ab7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  attackRange: 1.16
-  attackCooldown: 0.5
-  gizmosHeightOffset: 1.31
 --- !u!114 &7730203461770392063
 MonoBehaviour:
   m_ObjectHideFlags: 0
