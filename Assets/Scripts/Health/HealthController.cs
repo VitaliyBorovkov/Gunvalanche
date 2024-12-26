@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
@@ -5,10 +7,34 @@ public class HealthController : MonoBehaviour, IDamageable
     [SerializeField] private HealthData healthData;
     [SerializeField] private EntityData entityData;
 
+    private PlayerHpUI playerHpUI;
+    private bool isPlayer;
+
+    private void Start()
+    {
+        isPlayer = CompareTag("Player");
+
+        if (isPlayer)
+        {
+            playerHpUI = FindObjectOfType<PlayerHpUI>();
+
+            if (playerHpUI == null)
+            {
+                Debug.Log("HealthController: HeadHull не найден в сцене!");
+            }
+            else
+            {
+                playerHpUI.Initialize(entityData.Health);
+            }
+        }
+    }
+
     private void OnEnable()
     {
         healthData.CurrentHealth = entityData.Health;
         Debug.Log($"{entityData.Name} spawned with {healthData.CurrentHealth} health.");
+
+        UpdateHeadUI();
     }
 
     public int GetCurrentHealth()
@@ -23,6 +49,8 @@ public class HealthController : MonoBehaviour, IDamageable
         healthData.CurrentHealth -= damage;
         Debug.Log($"{entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
 
+        UpdateHeadUI();
+
         if (healthData.CurrentHealth <= 0)
         {
             Die();
@@ -33,6 +61,8 @@ public class HealthController : MonoBehaviour, IDamageable
     {
         healthData.CurrentHealth = Mathf.Clamp(health, 0, entityData.Health);
         Debug.Log($"{entityData.Name} health set to: {healthData.CurrentHealth}");
+
+        UpdateHeadUI();
     }
 
     protected virtual void Die()
@@ -48,5 +78,13 @@ public class HealthController : MonoBehaviour, IDamageable
 
 
         gameObject.SetActive(false);
+    }
+
+    private void UpdateHeadUI()
+    {
+        if (isPlayer && playerHpUI != null)
+        {
+            playerHpUI.UpdateUI(healthData.CurrentHealth);
+        }
     }
 }
