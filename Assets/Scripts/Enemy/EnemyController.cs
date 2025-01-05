@@ -40,7 +40,8 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
         if (playerTransform == null)
-        { 
+        {
+            Debug.Log($"{gameObject.name} не имеет ссылки на игрока!");
             return;
         }
 
@@ -83,6 +84,7 @@ public class EnemyController : MonoBehaviour
 
     public void SetPlayerTransform(Transform player)
     {
-        playerTransform = player;
+        playerTransform = player; 
     }
 }
+

@@ -7,7 +7,7 @@ public class HealthController : MonoBehaviour, IDamageable
     [SerializeField] protected HealthData healthData;
     [SerializeField] protected EntityData entityData;
 
-    private PlayerHpUI playerHpUI;
+    protected PlayerHpUI playerHpUI;
     private bool isPlayer;
 
     protected virtual void Start()
@@ -20,7 +20,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("HealthController: HeadHull не найден в сцене!");
+                Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
             }
             else
             {
