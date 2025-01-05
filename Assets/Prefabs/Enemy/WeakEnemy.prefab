@@ -279,8 +279,8 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 90
   m_CollisionDetection: 0
@@ -861,7 +861,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7336182974141918638}
-  - component: {fileID: 7844071335141549250}
+  - component: {fileID: 9115385841493746389}
   - component: {fileID: 7730203461770392063}
   - component: {fileID: 1848405981224325894}
   - component: {fileID: 2713205910797960544}
@@ -891,7 +891,7 @@ Transform:
   - {fileID: 1392251213626312481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7844071335141549250
+--- !u!114 &9115385841493746389
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -900,32 +900,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 5870442699430201994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068acb00d050c4e45a7791b2a0167d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: a17f28757aa9f564db1115cb9cf1e1db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthData:
     CurrentHealth: 0
     OnEndedHealth:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 7844071335141549250}
-          m_TargetAssemblyTypeName: 
-          m_MethodName: 
-          m_Mode: 0
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: 
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
   entityData:
     Name: Skelet
     Health: 100
     WalkSpeed: 2
     RunSpeed: 4
     Prefab: {fileID: 5870442699430201994}
+  damageTextPrefab: {fileID: 0}
+  damageTextSpawnPoint: {fileID: 0}
 --- !u!114 &7730203461770392063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -968,7 +958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityKey: WeakEnemy
   playerMovement: {fileID: 0}
-  health: {fileID: 7844071335141549250}
+  health: {fileID: 0}
   navMeshAgent: {fileID: 7779843437473723359}
 --- !u!195 &7779843437473723359
 NavMeshAgent:
