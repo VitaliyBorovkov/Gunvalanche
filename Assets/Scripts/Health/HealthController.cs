@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
 {
-    [SerializeField] private HealthData healthData;
-    [SerializeField] private EntityData entityData;
+    [SerializeField] protected HealthData healthData;
+    [SerializeField] protected EntityData entityData;
 
     private PlayerHpUI playerHpUI;
     private bool isPlayer;
 
-    private void Start()
+    protected virtual void Start()
     {
         isPlayer = CompareTag("Player");
 
@@ -86,5 +86,10 @@ public class HealthController : MonoBehaviour, IDamageable
         {
             playerHpUI.UpdateUI(healthData.CurrentHealth);
         }
+    }
+
+    protected virtual void OnDamageTaken(int damage) 
+    {
+        
     }
 }

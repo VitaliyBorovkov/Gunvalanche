@@ -18,10 +18,15 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public float walkSpeed;
     [HideInInspector] public float runSpeed;
 
-    private void Start()
+    private void Awake()
     {
         controller = GetComponent<CharacterController>();
         playerRun = GetComponent<PlayerRun>();
+
+        if (controller == null || playerRun == null)
+        {
+            Debug.Log(" CharacterController or PlayerRun not found");
+        }
     }
     
     private void FixedUpdate()

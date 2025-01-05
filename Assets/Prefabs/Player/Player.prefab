@@ -274,7 +274,7 @@ GameObject:
   - component: {fileID: 5588236916882797346}
   - component: {fileID: 9202750033256993497}
   - component: {fileID: 4443374691479103321}
-  - component: {fileID: 7706591545396076815}
+  - component: {fileID: 1608169243435678818}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityKey: Player
   playerMovement: {fileID: 1806327806865103107}
-  health: {fileID: 7706591545396076815}
+  health: {fileID: 0}
   navMeshAgent: {fileID: 0}
 --- !u!114 &5775478313144440459
 MonoBehaviour:
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ea2acfdc9bf37242a5be9ce1dcb90ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7706591545396076815
+--- !u!114 &1608169243435678818
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -553,7 +553,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5586268211691920688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 068acb00d050c4e45a7791b2a0167d9d, type: 3}
+  m_Script: {fileID: 11500000, guid: 9446bfc2ef466844897bbec6109818e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthData:
