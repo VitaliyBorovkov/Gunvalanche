@@ -6,7 +6,7 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] private GameObject ObjectPrefab;
-    [SerializeField] private int PoolSize = 10;
+    [SerializeField] private int poolSize = 10;
 
     private Queue<GameObject> ObjectQueue;
 
@@ -19,7 +19,7 @@ public class ObjectPool : MonoBehaviour
     {
         ObjectQueue = new Queue<GameObject>();
 
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             GameObject obj = Instantiate(ObjectPrefab);
             ObjectQueue.Enqueue(obj);
@@ -53,7 +53,7 @@ public class ObjectPool : MonoBehaviour
     {
         int currentPoolSize = ObjectQueue.Count;
 
-        for (int i = 0; i < PoolSize; i++)
+        for (int i = 0; i < poolSize; i++)
         {
             GameObject obj = Instantiate(ObjectPrefab);
             ObjectQueue.Enqueue(obj);

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8801709592010384310
+--- !u!1 &7127054407990423087
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,41 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1846560765092229957}
-  - component: {fileID: 7665375626359698592}
+  - component: {fileID: 364288933510437595}
+  - component: {fileID: 3599465730680397983}
   m_Layer: 0
-  m_Name: ObjectPool
+  m_Name: WeakEnemyPool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1846560765092229957
+--- !u!4 &364288933510437595
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801709592010384310}
+  m_GameObject: {fileID: 7127054407990423087}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6990883, y: 1.7380323, z: 6.2522507}
+  m_LocalPosition: {x: 1.5124549, y: 2.0314186, z: 14.537879}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7665375626359698592
+--- !u!114 &3599465730680397983
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8801709592010384310}
+  m_GameObject: {fileID: 7127054407990423087}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7dc0f1da098c6d04f9b416ffb03796d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ObjectPrefab: {fileID: 3928528860053484037, guid: ebcbac358f80a0d428cf008935f4945a, type: 3}
-  PoolSize: 30
+  ObjectPrefab: {fileID: 5870442699430201994, guid: c762d6792191333408ab84086b7c7a97, type: 3}
+  poolSize: 10

@@ -5,8 +5,9 @@ public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] public WeaponData[] weaponData;
     [SerializeField] private BulletsData bulletData;
-    [SerializeField] private ObjectPool objectPool;
     [SerializeField] private PlayerReload playerReload;
+
+    private ObjectPool bulletsPool;
 
     private bool IsFiring = false;
     private Transform cameraTransform;
@@ -47,14 +48,14 @@ public class PlayerShoot : MonoBehaviour
 
     public void SetObjectPool(ObjectPool pool)
     {
-        objectPool = pool;
+        bulletsPool = pool;
     }
 
     public void ShootGun()
     {
         if (weaponData.Length > 0)
         {
-            GameObject bullet = objectPool.Spawn(weaponData[0].BulletSpawnPoint.position, Quaternion.identity);
+            GameObject bullet = bulletsPool.Spawn(weaponData[0].BulletSpawnPoint.position, Quaternion.identity);
 
             BulletsController bulletsController = bullet.GetComponent<BulletsController>();
 
@@ -92,6 +93,6 @@ public class PlayerShoot : MonoBehaviour
     private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
     {
         yield return new WaitForSeconds(time);
-        objectPool.Despawn(bullet);
+        bulletsPool.Despawn(bullet);
     }
 }
