@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 6718659506216846404}
   - component: {fileID: 5300435315617899659}
   - component: {fileID: 1019001418259302823}
+  - component: {fileID: -7531674500342585047}
   m_Layer: 0
   m_Name: PistolAmmoBox
   m_TagString: Untagged
@@ -303,10 +304,31 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &-7531674500342585047
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5187556745157454770}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1186.074, y: 382.81427, z: 718.3672}
+  m_Center: {x: 7.342934, y: -1.1366009, z: -30.014275}
 --- !u!1001 &734399884791701730
 PrefabInstance:
   m_ObjectHideFlags: 0
