@@ -21,7 +21,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
+                Debug.Log("PlayerHealthController: PlayerHpUI Г­ГҐ Г­Г Г©Г¤ГҐГ­ Гў Г±Г¶ГҐГ­ГҐ!");
             }
             else
             {
@@ -50,12 +50,10 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
-        if (isDead) return;
-        if (damage <= 0) return;
 
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log($"{entityData.Name} уже мёртв, урон не применяется.");
+            Debug.Log($"{entityData.Name} ГіГ¦ГҐ Г¬ВёГ°ГІГў, ГіГ°Г®Г­ Г­ГҐ ГЇГ°ГЁГ¬ГҐГ­ГїГҐГІГ±Гї.");
             return;
         }
 
@@ -82,12 +80,6 @@ public class HealthController : MonoBehaviour, IDamageable
     {
         Debug.Log($"{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
-
-        //EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
-        //if (spawner != null)
-        //{
-        //    spawner.OnEnemyDeath(gameObject);
-        //}
 
 
         gameObject.SetActive(false);
