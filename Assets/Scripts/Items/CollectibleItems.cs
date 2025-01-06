@@ -1,8 +1,9 @@
 using System;
-
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(Rigidbody))]
 public class CollectibleItems : MonoBehaviour
 {
     [SerializeField] private float rotationSpeed = 43f;
@@ -12,12 +13,12 @@ public class CollectibleItems : MonoBehaviour
     private bool floatingUp = true;
     private Vector3 initialPosition;
 
-    private void Start()
+    protected virtual void Start()
     {
         initialPosition = transform.position;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         transform.Rotate(Vector3.up, rotationSpeed * Time.deltaTime);
 
@@ -39,7 +40,7 @@ public class CollectibleItems : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
@@ -47,7 +48,7 @@ public class CollectibleItems : MonoBehaviour
         }
     }
 
-    public void Collect(GameObject player)
+    protected virtual void Collect(GameObject player)
     {
         OnCollected.Invoke();
         gameObject.SetActive(false);

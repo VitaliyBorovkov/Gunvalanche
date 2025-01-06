@@ -530,7 +530,6 @@ MonoBehaviour:
     Speed: 50
     DistanceToTarget: 0
     LifeTime: 2
-  objectPool: {fileID: 7665375626359698592, guid: 86aff45d563826945a1a19dcc4d99472, type: 3}
   playerReload: {fileID: 4443374691479103321}
 --- !u!114 &4443374691479103321
 MonoBehaviour:
@@ -557,6 +556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthData:
+    MaxHealth: 1000
     CurrentHealth: 0
     OnEndedHealth:
       m_PersistentCalls:

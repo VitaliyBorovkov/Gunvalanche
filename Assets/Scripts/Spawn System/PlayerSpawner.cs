@@ -21,10 +21,21 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject player = Instantiate(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
 
+        player.transform.position = playerSpawnPoint.position;
+        player.transform.rotation = playerSpawnPoint.rotation;
+
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
         if (playerShoot != null && objectPool != null)
         {
             playerShoot.SetObjectPool(objectPool);
         }
+
+        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+        foreach (var enemy in enemies)
+        {
+            enemy.SetPlayerTransform(player.transform);
+        }
+
+        Debug.Log("PlayerSpawner —сылки на игрока обновлены у всех врагов.");
     }
 }

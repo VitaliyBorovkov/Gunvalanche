@@ -2,27 +2,28 @@ using UnityEngine;
 
 public class PlayerHealthController : HealthController
 {
-    private PlayerHpUI playerHpUI;
-
     protected override void Start()
     {
         base.Start();
 
-        playerHpUI = FindObjectOfType<PlayerHpUI>();
-
-        if (playerHpUI == null)
-        {
-            Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
-        }
-        else
-        {
-            playerHpUI.Initialize(entityData.Health);
-            UpdateHeadUI();
-        }
+        UpdateHeadUI();
     }
 
     protected override void OnDamageTaken(int damage)
     {
+        UpdateHeadUI();
+    }
+
+    public void Heal(int amount)
+    {
+        if (healthData.CurrentHealth <= 0)
+        {
+            Debug.Log("Heal() отменён: игрок мёртв!");
+            return;
+        }
+
+        healthData.CurrentHealth = Mathf.Clamp(healthData.CurrentHealth + amount, 0, healthData.MaxHealth);
+
         UpdateHeadUI();
     }
 
