@@ -7,8 +7,9 @@ public class HealthController : MonoBehaviour, IDamageable
     [SerializeField] protected HealthData healthData;
     [SerializeField] protected EntityData entityData;
 
-    private PlayerHpUI playerHpUI;
+    protected PlayerHpUI playerHpUI;
     private bool isPlayer;
+    private bool isDead = false;
 
     protected virtual void Start()
     {
@@ -20,7 +21,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("HealthController: HeadHull �� ������ � �����!");
+                Debug.Log("PlayerHealthController: PlayerHpUI íå íàéäåí â ñöåíå!");
             }
             else
             {
@@ -42,14 +43,19 @@ public class HealthController : MonoBehaviour, IDamageable
         return healthData.CurrentHealth;
     }
 
+    public int GetMaxHealth()
+    {
+        return healthData.MaxHealth;
+    }
+
     public virtual void TakeDamage(int damage)
     {
 
-        if (damage <= 0)
+        if (healthData.CurrentHealth <= 0)
         {
+            Debug.Log($"{entityData.Name} óæå ì¸ðòâ, óðîí íå ïðèìåíÿåòñÿ.");
             return;
         }
-
 
         healthData.CurrentHealth -= damage;
         Debug.Log($"{entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
@@ -77,6 +83,9 @@ public class HealthController : MonoBehaviour, IDamageable
 
 
         gameObject.SetActive(false);
+
+        if (isDead) return;
+        isDead = true;
     }
 
     private void UpdateHeadUI()
