@@ -14,6 +14,19 @@ public class PlayerHealthController : HealthController
         UpdateHeadUI();
     }
 
+    public void Heal(int amount)
+    {
+        if (healthData.CurrentHealth <= 0)
+        {
+            Debug.Log("Heal() отменён: игрок мёртв!");
+            return;
+        }
+
+        healthData.CurrentHealth = Mathf.Clamp(healthData.CurrentHealth + amount, 0, healthData.MaxHealth);
+
+        UpdateHeadUI();
+    }
+
     private void UpdateHeadUI()
     {
         if (playerHpUI != null)
