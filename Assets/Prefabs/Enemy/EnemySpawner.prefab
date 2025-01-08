@@ -48,10 +48,10 @@ MonoBehaviour:
   spawnPoints:
   - {fileID: 0}
   - {fileID: 0}
-  objectPool: {fileID: 3599465730680397983, guid: cb5eeb107e77c57468c1ed85b4041315, type: 3}
   maxObjects: 15
   spawnInterval: 3
   playerTransform: {fileID: 7871867582529927044, guid: 2497c09b4185d0346b9fcf0d6fe06aee, type: 3}
+  enemyPool: {fileID: 3599465730680397983, guid: cb5eeb107e77c57468c1ed85b4041315, type: 3}
 --- !u!1 &3997213899713453293
 GameObject:
   m_ObjectHideFlags: 0
