@@ -4,7 +4,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
-public class CollectibleItems : MonoBehaviour
+public class CollectibleItems : MonoBehaviour, ICollectible
 {
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
@@ -46,6 +46,11 @@ public class CollectibleItems : MonoBehaviour
         {
             Collect(other.gameObject);
         }
+    }
+
+    public virtual void Collect() 
+    {
+        Collect(null); 
     }
 
     protected virtual void Collect(GameObject player)

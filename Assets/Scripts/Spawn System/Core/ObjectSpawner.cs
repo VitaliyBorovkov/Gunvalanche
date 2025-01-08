@@ -10,7 +10,7 @@ public abstract class ObjectSpawner : MonoBehaviour
 
     private float timer = 0f;
 
-    private void Update()
+    protected virtual void Update()
     {
         timer += Time.deltaTime;
         if (timer >= spawnInterval && CountActiveObjects() < maxObjects)
