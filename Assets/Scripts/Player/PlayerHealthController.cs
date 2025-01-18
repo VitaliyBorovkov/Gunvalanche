@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerHealthController : HealthController
@@ -23,7 +24,6 @@ public class PlayerHealthController : HealthController
         }
 
         healthData.CurrentHealth = Mathf.Clamp(healthData.CurrentHealth + amount, 0, healthData.MaxHealth);
-
         UpdateHeadUI();
     }
 
