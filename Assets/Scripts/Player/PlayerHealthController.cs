@@ -18,7 +18,7 @@ public class PlayerHealthController : HealthController
     {
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log("Heal() отменён: игрок мёртв!");
+            Debug.Log("PlayerHealthController: Heal() отменён: игрок мёртв!");
             return;
         }
 
@@ -38,6 +38,6 @@ public class PlayerHealthController : HealthController
     protected override void Die()
     {
         base.Die();
-        Debug.Log("Player has died!");
+        Debug.Log("PlayerHealthController: Player has died!");
     }
 }

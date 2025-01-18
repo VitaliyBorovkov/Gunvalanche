@@ -32,8 +32,10 @@ public class HealthController : MonoBehaviour, IDamageable
 
     private void OnEnable()
     {
+        isDead = false;
+
         healthData.CurrentHealth = entityData.Health;
-        Debug.Log($"{entityData.Name} spawned with {healthData.CurrentHealth} health.");
+        Debug.Log($"HealthController: {entityData.Name} spawned with {healthData.CurrentHealth} health.");
 
         UpdateHeadUI();
     }
@@ -55,12 +57,12 @@ public class HealthController : MonoBehaviour, IDamageable
 
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log($"{entityData.Name} уже мёртв, урон не применяется.");
+            Debug.Log($"HealthController: {entityData.Name} уже мёртв, урон не применяется.");
             return;
         }
 
         healthData.CurrentHealth -= damage;
-        Debug.Log($"{entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
+        Debug.Log($"HealthController: {entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
 
         UpdateHeadUI();
 
@@ -73,14 +75,14 @@ public class HealthController : MonoBehaviour, IDamageable
     public void SetHealth(int health)
     {
         healthData.CurrentHealth = Mathf.Clamp(health, 0, entityData.Health);
-        Debug.Log($"{entityData.Name} health set to: {healthData.CurrentHealth}");
+        Debug.Log($"HealthController: {entityData.Name} health set to: {healthData.CurrentHealth}");
 
         UpdateHeadUI();
     }
 
     protected virtual void Die()
     {
-        Debug.Log($"{entityData.Name} has died.");
+        Debug.Log($"HealthController:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
         //EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
@@ -90,7 +92,7 @@ public class HealthController : MonoBehaviour, IDamageable
         //}
 
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
 
         if (isDead) return;
         isDead = true;
