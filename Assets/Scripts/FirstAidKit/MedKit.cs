@@ -23,7 +23,7 @@ public class MedKit : CollectibleItems
         }
         else
         {
-            Debug.Log($"MedKit: {player.name} не имеет PlayerHealthController!", this);
+            Debug.LogWarning($"MedKit: {player.name} не имеет PlayerHealthController!", this);
         }
     }
 }
