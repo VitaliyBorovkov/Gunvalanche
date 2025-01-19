@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
-                Debug.Log(" Player with tag 'Player' not found.");
+                Debug.Log("EnemyController: Player with tag 'Player' not found.");
             }
         }
     }
@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
 
         if (playerTransform == null)
         {
-            Debug.LogError("PlayerTransform is not set.");
+            Debug.LogError("EnemyController: PlayerTransform is not set.");
         }
     }
 
@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            Debug.Log($"{gameObject.name} не имеет ссылки на игрока!");
+            Debug.Log($"EnemyController: {gameObject.name} не имеет ссылки на игрока!");
             return;
         }
 

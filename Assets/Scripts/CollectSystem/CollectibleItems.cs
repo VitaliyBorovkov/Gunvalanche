@@ -11,6 +11,7 @@ public class CollectibleItems : MonoBehaviour, ICollectible
     [SerializeField] private UnityEvent OnCollected;
 
     private bool floatingUp = true;
+    private bool isCollected = false;
     private Vector3 initialPosition;
 
     protected virtual void Start()
@@ -55,6 +56,12 @@ public class CollectibleItems : MonoBehaviour, ICollectible
 
     protected virtual void Collect(GameObject player)
     {
+        if (isCollected)
+        {
+            return;
+        }
+        isCollected = true;
+
         OnCollected.Invoke();
         gameObject.SetActive(false);
     }
