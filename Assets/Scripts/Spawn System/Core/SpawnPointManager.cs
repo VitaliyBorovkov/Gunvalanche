@@ -45,7 +45,6 @@ public class SpawnPointManager : MonoBehaviour
         }
 
         Collider[] colliders = Physics.OverlapSphere(spawnPoint.position, checkRadius);
-
         foreach (Collider col in colliders)
         {
             if (col.GetComponent(itemType) != null)
@@ -61,7 +60,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (spawnCooldown.ContainsKey(spawnPoint))
         {
-            spawnCooldown[spawnPoint] -= minSpawnCooldown;
+            spawnCooldown[spawnPoint] = minSpawnCooldown;
         }
     }
 }

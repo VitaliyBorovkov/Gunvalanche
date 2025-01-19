@@ -8,11 +8,12 @@ public class CollectibleItems : MonoBehaviour, ICollectible
 {
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
-    [SerializeField] private UnityEvent OnCollected;
+    //[SerializeField] private UnityEvent OnCollected;
 
     private bool floatingUp = true;
-    private bool isCollected = false;
     private Vector3 initialPosition;
+
+    protected bool isCollected = false;
 
     protected virtual void Start()
     {
@@ -62,7 +63,7 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         }
         isCollected = true;
 
-        OnCollected.Invoke();
+        //OnCollected.Invoke();
         gameObject.SetActive(false);
     }
 }
