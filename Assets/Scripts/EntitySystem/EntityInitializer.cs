@@ -13,7 +13,7 @@ public class EntityInitializer : MonoBehaviour
     {
         if (Context.Instance == null || Context.Instance.DataSystem == null || Context.Instance.DataSystem.EntityData == null)
         {
-            Debug.LogError(" EntityInitializer. Context.Instance or its systems have not been initialized.");
+            //Debug.LogError(" EntityInitializer. Context.Instance or its systems have not been initialized.");
             return;
         }
 
@@ -21,7 +21,7 @@ public class EntityInitializer : MonoBehaviour
 
         if (data.Equals(default(EntityData)))
         {
-            Debug.LogError($" EntityInitializer. No entity data found with name {entityKey}.");
+            //Debug.LogError($" EntityInitializer. No entity data found with name {entityKey}.");
             return;
         }
 

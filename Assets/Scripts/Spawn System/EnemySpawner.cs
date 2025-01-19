@@ -21,8 +21,14 @@ public class EnemySpawner : ObjectSpawner
             }
             else
             {
-                Debug.Log("Игрок не найден при спавне врага!");
+                Debug.LogWarning("EnemySpawner: Игрок не найден при спавне врага!");
             }
+        }
+
+        EnemyHealthController enemyHealthController = spawnedEnemy.GetComponent<EnemyHealthController>();
+        if (enemyHealthController != null)
+        {
+            enemyHealthController.SetEnemyPool(enemyPool);
         }
 
         ISpawnable spawnable = spawnedEnemy.GetComponent<ISpawnable>();
