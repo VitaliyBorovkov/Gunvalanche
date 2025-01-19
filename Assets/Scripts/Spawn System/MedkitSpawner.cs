@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class MedkitSpawner : ObjectSpawner
 {
-    [Header("Medkit Settings")]
-    [SerializeField] private GameObject medkitPrefab;
+    [Header("MedKit Settings")]
+    [SerializeField] private GameObject medKitPrefab;
     [SerializeField] private float checkRadius = 0.5f;
+    [SerializeField] private ObjectPool medKitPool;
 
     private SpawnPointManager spawnPointManager;
 
@@ -35,22 +36,40 @@ public class MedkitSpawner : ObjectSpawner
         var availablePoints = spawnPoints.Where(point => 
         spawnPointManager.IsPointAvailable(point, checkRadius, typeof(MedKit))).ToList();
 
-        if (availablePoints.Count == 0)
+        if (!CheckerToNull.CheckArrayNotEmpty(spawnPoints, nameof(spawnPoints)) || availablePoints.Count == 0)
         {
-            Debug.Log("MedkitSpawner: Нет доступных точек для спавна аптечек.");
+            //Debug.LogWarning("MedkitSpawner: Точки спавна недоступны или нет свободных точек для спавна.");
             return;
         }
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(medkitPrefab, spawnPoint.position, Quaternion.identity);
-        spawnPointManager.SetCooldown(spawnPoint);
+        Transform spawnPoint = availablePoints[Random.Range(0, availablePoints.Count)];
+
+        GameObject spawnedMedKit = medKitPool.Spawn(spawnPoint.position, Quaternion.identity);
+        MedKit medKit = spawnedMedKit.GetComponent<MedKit>();
+        if (medKit != null)
+        {
+            medKit.SetMedKitPool(medKitPool);
+        }
+        else
+        {
+            Debug.LogWarning($"MedkitSpawner: У объекта {spawnedMedKit.name} отсутствует компонент MedKit!");
+        }
     }
 
     protected override int CountActiveObjects()
     {
-        /*ICollectible[] collevtibles =*/return GameObject.FindObjectsOfType<MonoBehaviour>().
-            OfType<ICollectible>().Where(item => item is MedKit).ToArray().Length;
+        return medKitPool != null ? medKitPool.CountActiveObjects() : 0;
+    }
 
-        //return collevtibles.Length;
+    private void OnDrawGizmos()
+    {
+        if (spawnPoints != null)
+        {
+            Gizmos.color = Color.green;
+            foreach (var point in spawnPoints)
+            {
+                Gizmos.DrawWireSphere(point.position, checkRadius);
+            }
+        }
     }
 }

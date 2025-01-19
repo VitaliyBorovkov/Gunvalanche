@@ -984,8 +984,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1629684904732748156}
-  - component: {fileID: 2036380966607042330}
-  - component: {fileID: 3233431072351465690}
+  - component: {fileID: 4298681382229893286}
   - component: {fileID: 7070329597216156484}
   - component: {fileID: -2209131749755692538}
   m_Layer: 0
@@ -1013,22 +1012,7 @@ Transform:
   - {fileID: 4778541761870914698}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!111 &2036380966607042330
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5479631052478839297}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
---- !u!114 &3233431072351465690
+--- !u!114 &4298681382229893286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1037,14 +1021,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5479631052478839297}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a841432780ed1f14c85cac670ff06d9c, type: 3}
+  m_Script: {fileID: 11500000, guid: 6b94ff2beea0345498b15b6c778f8fe9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 43
-  floatDistance: 1.7
+  floatDistance: 0.5
   OnCollected:
     m_PersistentCalls:
       m_Calls: []
+  ammoInBox: 30
+  ammoType: 1
+  ammoPickUpSound: {fileID: 0}
 --- !u!54 &7070329597216156484
 Rigidbody:
   m_ObjectHideFlags: 0

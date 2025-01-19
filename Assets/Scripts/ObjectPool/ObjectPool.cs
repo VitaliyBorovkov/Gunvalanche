@@ -9,6 +9,7 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private int poolSize = 10;
 
     private Queue<GameObject> ObjectQueue;
+    private int activeObjectsCount = 0;
 
     private void Start()
     {
@@ -47,6 +48,11 @@ public class ObjectPool : MonoBehaviour
         obj.SetActive(false);
 
         ObjectQueue.Enqueue(obj);
+    }
+
+    public int CountActiveObjects()
+    {
+        return activeObjectsCount;
     }
 
     private void ExpandPool()
