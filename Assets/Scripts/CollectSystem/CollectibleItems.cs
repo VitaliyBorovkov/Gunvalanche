@@ -8,7 +8,6 @@ public class CollectibleItems : MonoBehaviour, ICollectible
 {
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
-    //[SerializeField] private UnityEvent OnCollected;
 
     private bool floatingUp = true;
     private Vector3 initialPosition;
@@ -63,7 +62,6 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         }
         isCollected = true;
 
-        //OnCollected.Invoke();
         gameObject.SetActive(false);
     }
 }

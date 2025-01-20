@@ -49,11 +49,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   maxObjects: 5
   spawnInterval: 15
-  medKitPrefab: {fileID: 179798389817816852, guid: 932f29bfe0cbd9a4a9a45a3081ac5060, type: 3}
   checkRadius: 3
-  medKitPool: {fileID: 0}
+  medKitPrefab: {fileID: 179798389817816852, guid: 932f29bfe0cbd9a4a9a45a3081ac5060, type: 3}
+  medKitPool: {fileID: 7301534802038234287, guid: 428c66535cd583a43ae7741ecfe6acd5, type: 3}
 --- !u!1 &8786055645873510000
 GameObject:
   m_ObjectHideFlags: 0

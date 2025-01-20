@@ -8,6 +8,12 @@ public class AmmoBox : CollectibleItems
     [SerializeField] protected AudioClip ammoPickUpSound;
 
     private AudioSource audioSource;
+    private ObjectPool ammoBoxPool;
+
+    internal void SetAmmoBoxPool(ObjectPool pool)
+    {
+        ammoBoxPool = pool;
+    }
 
     protected override void Start()
     {
@@ -26,6 +32,18 @@ public class AmmoBox : CollectibleItems
 
         PlayPickUpSound();
         AddAmmoToPlayer(player);
+
+        if (ammoBoxPool != null)
+        {
+            ammoBoxPool.Despawn(gameObject);
+        }
+        else
+        {
+            Debug.LogWarning($"AmmoBox: ObjectPool не установлен для {gameObject.name}!");
+        }
+
+        SpawnPointManager.Instance?.ReleasePoint(transform);
+        SpawnPointManager.Instance?.SetCooldown(transform);
     }
 
     protected virtual void AddAmmoToPlayer(GameObject player)
@@ -39,5 +57,11 @@ public class AmmoBox : CollectibleItems
         {
             audioSource.PlayOneShot(ammoPickUpSound);
         }
+    }
+
+    public void ResetState()
+    {
+        isCollected = false;
+        gameObject.SetActive(true);
     }
 }
