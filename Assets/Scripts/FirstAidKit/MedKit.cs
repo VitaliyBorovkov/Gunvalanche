@@ -31,6 +31,9 @@ public class MedKit : CollectibleItems
                 {
                     Debug.LogWarning($"MedKit: ObjectPool не установлен для {gameObject.name}!");
                 }
+
+                SpawnPointManager.Instance?.ReleasePoint(transform);
+                SpawnPointManager.Instance?.SetCooldown(transform);
             }
             else
             {
