@@ -4,53 +4,47 @@ using UnityEngine;
 
 public class MedkitSpawner : ObjectSpawner
 {
-    [Header("Medkit Settings")]
-    [SerializeField] private GameObject medkitPrefab;
-    [SerializeField] private float checkRadius = 0.5f;
+    [Header("MedKit Settings")]
 
-    private SpawnPointManager spawnPointManager;
-
-    private void Start()
-    {
-        spawnPointManager = FindObjectOfType<SpawnPointManager>();
-
-        if (spawnPointManager == null)
-        {
-            Debug.Log("MedkitSpawner: SpawnPointManager не найден на сцене!");
-            enabled = false;
-            return;
-        }
-
-        spawnPointManager.InitializeSpawnPoint(spawnPoints);
-    }
-
-    protected override void Update()
-    {
-        spawnPointManager.UpdateCooldowns();
-        base.Update();
-    }
+    [SerializeField] private GameObject medKitPrefab;
+    [SerializeField] private ObjectPool medKitPool;
 
     protected override void SpawnObject()
     {
-        var availablePoints = spawnPoints.Where(point => 
-        spawnPointManager.IsPointAvailable(point, checkRadius, typeof(MedKit))).ToList();
-
-        if (availablePoints.Count == 0)
+        Transform spawnPoint = GetAvailableSpawnPoint(spawnPointManager, checkRadius, typeof(MedKit));
+        if (spawnPoint == null)
         {
-            Debug.Log("MedkitSpawner: Нет доступных точек для спавна аптечек.");
             return;
         }
 
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-        Instantiate(medkitPrefab, spawnPoint.position, Quaternion.identity);
-        spawnPointManager.SetCooldown(spawnPoint);
+        GameObject spawnedMedKit = medKitPool.Spawn(spawnPoint.position, Quaternion.identity);
+        MedKit medKit = spawnedMedKit.GetComponent<MedKit>();
+        if (medKit != null)
+        {
+            medKit.SetMedKitPool(medKitPool);
+            medKit.SetSpawnPoint(spawnPoint);
+            spawnPointManager.OccupyPoint(spawnPoint, "MedKit");
+        }
+        else
+        {
+            Debug.LogWarning($"MedkitSpawner: У объекта {spawnedMedKit.name} отсутствует компонент MedKit!");
+        }
     }
 
     protected override int CountActiveObjects()
     {
-        /*ICollectible[] collevtibles =*/return GameObject.FindObjectsOfType<MonoBehaviour>().
-            OfType<ICollectible>().Where(item => item is MedKit).ToArray().Length;
+        return medKitPool != null ? medKitPool.CountActiveObjects() : 0;
+    }
 
-        //return collevtibles.Length;
+    private void OnDrawGizmos()
+    {
+        if (spawnPoints != null)
+        {
+            Gizmos.color = Color.green;
+            foreach (var point in spawnPoints)
+            {
+                Gizmos.DrawWireSphere(point.position, checkRadius);
+            }
+        }
     }
 }

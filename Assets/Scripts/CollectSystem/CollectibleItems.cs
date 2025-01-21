@@ -8,11 +8,13 @@ public class CollectibleItems : MonoBehaviour, ICollectible
 {
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
-    [SerializeField] private UnityEvent OnCollected;
+
+    protected Transform spawnPoint;
 
     private bool floatingUp = true;
-    private bool isCollected = false;
     private Vector3 initialPosition;
+
+    protected bool isCollected = false;
 
     protected virtual void Start()
     {
@@ -62,7 +64,11 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         }
         isCollected = true;
 
-        OnCollected.Invoke();
         gameObject.SetActive(false);
+    }
+
+    public void SetSpawnPoint(Transform point)
+    {
+        spawnPoint = point;
     }
 }

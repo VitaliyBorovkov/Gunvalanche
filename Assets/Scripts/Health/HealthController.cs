@@ -35,7 +35,7 @@ public class HealthController : MonoBehaviour, IDamageable
         isDead = false;
 
         healthData.CurrentHealth = entityData.Health;
-        Debug.Log($"HealthController: {entityData.Name} spawned with {healthData.CurrentHealth} health.");
+        //Debug.Log($"HealthController: {entityData.Name} spawned with {healthData.CurrentHealth} health.");
 
         UpdateHeadUI();
     }
