@@ -7,44 +7,10 @@ public class MedkitSpawner : ObjectSpawner
     [Header("MedKit Settings")]
 
     [SerializeField] private GameObject medKitPrefab;
-    //[SerializeField] private float checkRadius = 0.5f;
     [SerializeField] private ObjectPool medKitPool;
-
-    //private SpawnPointManager spawnPointManager;
-
-    //private void Start()
-    //{
-    //    spawnPointManager = FindObjectOfType<SpawnPointManager>();
-
-    //    if (spawnPointManager == null)
-    //    {
-    //        Debug.Log("MedkitSpawner: SpawnPointManager не найден на сцене!");
-    //        enabled = false;
-    //        return;
-    //    }
-
-    //    spawnPointManager.InitializeSpawnPoint(spawnPoints);
-    //}
-
-    //protected override void Update()
-    //{
-    //    spawnPointManager.UpdateCooldowns();
-    //    base.Update();
-    //}
 
     protected override void SpawnObject()
     {
-        //var availablePoints = spawnPoints.Where(point => 
-        //spawnPointManager.IsPointAvailable(point, checkRadius, typeof(MedKit))).ToList();
-
-        //if (!CheckerToNull.CheckArrayNotEmpty(spawnPoints, nameof(spawnPoints)) || availablePoints.Count == 0)
-        //{
-        //    //Debug.LogWarning("MedkitSpawner: “очки спавна недоступны или нет свободных точек дл€ спавна.");
-        //    return;
-        //}
-
-        //Transform spawnPoint = availablePoints[Random.Range(0, availablePoints.Count)];
-
         Transform spawnPoint = GetAvailableSpawnPoint(spawnPointManager, checkRadius, typeof(MedKit));
         if (spawnPoint == null)
         {
@@ -56,6 +22,7 @@ public class MedkitSpawner : ObjectSpawner
         if (medKit != null)
         {
             medKit.SetMedKitPool(medKitPool);
+            medKit.SetSpawnPoint(spawnPoint);
             spawnPointManager.OccupyPoint(spawnPoint, "MedKit");
         }
         else

@@ -42,8 +42,14 @@ public class AmmoBox : CollectibleItems
             Debug.LogWarning($"AmmoBox: ObjectPool не установлен для {gameObject.name}!");
         }
 
-        SpawnPointManager.Instance?.ReleasePoint(transform);
-        SpawnPointManager.Instance?.SetCooldown(transform);
+        if (SpawnPointManager.Instance != null && spawnPoint != null)
+        {
+            SpawnPointManager.Instance.ReleasePoint(spawnPoint);
+            SpawnPointManager.Instance.SetCooldown(spawnPoint);
+        }
+
+        //SpawnPointManager.Instance?.ReleasePoint(transform);
+        //SpawnPointManager.Instance?.SetCooldown(transform);
     }
 
     protected virtual void AddAmmoToPlayer(GameObject player)

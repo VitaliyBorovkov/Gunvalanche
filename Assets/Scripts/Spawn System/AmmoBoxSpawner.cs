@@ -23,6 +23,7 @@ public class AmmoBoxSpawner : ObjectSpawner
         if (ammoBox != null)
         {
             ammoBox.SetAmmoBoxPool(selectedPool);
+            ammoBox.SetSpawnPoint(spawnPoint);
             spawnPointManager.OccupyPoint(spawnPoint, "AmmoBox");
         }
         else

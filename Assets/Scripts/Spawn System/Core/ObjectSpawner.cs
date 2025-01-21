@@ -21,9 +21,13 @@ public abstract class ObjectSpawner : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (spawnPointManager == null)
+        if (spawnPointManager != null)
         {
             spawnPointManager.UpdateCooldowns();
+        }
+        else
+        {
+            Debug.LogWarning("ObjectSpawner: spawnPointManager равен null.  улдауны не обновл€ютс€!");
         }
 
         timer += Time.deltaTime;
