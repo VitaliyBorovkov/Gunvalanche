@@ -35,7 +35,5 @@ public class PlayerSpawner : MonoBehaviour
         {
             enemy.SetPlayerTransform(player.transform);
         }
-
-        Debug.Log("PlayerSpawner —сылки на игрока обновлены у всех врагов.");
     }
 }

@@ -9,6 +9,8 @@ public class CollectibleItems : MonoBehaviour, ICollectible
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
 
+    protected Transform spawnPoint;
+
     private bool floatingUp = true;
     private Vector3 initialPosition;
 
@@ -63,5 +65,10 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         isCollected = true;
 
         gameObject.SetActive(false);
+    }
+
+    public void SetSpawnPoint(Transform point)
+    {
+        spawnPoint = point;
     }
 }
