@@ -37,8 +37,6 @@ public class MedKit : CollectibleItems
                     SpawnPointManager.Instance.ReleasePoint(spawnPoint);
                     SpawnPointManager.Instance.SetCooldown(spawnPoint);
                 }
-                //SpawnPointManager.Instance?.ReleasePoint(transform);
-                //SpawnPointManager.Instance?.SetCooldown(transform);
             }
             else
             {
