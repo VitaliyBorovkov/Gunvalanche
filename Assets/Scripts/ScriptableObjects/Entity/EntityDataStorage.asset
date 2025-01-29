@@ -12,9 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6727de9b8b747a42815554c96a5d05d, type: 3}
   m_Name: EntityDataStorage
   m_EditorClassIdentifier: 
-  entityData:
-  - Name: Player
-    Health: 100
-    WalkSpeed: 5
-    RunSpeed: 10
-    Prefab: {fileID: 991634049820325967, guid: 61418c65cc0c433419c5cf0b11159a6c, type: 3}
+  entityData: []
