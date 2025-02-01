@@ -25,7 +25,7 @@ public class PlayerShoot : MonoBehaviour
             bulletsPool = FindObjectOfType<ObjectPool>();
             if (bulletsPool == null)
             {
-                Debug.LogError("PlayerShoot: ObjectPool не найден на сцене!");
+                Debug.LogError("PlayerShoot: ObjectPool пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ!");
             }
         }
     }
@@ -42,7 +42,7 @@ public class PlayerShoot : MonoBehaviour
     {
         if (currentWeapon == null)
         {
-            Debug.Log("PlayerShoot: Нет активного оружия!");
+            Debug.Log("PlayerShoot: пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!");
             return;
         }
 
@@ -85,17 +85,17 @@ public class PlayerShoot : MonoBehaviour
         weaponConfigHolder = currentWeapon.GetComponent<WeaponConfigHolder>();
         //if (weaponConfigHolder != null)
         //{
-        //    Debug.Log($"PlayerShoot: Оружие сменилось на {weapon.name}, обновляем ObjectPool!");
+        //    Debug.Log($"PlayerShoot: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ {weapon.name}, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ObjectPool!");
         //    bulletsPool = weaponConfigHolder.weaponConfig.weaponData[0].GunPrefab.GetComponent<ObjectPool>();
         //}
         //else
         //{
-        //    Debug.LogError("PlayerShoot: WeaponConfigHolder не найден!");
+        //    Debug.LogError("PlayerShoot: WeaponConfigHolder пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!");
         //}
 
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
-            Debug.LogError($"PlayerShoot: {weapon.name} не имеет WeaponConfigHolder!");
+            Debug.LogError($"PlayerShoot: {weapon.name} пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ WeaponConfigHolder!");
             return;
         }
 
@@ -148,61 +148,31 @@ public class PlayerShoot : MonoBehaviour
     {
         if (currentWeapon == null)
         {
-            Debug.LogWarning("PlayerShoot: Нет активного оружия!");
+            Debug.LogWarning("PlayerShoot: пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!");
             return;
         }
 
         weaponData = GetWeaponData();
         if (weaponData == null)
         {
-            Debug.LogWarning("PlayerShoot: Ошибка получения данных оружия!");
+            Debug.LogWarning("PlayerShoot: пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ!");
             return;
         }
 
         Transform spawnPoint = currentWeapon.GetComponent<WeaponConfigHolder>().bulletSpawnPoint;
         if (spawnPoint == null)
         {
-            Debug.LogWarning("PlayerShoot: Bullet Spawn Point не назначен!");
+            Debug.LogWarning("PlayerShoot: Bullet Spawn Point пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!");
             return;
         }
 
         if (bulletsPool == null)
         {
-            Debug.LogWarning("PlayerShoot: Object Pool не назначен! Невозможно создать пулю.");
+            Debug.LogWarning("PlayerShoot: Object Pool пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.");
             return;
         }
 
-        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, Quaternion.identity);
-        if (bullet == null)
-        {
-            Debug.LogWarning("PlayerShoot: Object Pool вернул null при попытке спавна!");
-            return;
-        }
 
-        BulletsController bulletsController = bullet.GetComponent<BulletsController>();
-        if (bulletsController == null)
-        {
-            Debug.LogWarning("PlayerShoot: У объекта пули нет BulletsController!");
-            return;
-        }
-
-        float range = weaponData.Range;
-        bool hitTarget = false;
-        Vector3 target = cameraTransform.position + cameraTransform.forward * range;
-
-        RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
-        {
-            target = hit.point;
-            hitTarget = true;
-
-            if (hit.collider.CompareTag("Enemy"))
-            {
-                HealthController healthController = hit.collider.GetComponentInParent<HealthController>();
-                if (healthController != null)
-                {
-                    healthController.TakeDamage(weaponData.Damage);
-                }
             }
         }
         bulletsController.bulletData.Target = target;
@@ -223,7 +193,7 @@ public class PlayerShoot : MonoBehaviour
         }
         else
         {
-            Debug.LogError("PlayerShoot: Object Pool не найден при попытке удалить пулю!");
+            Debug.LogError("PlayerShoot: Object Pool пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!");
         }
     }
 }
