@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponData:
   - Name: Pistol
-    Damage: 5
+    Damage: 25
     MagazineSize: 7
     CurrentAmmo: 7
-    TotalAmmo: 30
-    FireRate: 250
-    Range: 100
+    TotalAmmo: 42
+    FireRate: 2
+    Range: 300
     GunsType: 0
     BulletSpawnPoint: {fileID: 0}
     GunPrefab: {fileID: 8168748422083441467, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}

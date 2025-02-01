@@ -17,9 +17,9 @@ MonoBehaviour:
     Damage: 10
     MagazineSize: 30
     CurrentAmmo: 30
-    TotalAmmo: 120
-    FireRate: 1
-    Range: 300
+    TotalAmmo: 150
+    FireRate: 10
+    Range: 400
     GunsType: 1
     BulletSpawnPoint: {fileID: 0}
     GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
