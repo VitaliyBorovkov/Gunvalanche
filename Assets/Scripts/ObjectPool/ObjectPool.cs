@@ -40,14 +40,16 @@ public class ObjectPool : MonoBehaviour
         obj.transform.rotation = rotation;
         obj.SetActive(true);
 
+        activeObjectsCount++;
+
         return obj;
     }
 
     public void Despawn(GameObject obj)
     {
         obj.SetActive(false);
-
         ObjectQueue.Enqueue(obj);
+        activeObjectsCount--;
     }
 
     public int CountActiveObjects()
@@ -67,6 +69,3 @@ public class ObjectPool : MonoBehaviour
         }
     }
 }
-
-
-

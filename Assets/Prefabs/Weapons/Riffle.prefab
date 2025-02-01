@@ -142,6 +142,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponConfig: {fileID: 11400000, guid: 3b2ca971cfa24c741b18b709c46c6a33, type: 2}
+  bulletSpawnPoint: {fileID: 7819212591617405478}
 --- !u!1001 &6254767011836629738
 PrefabInstance:
   m_ObjectHideFlags: 0
