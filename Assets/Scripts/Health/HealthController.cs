@@ -85,15 +85,6 @@ public class HealthController : MonoBehaviour, IDamageable
         Debug.Log($"HealthController:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
-        //EnemySpawner spawner = FindObjectOfType<EnemySpawner>();
-        //if (spawner != null)
-        //{
-        //    spawner.OnEnemyDeath(gameObject);
-        //}
-
-
-        //gameObject.SetActive(false);
-
         if (isDead) return;
         isDead = true;
     }
