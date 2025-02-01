@@ -82,9 +82,6 @@ public class HealthController : MonoBehaviour, IDamageable
         Debug.Log($"HealthController:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
-
-        //gameObject.SetActive(false);
-
         if (isDead) return;
         isDead = true;
     }

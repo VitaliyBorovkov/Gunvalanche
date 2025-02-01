@@ -7,15 +7,16 @@ public class WeaponData
     public string Name;
     
     public int Damage;
-    public int MagazineSize;
-    public int CurrentAmmo;
     public int TotalAmmo;
+    public int CurrentAmmo;
+    public int MagazineSize;
 
-    public float FireRate;
     public float Range;
+    public float FireRate;
 
     public GunsType GunsType;
+    public BulletsType BulletsType;
 
-    public Transform BulletSpawnPoint;
     public GameObject GunPrefab;
+    public Transform BulletSpawnPoint;
 }
