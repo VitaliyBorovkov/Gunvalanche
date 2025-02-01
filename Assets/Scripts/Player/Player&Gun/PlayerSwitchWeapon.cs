@@ -11,9 +11,12 @@ public class PlayerSwitchWeapon : MonoBehaviour
     private List<GameObject> weaponInstances = new List<GameObject>();
     private WeaponConfig currentWeaponConfig;
     private int currentWeaponIndex = 0;
+    private PlayerShoot playerShoot;
 
     private void Start()
     {
+        playerShoot = GetComponent<PlayerShoot>();
+
         if (weaponsHolder == null)
         {
             Debug.Log("PlayerSwitchWeapon: WeaponsHolder не назначен!");
@@ -92,11 +95,18 @@ public class PlayerSwitchWeapon : MonoBehaviour
         currentWeaponIndex = index;
         weaponInstances[currentWeaponIndex].SetActive(true);
 
+
         WeaponConfigHolder  holder = weaponInstances[currentWeaponIndex].GetComponent<WeaponConfigHolder>();
         if (holder != null && holder.weaponConfig != null)
         {
             currentWeaponConfig = holder.weaponConfig;
             Debug.Log($"PlayerWeaponSwitcher: Сменили оружие на {weaponInstances[currentWeaponIndex].name}");
+
+            if (playerShoot != null)
+            {
+                playerShoot.SetCurrentWeapon(weaponInstances[currentWeaponIndex]);
+                playerShoot.UpdateWeaponData();
+            }
         }
         else
         {

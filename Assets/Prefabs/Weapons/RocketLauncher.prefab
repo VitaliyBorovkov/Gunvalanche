@@ -143,6 +143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponConfig: {fileID: 11400000, guid: 032b65d1d9673554188c52576086d257, type: 2}
+  bulletSpawnPoint: {fileID: 2901763252424374121}
 --- !u!1 &4866659970225455259
 GameObject:
   m_ObjectHideFlags: 0

@@ -514,24 +514,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e781d9c2e7fcc42965bec4bd2dd919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponData:
-  - Name: Riffle
-    Damage: 10
-    MagazineSize: 30
-    CurrentAmmo: 30
-    TotalAmmo: 1000
-    FireRate: 10
-    Range: 300
-    GunsType: 1
-    BulletSpawnPoint: {fileID: 6564971173279229391}
-    GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
+  playerReload: {fileID: 4443374691479103321}
+  bulletsPool: {fileID: 5849179238584681934, guid: 86aff45d563826945a1a19dcc4d99472, type: 3}
   bulletData:
     BulletPrefab: {fileID: 3928528860053484037, guid: ebcbac358f80a0d428cf008935f4945a, type: 3}
     Name: Bullet
     Speed: 50
     DistanceToTarget: 0
     LifeTime: 2
-  playerReload: {fileID: 4443374691479103321}
+  WeaponsHolder: {fileID: 302710563676770984}
 --- !u!114 &4443374691479103321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,6 +747,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4720197619940796575, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
+      propertyPath: bulletSpawnPoint
+      value: 
+      objectReference: {fileID: 3287324094552724613}
     - target: {fileID: 5010524325283374722, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -805,6 +800,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
+--- !u!4 &3287324094552724613 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2901763252424374121, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
+  m_PrefabInstance: {fileID: 422152632387019756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8990862443240630207 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8727479462447187027, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
@@ -928,6 +928,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 302710563676770984}
     m_Modifications:
+    - target: {fileID: 1166546792992386777, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
+      propertyPath: bulletSpawnPoint
+      value: 
+      objectReference: {fileID: 6564971173279229391}
     - target: {fileID: 5371836467709723632, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1047,6 +1051,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 302710563676770984}
     m_Modifications:
+    - target: {fileID: 303869807103424676, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+      propertyPath: bulletSpawnPoint
+      value: 
+      objectReference: {fileID: 1020355423299054221}
     - target: {fileID: 570985353699635007, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -1155,6 +1163,11 @@ PrefabInstance:
       addedObject: {fileID: 3752331789977344600}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+--- !u!4 &1020355423299054221 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9076481797280149114, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+  m_PrefabInstance: {fileID: 8349431554850456823}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3244653030924616126 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6834337222945441097, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}

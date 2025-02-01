@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public struct WeaponData
+public class WeaponData
 {
     public string Name;
     
