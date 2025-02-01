@@ -4,37 +4,43 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private PlayerReload playerReload;
-    [SerializeField] private ObjectPool bulletsPool;
-    [SerializeField] private BulletsData bulletData;
     [SerializeField] private Transform WeaponsHolder;
+    [SerializeField] private PlayerReload playerReload;
+    [SerializeField] private BulletsConfig bulletConfig;
+    //[SerializeField] private ObjectPool bulletsPool;
 
+    private WeaponData weaponData;
+    private BulletsData bulletData;
+    private GameObject currentWeapon;
+    private Transform cameraTransform;
+    private ObjectPool currentBulletsPool;
+    private WeaponConfigHolder weaponConfigHolder;
 
     private bool IsFiring = false;
-    private Transform cameraTransform;
-    private GameObject currentWeapon;
-    private WeaponConfigHolder weaponConfigHolder;
-    private WeaponData weaponData;
 
     private void Awake()
     {
         cameraTransform = Camera.main.transform;
 
-        if (bulletsPool == null)
-        {
-            bulletsPool = FindObjectOfType<ObjectPool>();
-            if (bulletsPool == null)
-            {
-                Debug.LogError("PlayerShoot: ObjectPool не найден на сцене!");
-            }
-        }
+        //if (bulletsPool == null)
+        //{
+        //    bulletsPool = FindObjectOfType<ObjectPool>();
+        //    if (bulletsPool == null)
+        //    {
+        //        Debug.LogError("PlayerShoot: ObjectPool не найден на сцене!");
+        //    }
+        //}
     }
 
     private void Start()
     {
-        if (WeaponsHolder != null && WeaponsHolder.transform.childCount > 0)
+        //if (WeaponsHolder != null && WeaponsHolder.transform.childCount > 0)
+        //{
+        //    SetCurrentWeapon(WeaponsHolder.transform.GetChild(0).gameObject);
+        //}
+        if (currentWeapon != null)
         {
-            SetCurrentWeapon(WeaponsHolder.transform.GetChild(0).gameObject);
+            SetCurrentWeapon(currentWeapon);
         }
     }
 
@@ -73,10 +79,10 @@ public class PlayerShoot : MonoBehaviour
         StopFiring();
     }
 
-    public void SetObjectPool(ObjectPool pool)
-    {
-        bulletsPool = pool;
-    }
+    //public void SetObjectPool(ObjectPool pool)
+    //{
+    //    bulletsPool = pool;
+    //}
 
     public void SetCurrentWeapon(GameObject weapon)
     {
@@ -99,12 +105,31 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
-        if (weaponConfigHolder.weaponConfig.weaponData[0].GunPrefab.TryGetComponent(out ObjectPool newPool))
-        {
-            bulletsPool = newPool;
-        }
+        weaponData = weaponConfigHolder.weaponConfig.weaponData[0];
+
+        currentBulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
+
+        bulletData = GetBulletDataForWeapon(weaponData.BulletsType);
+
+        //if (weaponConfigHolder.weaponConfig.weaponData[0].GunPrefab.TryGetComponent(out ObjectPool newPool))
+        //{
+        //    bulletsPool = newPool;
+        //}
 
         UpdateWeaponData();
+    }
+
+    private BulletsData GetBulletDataForWeapon(BulletsType bulletsType)
+    {
+        foreach(var bullet in bulletConfig.bulletsData)
+        {
+            if (bullet.BulletsType == bulletsType)
+            {
+                return bullet;
+            }
+        }
+        Debug.LogWarning($"PlayerShoot: Не найден BulletsData для {bulletsType}");
+        return new BulletsData();
     }
 
     public GameObject GetCurrentWeapon()
@@ -146,9 +171,9 @@ public class PlayerShoot : MonoBehaviour
 
     public void ShootGun()
     {
-        if (currentWeapon == null)
+        if (currentWeapon == null || currentBulletsPool == null)
         {
-            Debug.LogWarning("PlayerShoot: Нет активного оружия!");
+            Debug.LogWarning("PlayerShoot: Нет активного оружия или пул не настроен!");
             return;
         }
 
@@ -159,6 +184,8 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
+        weaponData.CurrentAmmo--;
+
         Transform spawnPoint = currentWeapon.GetComponent<WeaponConfigHolder>().bulletSpawnPoint;
         if (spawnPoint == null)
         {
@@ -166,13 +193,13 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
-        if (bulletsPool == null)
-        {
-            Debug.LogWarning("PlayerShoot: Object Pool не назначен! Невозможно создать пулю.");
-            return;
-        }
+        //if (bulletsPool == null)
+        //{
+        //    Debug.LogWarning("PlayerShoot: Object Pool не назначен! Невозможно создать пулю.");
+        //    return;
+        //}
 
-        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, Quaternion.identity);
+        GameObject bullet = currentBulletsPool.Spawn(spawnPoint.position, Quaternion.identity);
         if (bullet == null)
         {
             Debug.LogWarning("PlayerShoot: Object Pool вернул null при попытке спавна!");
@@ -187,14 +214,14 @@ public class PlayerShoot : MonoBehaviour
         }
 
         float range = weaponData.Range;
-        bool hitTarget = false;
+        //bool hitTarget = false;
         Vector3 target = cameraTransform.position + cameraTransform.forward * range;
 
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
         {
             target = hit.point;
-            hitTarget = true;
+            //hitTarget = true;
 
             if (hit.collider.CompareTag("Enemy"))
             {
@@ -206,20 +233,20 @@ public class PlayerShoot : MonoBehaviour
             }
         }
         bulletsController.bulletData.Target = target;
-        bulletsController.bulletData.HitTarget = hitTarget;
+        bulletsController.bulletData.HitTarget = /*hitTarget*/true;
         bullet.transform.forward = target - bullet.transform.position;
 
-        StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
-        weaponData.CurrentAmmo--;
+        StartCoroutine(DespawnBulletAfterTime(bullet, weaponData.Range / bulletData.Speed));
+        //weaponData.CurrentAmmo--;
     }
 
     private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
     {
         yield return new WaitForSeconds(time);
 
-        if (bulletsPool != null)
+        if (currentBulletsPool != null)
         {
-            bulletsPool.Despawn(bullet);
+            currentBulletsPool.Despawn(bullet);
         }
         else
         {

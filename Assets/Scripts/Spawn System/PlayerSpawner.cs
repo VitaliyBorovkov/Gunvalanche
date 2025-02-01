@@ -1,10 +1,11 @@
+using System;
+
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
 {
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private GameObject playerPrefab;
-    [SerializeField] private ObjectPool objectPool;
 
     private void Start()
     {
@@ -25,15 +26,20 @@ public class PlayerSpawner : MonoBehaviour
         player.transform.rotation = playerSpawnPoint.rotation;
 
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
-        if (playerShoot != null && objectPool != null)
+        if (playerShoot == null )
         {
-            playerShoot.SetObjectPool(objectPool);
+            Debug.LogWarning("PlayerSpawner: У игрока отсутствует PlayerShoot!");
         }
 
+        AssignPlayerToEnemies(player.transform);
+    }
+
+    private void AssignPlayerToEnemies(Transform playerTransform)
+    {
         EnemyController[] enemies = FindObjectsOfType<EnemyController>();
         foreach (var enemy in enemies)
         {
-            enemy.SetPlayerTransform(player.transform);
+            enemy.SetPlayerTransform(playerTransform);
         }
     }
 }
