@@ -100,8 +100,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
         if (holder != null && holder.weaponConfig != null)
         {
             currentWeaponConfig = holder.weaponConfig;
-            Debug.Log($"PlayerWeaponSwitcher: Сменили оружие на {weaponInstances[currentWeaponIndex].name}");
-
+        
             if (playerShoot != null)
             {
                 playerShoot.SetCurrentWeapon(weaponInstances[currentWeaponIndex]);

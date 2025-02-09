@@ -47,9 +47,9 @@ GameObject:
   - component: {fileID: -5513550925885236486}
   - component: {fileID: 6499858512713483950}
   - component: {fileID: 2059826057122197089}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RocketlauncherAmmoBox
-  m_TagString: Untagged
+  m_TagString: AmmoBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,11 +86,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 43
   floatDistance: 0.5
-  OnCollected:
-    m_PersistentCalls:
-      m_Calls: []
   ammoInBox: 2
-  ammoType: 2
+  gunsType: 2
+  bulletsType: 2
   ammoPickUpSound: {fileID: 0}
 --- !u!54 &6499858512713483950
 Rigidbody:

@@ -62,13 +62,13 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (spawnCooldown.ContainsKey(spawnPoint) && spawnCooldown[spawnPoint] > 0)
         {
-            Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} не доступна. Кулдаун ещё активен: {spawnCooldown[spawnPoint]:F2} сек.");
+            //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} не доступна. Кулдаун ещё активен: {spawnCooldown[spawnPoint]:F2} сек.");
             return false;
         }
 
         if (occupiedPoints.ContainsKey(spawnPoint) && occupiedPoints[spawnPoint] != null)
         {
-            Debug.Log($"SpawnPointManager occupiedPoints: Точка {spawnPoint.name} занята объектом {occupiedPoints[spawnPoint]}.");
+            //Debug.Log($"SpawnPointManager occupiedPoints: Точка {spawnPoint.name} занята объектом {occupiedPoints[spawnPoint]}.");
             return false;
         }
 
@@ -77,11 +77,11 @@ public class SpawnPointManager : MonoBehaviour
         {
             if (col.GetComponent<CollectibleItems>() != null)
             {
-                Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} занята объектом {col.gameObject.name}, тип: {col.GetComponent<CollectibleItems>().GetType().Name}.");
-                return false;
+                //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} занята объектом {col.gameObject.name}, тип: {col.GetComponent<CollectibleItems>().GetType().Name}.");
+                //return false;
             }
         }
-        Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} доступна для спавна.");
+        //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} доступна для спавна.");
         return true;
     }
 
@@ -97,7 +97,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (occupiedPoints.ContainsKey(spawnPoint))
         {
-            Debug.Log($"SpawnPointManager: Освобождаем точку {spawnPoint.name}.");
+            //Debug.Log($"SpawnPointManager: Освобождаем точку {spawnPoint.name}.");
             occupiedPoints[spawnPoint] = null;
         }
         else
@@ -110,7 +110,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (spawnCooldown.ContainsKey(spawnPoint))
         {
-            Debug.Log($"SpawnPointManager: Устанавливаем кулдаун для точки {spawnPoint.name}, время: {minSpawnCooldown} сек.");
+            //Debug.Log($"SpawnPointManager: Устанавливаем кулдаун для точки {spawnPoint.name}, время: {minSpawnCooldown} сек.");
             spawnCooldown[spawnPoint] = minSpawnCooldown;
         }
     }

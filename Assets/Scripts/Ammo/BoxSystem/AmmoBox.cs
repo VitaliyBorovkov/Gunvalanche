@@ -4,7 +4,8 @@ using UnityEngine;
 public class AmmoBox : CollectibleItems
 {
     [SerializeField] protected int ammoInBox = 10;
-    [SerializeField] protected GunsType ammoType;
+    [SerializeField] protected GunsType gunsType;
+    [SerializeField] protected BulletsType bulletsType;
     [SerializeField] protected AudioClip ammoPickUpSound;
 
     private AudioSource audioSource;
@@ -19,21 +20,33 @@ public class AmmoBox : CollectibleItems
     {
         base.Start();
 
-        audioSource = GetComponent<AudioSource>();
-        if (audioSource == null)
-        {
-            audioSource = gameObject.AddComponent<AudioSource>();
-        }
+        audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
     }
 
     protected override void Collect(GameObject player)
     {
-        base.Collect(player);
+        WeaponData weaponData = player.GetComponent<PlayerShoot>().GetWeaponData();
+        if (weaponData == null) 
+        {
+            return;
+        }
+
+        int currentTotalAmmo = AmmoManager.Instance.GetTotalAmmo(gunsType);
+        int maxAmmo = GetMaxAmmoFromConfig(gunsType);
+
+        if (currentTotalAmmo >= maxAmmo)
+        {
+            Debug.Log($"AmmoBox: Боезапас для {gunsType} уже полон ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+            return;
+        }
+
+        //base.Collect(player);
 
         PlayPickUpSound();
         AddAmmoToPlayer(player);
 
-        if (ammoBoxPool != null)
+        bool ammoAdded = AddAmmoToPlayer(player);
+        if (ammoAdded && ammoBoxPool != null)
         {
             ammoBoxPool.Despawn(gameObject);
         }
@@ -47,14 +60,55 @@ public class AmmoBox : CollectibleItems
             SpawnPointManager.Instance.ReleasePoint(spawnPoint);
             SpawnPointManager.Instance.SetCooldown(spawnPoint);
         }
-
-        //SpawnPointManager.Instance?.ReleasePoint(transform);
-        //SpawnPointManager.Instance?.SetCooldown(transform);
     }
 
-    protected virtual void AddAmmoToPlayer(GameObject player)
+    private int GetMaxAmmoFromConfig(GunsType gunsType)
     {
-        
+        WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
+        foreach (var config in weaponConfigs)
+        {
+            foreach (var weapon in config.weaponData)
+            {
+                if (weapon.GunsType == gunsType)
+                {
+                    return weapon.TotalAmmo;
+                }
+            }
+        }
+
+        Debug.LogWarning($"AmmoBox: Не найден maxAmmo для {gunsType} в WeaponConfig!");
+        return 0;
+    }
+
+    protected virtual bool AddAmmoToPlayer(GameObject player)
+    {
+        WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
+
+        foreach (var config in weaponConfigs)
+        {
+            foreach (var weapon in config.weaponData)
+            {
+                if (weapon.BulletsType == bulletsType)
+                {
+                    int currentTotalAmmo = AmmoManager.Instance.GetTotalAmmo(weapon.GunsType);
+                    int maxAmmo = weapon.TotalAmmo;
+
+                    if (currentTotalAmmo >= maxAmmo)
+                    {
+                        Debug.Log($"AmmoBox: Боезапас для {weapon.GunsType} уже полон ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+                        return false;
+                    }
+
+                    AmmoManager.Instance.AddAmmo(weapon.GunsType, ammoInBox, maxAmmo);
+                    Debug.Log($"AmmoBox: Игрок подобрал {ammoInBox} патронов для {weapon.GunsType}. Теперь в запасе: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
+
+                    return true;
+                }
+            }
+        }
+
+        Debug.LogWarning($"AmmoBox: Оружие с типом {gunsType} не найдено в WeaponConfig!");
+        return false;
     }
 
     private void PlayPickUpSound()

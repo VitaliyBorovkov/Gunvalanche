@@ -514,15 +514,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e781d9c2e7fcc42965bec4bd2dd919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerReload: {fileID: 4443374691479103321}
-  bulletsPool: {fileID: 5849179238584681934, guid: 86aff45d563826945a1a19dcc4d99472, type: 3}
-  bulletData:
-    BulletPrefab: {fileID: 3928528860053484037, guid: ebcbac358f80a0d428cf008935f4945a, type: 3}
-    Name: Bullet
-    Speed: 50
-    DistanceToTarget: 0
-    LifeTime: 2
   WeaponsHolder: {fileID: 302710563676770984}
+  playerReload: {fileID: 4443374691479103321}
+  bulletConfig: {fileID: 11400000, guid: cafaa0dcf0d84654eb943221c8db1c37, type: 2}
 --- !u!114 &4443374691479103321
 MonoBehaviour:
   m_ObjectHideFlags: 0

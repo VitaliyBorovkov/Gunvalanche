@@ -16,7 +16,7 @@ MonoBehaviour:
   - Name: RocketLauncher
     Damage: 100
     TotalAmmo: 5
-    CurrentAmmo: 1
+    CurrentAmmo: 2
     MagazineSize: 1
     Range: 100
     FireRate: 1
