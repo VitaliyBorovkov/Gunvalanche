@@ -987,9 +987,9 @@ GameObject:
   - component: {fileID: 4298681382229893286}
   - component: {fileID: 7070329597216156484}
   - component: {fileID: -2209131749755692538}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RiffleAmmoBox
-  m_TagString: Untagged
+  m_TagString: AmmoBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1026,11 +1026,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 43
   floatDistance: 0.5
-  OnCollected:
-    m_PersistentCalls:
-      m_Calls: []
   ammoInBox: 30
-  ammoType: 1
+  gunsType: 1
+  bulletsType: 1
   ammoPickUpSound: {fileID: 0}
 --- !u!54 &7070329597216156484
 Rigidbody:

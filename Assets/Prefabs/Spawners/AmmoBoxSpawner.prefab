@@ -55,6 +55,6 @@ MonoBehaviour:
   maxObjects: 4
   spawnInterval: 15
   checkRadius: 2
-  pistolAmmoPool: {fileID: 0}
-  riffleAmmoPool: {fileID: 0}
-  rocketLauncherAmmoPool: {fileID: 0}
+  pistolAmmoPool: {fileID: 38350717249042050, guid: 21da692c4a96b9343b039c8be7c62547, type: 3}
+  riffleAmmoPool: {fileID: 3710786034234464815, guid: c83e64d03a4b74742a0623d23059dc6c, type: 3}
+  rocketLauncherAmmoPool: {fileID: 8488935682372821908, guid: 908e8fb0ca90a6a44a470b638563cf7c, type: 3}

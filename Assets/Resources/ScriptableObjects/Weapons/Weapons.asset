@@ -15,31 +15,34 @@ MonoBehaviour:
   weaponData:
   - Name: Pistol
     Damage: 20
-    MagazineSize: 7
-    CurrentAmmo: 7
     TotalAmmo: 40
-    FireRate: 5
+    CurrentAmmo: 7
+    MagazineSize: 7
     Range: 200
+    FireRate: 5
     GunsType: 0
-    BulletSpawnPoint: {fileID: 0}
+    BulletsType: 0
     GunPrefab: {fileID: 8168748422083441467, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+    BulletSpawnPoint: {fileID: 0}
   - Name: Riffle
     Damage: 10
-    MagazineSize: 30
-    CurrentAmmo: 30
     TotalAmmo: 1000
-    FireRate: 10
+    CurrentAmmo: 30
+    MagazineSize: 30
     Range: 300
+    FireRate: 10
     GunsType: 1
-    BulletSpawnPoint: {fileID: 0}
+    BulletsType: 1
     GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
+    BulletSpawnPoint: {fileID: 0}
   - Name: RocketLauncher
     Damage: 100
-    MagazineSize: 1
-    CurrentAmmo: 2
     TotalAmmo: 5
-    FireRate: 1
+    CurrentAmmo: 2
+    MagazineSize: 1
     Range: 100
+    FireRate: 1
     GunsType: 2
-    BulletSpawnPoint: {fileID: 0}
+    BulletsType: 2
     GunPrefab: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
+    BulletSpawnPoint: {fileID: 0}

@@ -8,6 +8,7 @@ public struct BulletsData
 
     public float Speed;
     public float DistanceToTarget;
+    public float LifeTime;
 
     public GameObject BulletPrefab;
     public BulletsType BulletsType;
