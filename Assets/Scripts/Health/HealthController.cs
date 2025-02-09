@@ -21,7 +21,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
+                Debug.Log("PlayerHealthController: PlayerHpUI Г­ГҐ Г­Г Г©Г¤ГҐГ­ Гў Г±Г¶ГҐГ­ГҐ!");
             }
             else
             {
@@ -52,12 +52,9 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
-        if (isDead) return;
-        if (damage <= 0) return;
 
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log($"HealthController: {entityData.Name} уже мёртв, урон не применяется.");
             return;
         }
 
