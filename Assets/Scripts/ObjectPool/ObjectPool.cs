@@ -32,6 +32,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (ObjectQueue.Count == 0)
         {
+            Debug.LogWarning($"ObjectPool: {gameObject.name} пуст, расширяем пул.");
             ExpandPool();
         }
 
@@ -42,14 +43,29 @@ public class ObjectPool : MonoBehaviour
 
         activeObjectsCount++;
 
+        //Debug.Log($"ObjectPool: {gameObject.name} - Спавн {obj.name}. Активных: {activeObjectsCount}");
         return obj;
     }
 
     public void Despawn(GameObject obj)
     {
+        Debug.Log($"ObjectPool: Вызывается метод Despawn");
+
+        if (obj == null)
+        {
+            Debug.LogError("ObjectPool: Попытка деспавна null объекта!");
+            return;
+        }
+        Debug.Log($"[ObjectPool] Вызван Despawn() для {obj.name}");
         obj.SetActive(false);
+        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} выключен");
+        obj.transform.position = transform.position;
+        obj.transform.rotation = Quaternion.identity;
         ObjectQueue.Enqueue(obj);
+        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} добавлен обратно в очередь.");
         activeObjectsCount--;
+
+        //Debug.Log($"ObjectPool: {gameObject.name} - Деспавн {obj.name}. Очередь пула: {ObjectQueue.Count}, Активных: {activeObjectsCount}");
     }
 
     public int CountActiveObjects()

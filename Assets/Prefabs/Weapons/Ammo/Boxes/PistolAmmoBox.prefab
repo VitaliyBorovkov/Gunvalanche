@@ -223,9 +223,9 @@ GameObject:
   - component: {fileID: -1677451449397336200}
   - component: {fileID: 1019001418259302823}
   - component: {fileID: -7531674500342585047}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PistolAmmoBox
-  m_TagString: Untagged
+  m_TagString: AmmoBoxes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -262,9 +262,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 43
   floatDistance: 0.5
-  OnCollected:
-    m_PersistentCalls:
-      m_Calls: []
   ammoInBox: 14
   ammoType: 0
   ammoPickUpSound: {fileID: 0}

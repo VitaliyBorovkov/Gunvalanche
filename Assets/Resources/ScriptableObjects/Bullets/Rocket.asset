@@ -16,5 +16,6 @@ MonoBehaviour:
   - Name: Rocket
     Speed: 10
     DistanceToTarget: 0.1
+    LifeTime: 4
     BulletPrefab: {fileID: 2093213116284574110, guid: 6592e0032af00e84491fae4a55b6f162, type: 3}
     BulletsType: 2

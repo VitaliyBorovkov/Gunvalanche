@@ -19,14 +19,6 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
-        //WeaponConfigHolder weaponConfigHolder = playerShoot.GetCurrentWeapon().GetComponent<WeaponConfigHolder>();
-        //if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
-        //{
-        //    Debug.LogWarning("PlayerReload: Не найден WeaponConfigHolder или WeaponConfig!");
-        //    return;
-        //}
-
-        //WeaponData weaponData = weaponConfigHolder.weaponConfig.weaponData[0];
         WeaponData weaponData = playerShoot.GetWeaponData();
 
         if (isReloading)
@@ -41,33 +33,31 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
-        if (weaponData.TotalAmmo <= 0)
+        if (AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) <= 0)
         {
-            Debug.Log(" PlayerReload. No ammo left to reload");
+            Debug.Log("PlayerReload: Нет патронов в запасе");
             return;
         }
 
-        Debug.Log(" PlayerReload. Starting reload");
-        StartCoroutine(ReloadRoutine());
+        Debug.Log(" PlayerReload. Starting reload...");
+        StartCoroutine(ReloadRoutine(weaponData));
     }
 
-    private IEnumerator ReloadRoutine()
+    private IEnumerator ReloadRoutine(WeaponData weaponData)
     {
         isReloading = true;
-        Debug.Log(" PlayerReload. Reloading...");
 
         yield return new WaitForSeconds(2f);
 
-        WeaponData weaponData = playerShoot.GetWeaponData();
-
         int ammoNeeded = weaponData.MagazineSize - weaponData.CurrentAmmo;
-        int ammoToReload = Mathf.Min(ammoNeeded, weaponData.TotalAmmo);
+        int ammoAvailable = AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType);
+        int ammoToReload = Mathf.Min(ammoNeeded, ammoAvailable);
 
         weaponData.CurrentAmmo += ammoToReload;
-        weaponData.TotalAmmo -= ammoToReload;
+        AmmoManager.Instance.UseAmmo(weaponData.GunsType, ammoToReload);
 
         isReloading = false;
-        Debug.Log(" PlayerReload. Reloaded: Current Ammo = " + weaponData.CurrentAmmo + ", Total Ammo = " + weaponData.TotalAmmo);
+        Debug.Log($"PlayerReload: Перезаряжено {ammoToReload} патронов. Остаток: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
     }
 
     public bool IsReloading()
