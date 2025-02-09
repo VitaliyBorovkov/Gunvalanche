@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b5898404db20d7448d5ff1e42fe7641, type: 3}
-  m_Name: PistolBullet
+  m_Name: BulletsConfig
   m_EditorClassIdentifier: 
   bulletsData:
   - Name: PistolBullet
@@ -19,3 +19,15 @@ MonoBehaviour:
     LifeTime: 2
     BulletPrefab: {fileID: 4033052067013613883, guid: 43f90bd7383a2b74b96b7347d3bb932e, type: 3}
     BulletsType: 0
+  - Name: RiffleBullet
+    Speed: 50
+    DistanceToTarget: 0.1
+    LifeTime: 3
+    BulletPrefab: {fileID: 6371162566170336153, guid: 1b5b859b607867f4faac36774ba8885a, type: 3}
+    BulletsType: 1
+  - Name: Rocket
+    Speed: 10
+    DistanceToTarget: 0.1
+    LifeTime: 4
+    BulletPrefab: {fileID: 2093213116284574110, guid: 6592e0032af00e84491fae4a55b6f162, type: 3}
+    BulletsType: 2

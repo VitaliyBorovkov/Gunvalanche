@@ -4,13 +4,15 @@ public class RocketLauncherAmmoBox : AmmoBox
 {
     private void Awake()
     {
-        ammoType = GunsType.RocketLauncher;
+        gunsType = GunsType.RocketLauncher;
         ammoInBox = 2;
-        ammoPickUpSound = Resources.Load<AudioClip>("Sounds/PistolPickup");
+        ammoPickUpSound = Resources.Load<AudioClip>("Sounds/RocketsPickup");
     }
 
-    protected override void AddAmmoToPlayer(GameObject player)
+    protected override bool AddAmmoToPlayer(GameObject player)
     {
-        Debug.Log($"RocketLauncherAmmoBox: Игрок получил {ammoInBox} ракеты для ракетницы.");
+        bool ammoAdded = base.AddAmmoToPlayer(player);
+        //Debug.Log($"RocketLauncherAmmoBox: Игрок получил {ammoInBox} ракеты для ракетницы.");
+        return ammoAdded;
     }
 }

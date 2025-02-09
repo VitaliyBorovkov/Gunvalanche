@@ -70,7 +70,6 @@ public abstract class ObjectSpawner : MonoBehaviour
             spawnPointManager.IsPointAvailable(point, checkRadius, itemType)).ToList();
         if (availablePoints.Count == 0)
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: Нет доступных точек для спавна.");
             return null;
         }
 
