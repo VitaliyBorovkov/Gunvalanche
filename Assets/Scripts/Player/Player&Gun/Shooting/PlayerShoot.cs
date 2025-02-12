@@ -85,6 +85,10 @@ public class PlayerShoot : MonoBehaviour
         weaponData = weaponConfigHolder.weaponConfig.weaponData[0];
 
         currentBulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
+        if (currentBulletsPool == null)
+        {
+            Debug.LogError($"PlayerShoot: Ќе найден пул дл€ {weaponData.BulletsType}");
+        }
 
         bulletData = GetBulletDataForWeapon(weaponData.BulletsType);
 
@@ -182,44 +186,51 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
-        bulletsController.SetPool(currentBulletsPool);
+        //bulletsController.SetPool(currentBulletsPool);
 
-        float range = weaponData.Range;
-        Vector3 target = cameraTransform.position + cameraTransform.forward * range;
+        //float range = weaponData.Range;
+        //Vector3 target = cameraTransform.position + cameraTransform.forward * range;
 
-        RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
+        //RaycastHit hit;
+        //if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
+        //{
+        //    target = hit.point;
+
+        //    if (hit.collider.CompareTag("Enemy"))
+        //    {
+        //        HealthController healthController = hit.collider.GetComponentInParent<HealthController>();
+        //        if (healthController != null)
+        //        {
+        //            healthController.TakeDamage(weaponData.Damage);
+        //        }
+        //    }
+        //}
+        //bulletsController.bulletData.Target = target;
+        //bulletsController.bulletData.HitTarget = true;
+        //bullet.transform.forward = (target - bullet.transform.position).normalized;
+
+        //StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
+        Vector3 shootDirection = cameraTransform.forward;
+        if (currentBulletsPool == null)
         {
-            target = hit.point;
-
-            if (hit.collider.CompareTag("Enemy"))
-            {
-                HealthController healthController = hit.collider.GetComponentInParent<HealthController>();
-                if (healthController != null)
-                {
-                    healthController.TakeDamage(weaponData.Damage);
-                }
-            }
+            Debug.LogError($"PlayerShoot: Object Pool не найден дл€ {weaponData.BulletsType}");
+            return;
         }
-        bulletsController.bulletData.Target = target;
-        bulletsController.bulletData.HitTarget = true;
-        bullet.transform.forward = (target - bullet.transform.position).normalized;
-
-        StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
+        bulletsController.Initialize(shootDirection, currentBulletsPool, weaponData);
     }
 
-    private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
-    {
-        yield return new WaitForSeconds(time);
+    //private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
+    //{
+    //    yield return new WaitForSeconds(time);
 
-        if (currentBulletsPool != null)
-        {
-            Debug.Log($"PlayerShoot: ƒеспавним {bullet.name} через ObjectPool {currentBulletsPool.gameObject.name}");
-            currentBulletsPool.Despawn(bullet);
-        }
-        else
-        {
-            Debug.LogError("PlayerShoot: Object Pool не найден при попытке удалить пулю!");
-        }
-    }
+    //    if (currentBulletsPool != null)
+    //    {
+    //        Debug.Log($"PlayerShoot: ƒеспавним {bullet.name} через ObjectPool {currentBulletsPool.gameObject.name}");
+    //        currentBulletsPool.Despawn(bullet);
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("PlayerShoot: Object Pool не найден при попытке удалить пулю!");
+    //    }
+    //}
 }
