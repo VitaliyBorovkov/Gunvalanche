@@ -49,6 +49,9 @@ public class AmmoManager : MonoBehaviour
         }
 
         GameObject poolObject = Instantiate(poolPrefab);
+        Debug.Log($"AmmoManager: PistolBulletsPool = {pistolBulletsPool?.gameObject.name}");
+        Debug.Log($"AmmoManager: RiffleBulletsPool = {riffleBulletsPool?.gameObject.name}");
+        Debug.Log($"AmmoManager: RocketsPool = {rocketsPool?.gameObject.name}");
         poolObject.name = poolName;
         return poolObject.GetComponent<ObjectPool>();
     }
@@ -107,25 +110,27 @@ public class AmmoManager : MonoBehaviour
     {
         if (!ammoStorage.ContainsKey(type))
         {
-            Debug.LogError($"[AmmoManager] ОШИБКА! {type} не найден в ammoStorage.");
+            Debug.LogError($"AmmoManager: ОШИБКА! {type} не найден в ammoStorage.");
             return 0;
         }
 
-        //int ammo =  ammoStorage.ContainsKey(type) ? ammoStorage[type] : 0;
-        //return ammo;
         int totalAmmo = ammoStorage[type];
-        Debug.Log($"[AmmoManager] Получаем патроны для {type}: {totalAmmo}");
+        Debug.Log($"AmmoManager: Получаем патроны для {type}: {totalAmmo}");
         return totalAmmo;
     }
 
     public ObjectPool GetBulletsPool(BulletsType bulletsType)
     {
-        return bulletsType switch
+
+        //return bulletsType switch
+        ObjectPool pool = bulletsType switch
         {
             BulletsType.Pistol => pistolBulletsPool,
             BulletsType.Riffle => riffleBulletsPool,
             BulletsType.Rocket => rocketsPool,
             _ => null
         };
+        Debug.Log($"AmmoManager: Выдаём пул {pool?.gameObject.name} для {bulletsType}");
+        return pool;
     }
 }
