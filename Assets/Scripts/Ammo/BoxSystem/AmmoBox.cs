@@ -40,10 +40,7 @@ public class AmmoBox : CollectibleItems
             return;
         }
 
-        //base.Collect(player);
-
         PlayPickUpSound();
-        AddAmmoToPlayer(player);
 
         bool ammoAdded = AddAmmoToPlayer(player);
         if (ammoAdded && ammoBoxPool != null)
