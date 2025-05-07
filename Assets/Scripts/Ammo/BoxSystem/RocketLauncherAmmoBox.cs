@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class RocketLauncherAmmoBox : AmmoBox
 {
@@ -12,7 +12,7 @@ public class RocketLauncherAmmoBox : AmmoBox
     protected override bool AddAmmoToPlayer(GameObject player)
     {
         bool ammoAdded = base.AddAmmoToPlayer(player);
-        //Debug.Log($"RocketLauncherAmmoBox: Игрок получил {ammoInBox} ракеты для ракетницы.");
+        //Debug.Log($"RocketLauncherAmmoBox: РРіСЂРѕРє РїРѕР»СѓС‡РёР» {ammoInBox} СЂР°РєРµС‚С‹ РґР»СЏ СЂР°РєРµС‚РЅРёС†С‹.");
         return ammoAdded;
     }
 }

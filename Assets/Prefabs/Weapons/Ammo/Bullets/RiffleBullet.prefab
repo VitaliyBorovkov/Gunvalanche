@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2334592857715853637}
   - component: {fileID: 1720020954871238960}
   - component: {fileID: 8491595974448387209}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 7713759180763561642}
   - component: {fileID: 6313336960965332407}
   - component: {fileID: 7305007263125792833}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -176,7 +176,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7961043291673389456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: BulletRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 2435466060220192050}
   - component: {fileID: 6978733607568801909}
   - component: {fileID: 8438554041054577412}
-  m_Layer: 10
+  m_Layer: 3
   m_Name: RiffleBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}

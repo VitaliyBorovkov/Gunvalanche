@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class EnemyTriggerAttack : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class EnemyTriggerAttack : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
                 lastAttackTime = Time.time;
-                Debug.Log($"EnemyTriggerAttack: Нанесён урон - {damage}. Здоровье игрока: {playerHealth.GetCurrentHealth()}");
+                Debug.Log($"EnemyTriggerAttack: РќР°РЅРµСЃС‘РЅ СѓСЂРѕРЅ - {damage}. Р—РґРѕСЂРѕРІСЊРµ РёРіСЂРѕРєР°: {playerHealth.GetCurrentHealth()}");
             }
         }
     }
