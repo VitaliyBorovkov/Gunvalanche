@@ -15,6 +15,6 @@ MonoBehaviour:
   entityData:
   - Name: WeakEnemy
     Health: 100
-    WalkSpeed: 5
+    WalkSpeed: 3
     RunSpeed: 5
-    Prefab: {fileID: 5870442699430201994, guid: c762d6792191333408ab84086b7c7a97, type: 3}
+    Prefab: {fileID: 1272129834453451683, guid: 0bbdf1a3b2edd594f88ace297fd7f4d5, type: 3}

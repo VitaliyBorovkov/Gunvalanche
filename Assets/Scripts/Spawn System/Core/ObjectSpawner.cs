@@ -1,4 +1,4 @@
-using System.Linq;
+п»їusing System.Linq;
 using UnityEngine;
 
 public abstract class ObjectSpawner : MonoBehaviour
@@ -27,7 +27,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("ObjectSpawner: spawnPointManager равен null. Кулдауны не обновляются!");
+            Debug.LogWarning("ObjectSpawner: spawnPointManager СЂР°РІРµРЅ null. РљСѓР»РґР°СѓРЅС‹ РЅРµ РѕР±РЅРѕРІР»СЏСЋС‚СЃСЏ!");
         }
 
         timer += Time.deltaTime;
@@ -48,7 +48,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         spawnPointManager = FindObjectOfType<SpawnPointManager>();
         if (spawnPointManager == null)
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: SpawnPointManager не найден на сцене!");
+            Debug.Log($"ObjectSpawner: {GetType().Name}: SpawnPointManager РЅРµ РЅР°Р№РґРµРЅ РЅР° СЃС†РµРЅРµ!");
             enabled = false;
             return;
         }
@@ -62,7 +62,7 @@ public abstract class ObjectSpawner : MonoBehaviour
     {
         if (!CheckerToNull.CheckArrayNotEmpty(spawnPoints, nameof(spawnPoints)))
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: Точки спавна не настроены.");
+            Debug.Log($"ObjectSpawner: {GetType().Name}: РўРѕС‡РєРё СЃРїР°РІРЅР° РЅРµ РЅР°СЃС‚СЂРѕРµРЅС‹.");
             return null;
         }
 

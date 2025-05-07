@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
@@ -19,7 +19,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (weaponsHolder == null)
         {
-            Debug.Log("PlayerSwitchWeapon: WeaponsHolder не назначен!");
+            Debug.Log("PlayerSwitchWeapon: WeaponsHolder РЅРµ РЅР°Р·РЅР°С‡РµРЅ!");
             return;
         }
 
@@ -109,7 +109,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"PlayerSwitchWeapon: У {weaponInstances[currentWeaponIndex].name} нет WeaponConfigHolder или WeaponConfig!");
+            Debug.LogWarning($"PlayerSwitchWeapon: РЈ {weaponInstances[currentWeaponIndex].name} РЅРµС‚ WeaponConfigHolder РёР»Рё WeaponConfig!");
         }
     }
 }

@@ -16,6 +16,6 @@ MonoBehaviour:
   - Name: RiffleBullets
     Speed: 50
     DistanceToTarget: 0.1
-    LifeTime: 3
+    LifeTime: 7
     BulletPrefab: {fileID: 6371162566170336153, guid: 1b5b859b607867f4faac36774ba8885a, type: 3}
     BulletsType: 1

@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class MedKit : CollectibleItems
 {
@@ -20,7 +20,7 @@ public class MedKit : CollectibleItems
             if (playerHealthController.GetCurrentHealth() < playerHealthController.GetMaxHealth())
             {
                 playerHealthController.Heal(healAmount);
-                Debug.Log($"MedKit: {gameObject.name}: Èãðîê {player.name} èñöåë¸í íà {healAmount} HP.");
+                Debug.Log($"MedKit: {gameObject.name}: Ð˜Ð³Ñ€Ð¾Ðº {player.name} Ð¸ÑÑ†ÐµÐ»Ñ‘Ð½ Ð½Ð° {healAmount} HP.");
                 base.Collect(player);
 
                 if (medKitPool != null)
@@ -29,7 +29,7 @@ public class MedKit : CollectibleItems
                 }
                 else
                 {
-                    Debug.LogWarning($"MedKit: ObjectPool íå óñòàíîâëåí äëÿ {gameObject.name}!");
+                    Debug.LogWarning($"MedKit: ObjectPool Ð½Ðµ ÑƒÑÑ‚Ð°Ð½Ð¾Ð²Ð»ÐµÐ½ Ð´Ð»Ñ {gameObject.name}!");
                 }
 
                 if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -40,12 +40,12 @@ public class MedKit : CollectibleItems
             }
             else
             {
-                Debug.LogWarning($"MedKit: {gameObject.name}: Ó èãðîêà {player.name} ïîëíîå çäîðîâüå è àïòå÷êà íå áûëà ïîäîáðàíà.");
+                Debug.LogWarning($"MedKit: {gameObject.name}: Ð£ Ð¸Ð³Ñ€Ð¾ÐºÐ° {player.name} Ð¿Ð¾Ð»Ð½Ð¾Ðµ Ð·Ð´Ð¾Ñ€Ð¾Ð²ÑŒÐµ Ð¸ Ð°Ð¿Ñ‚ÐµÑ‡ÐºÐ° Ð½Ðµ Ð±Ñ‹Ð»Ð° Ð¿Ð¾Ð´Ð¾Ð±Ñ€Ð°Ð½Ð°.");
             }
         }
         else
         {
-            Debug.LogWarning($"MedKit: {player.name} íå èìååò PlayerHealthController!", this);
+            Debug.LogWarning($"MedKit: {player.name} Ð½Ðµ Ð¸Ð¼ÐµÐµÑ‚ PlayerHealthController!", this);
         }
     }
 

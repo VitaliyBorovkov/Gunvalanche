@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class RiffleAmmoBox : AmmoBox
 {
@@ -12,7 +12,7 @@ public class RiffleAmmoBox : AmmoBox
     protected override bool AddAmmoToPlayer(GameObject player)
     {
         bool ammoAdded = base.AddAmmoToPlayer(player);
-        //Debug.Log($"RiffleAmmoBox: Игрок получил {ammoInBox} патронов для автомата.");
+        //Debug.Log($"RiffleAmmoBox: РРіСЂРѕРє РїРѕР»СѓС‡РёР» {ammoInBox} РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ Р°РІС‚РѕРјР°С‚Р°.");
         return ammoAdded;
     }
 }

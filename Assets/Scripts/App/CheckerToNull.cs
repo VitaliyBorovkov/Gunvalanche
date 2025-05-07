@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class CheckerToNull
 {
@@ -6,7 +6,7 @@ public class CheckerToNull
     {
         if (obj == null)
         {
-            Debug.Log($"CheckerToNull: Объект '{objectName}' равен null!");
+            Debug.Log($"CheckerToNull: РћР±СЉРµРєС‚ '{objectName}' СЂР°РІРµРЅ null!");
             return false;
         }
         else
@@ -19,12 +19,12 @@ public class CheckerToNull
     {
         if (array == null)
         {
-            Debug.Log($":CheckerToNull Массив '{arrayName}' равен null!");
+            Debug.Log($"CheckerToNull: РњР°СЃСЃРёРІ '{arrayName}' СЂР°РІРµРЅ null!");
             return false;
         }
         if (array.Length == 0)
         {
-            Debug.Log($":CheckerToNull Массив '{arrayName}' пуст!");
+            Debug.Log($"CheckerToNull: РњР°СЃСЃРёРІ '{arrayName}' РїСѓСЃС‚!");
             return false;
         }
        

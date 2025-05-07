@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using UnityEngine;
 
 public class AmmoBoxSpawner : ObjectSpawner
@@ -28,7 +28,7 @@ public class AmmoBoxSpawner : ObjectSpawner
         }
         else
         {
-            Debug.LogWarning($"AmmoBoxSpawner: У объекта {spawnedAmmoBox.name} отсутствует компонент AmmoBox!");
+            Debug.LogWarning($"AmmoBoxSpawner: РЈ РѕР±СЉРµРєС‚Р° {spawnedAmmoBox.name} РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РєРѕРјРїРѕРЅРµРЅС‚ AmmoBox!");
         }
     }
 

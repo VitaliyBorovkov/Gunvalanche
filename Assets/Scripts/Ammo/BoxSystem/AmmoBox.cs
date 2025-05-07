@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using UnityEngine;
 
 public class AmmoBox : CollectibleItems
@@ -36,7 +36,7 @@ public class AmmoBox : CollectibleItems
 
         if (currentTotalAmmo >= maxAmmo)
         {
-            Debug.Log($"AmmoBox: Боезапас для {gunsType} уже полон ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+            Debug.Log($"AmmoBox: Р‘РѕРµР·Р°РїР°СЃ РґР»СЏ {gunsType} СѓР¶Рµ РїРѕР»РЅС‹Р№ ({currentTotalAmmo}/{maxAmmo}). РЇС‰РёРє РЅРµ РёСЃС‡РµР·Р°РµС‚.");
             return;
         }
 
@@ -49,7 +49,7 @@ public class AmmoBox : CollectibleItems
         }
         else
         {
-            Debug.LogWarning($"AmmoBox: ObjectPool не установлен для {gameObject.name}!");
+            Debug.LogWarning($"AmmoBox: ObjectPool РЅРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅ РґР»СЏ {gameObject.name}!");
         }
 
         if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -73,7 +73,7 @@ public class AmmoBox : CollectibleItems
             }
         }
 
-        Debug.LogWarning($"AmmoBox: Не найден maxAmmo для {gunsType} в WeaponConfig!");
+        Debug.LogWarning($"AmmoBox: РќРµ РЅР°Р№РґРµРЅ maxAmmo РґР»СЏ {gunsType} РІ WeaponConfig!");
         return 0;
     }
 
@@ -92,19 +92,18 @@ public class AmmoBox : CollectibleItems
 
                     if (currentTotalAmmo >= maxAmmo)
                     {
-                        Debug.Log($"AmmoBox: Боезапас для {weapon.GunsType} уже полон ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+                        Debug.Log($"AmmoBox: Р‘РѕРµР·Р°РїР°СЃ РґР»СЏ {weapon.GunsType} СѓР¶Рµ РїРѕР»РЅС‹Р№ ({currentTotalAmmo}/{maxAmmo}). РЇС‰РёРє РЅРµ РёСЃС‡РµР·Р°РµС‚.");
                         return false;
                     }
 
                     AmmoManager.Instance.AddAmmo(weapon.GunsType, ammoInBox, maxAmmo);
-                    Debug.Log($"AmmoBox: Игрок подобрал {ammoInBox} патронов для {weapon.GunsType}. Теперь в запасе: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
-
+                    Debug.Log($"AmmoBox: РРіСЂРѕРє РїРѕРґРѕР±СЂР°Р» {ammoInBox} РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ {weapon.GunsType}. РўРµРїРµСЂСЊ РІ Р·Р°РїР°СЃРµ: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
                     return true;
                 }
             }
         }
 
-        Debug.LogWarning($"AmmoBox: Оружие с типом {gunsType} не найдено в WeaponConfig!");
+        Debug.LogWarning($"AmmoBox: РћСЂСѓР¶РёРµ СЃ С‚РёРїРѕРј {gunsType} РЅРµ РЅР°Р№РґРµРЅРѕ РІ WeaponConfig!");
         return false;
     }
 

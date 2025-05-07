@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -32,7 +32,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (ObjectQueue.Count == 0)
         {
-            Debug.LogWarning($"ObjectPool: {gameObject.name} пуст, расширяем пул.");
+            Debug.LogWarning($"ObjectPool: {gameObject.name} РїСѓСЃС‚, СЂР°СЃС€РёСЂСЏРµРј РїСѓР».");
             ExpandPool();
         }
 
@@ -43,29 +43,29 @@ public class ObjectPool : MonoBehaviour
 
         activeObjectsCount++;
 
-        //Debug.Log($"ObjectPool: {gameObject.name} - Спавн {obj.name}. Активных: {activeObjectsCount}");
+        //Debug.Log($"ObjectPool: {gameObject.name} - РЎРїР°РІРЅ {obj.name}. РђРєС‚РёРІРЅС‹С…: {activeObjectsCount}");
         return obj;
     }
 
     public void Despawn(GameObject obj)
     {
-        Debug.Log($"ObjectPool: Вызывается метод Despawn");
+        //Debug.Log($"ObjectPool: Р’С‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґ Despawn");
 
         if (obj == null)
         {
-            Debug.LogError("ObjectPool: Попытка деспавна null объекта!");
+            Debug.LogError("ObjectPool: РџРѕРїС‹С‚РєР° РґРµСЃРїР°РІРЅР° null РѕР±СЉРµРєС‚Р°!");
             return;
         }
-        Debug.Log($"[ObjectPool] Вызван Despawn() для {obj.name}");
+        //Debug.Log($"[ObjectPool] Р’С‹Р·РІР°РЅ Despawn() РґР»СЏ {obj.name}");
         obj.SetActive(false);
-        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} выключен");
+        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} РІС‹РєР»СЋС‡РµРЅ");
         obj.transform.position = transform.position;
         obj.transform.rotation = Quaternion.identity;
         ObjectQueue.Enqueue(obj);
-        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} добавлен обратно в очередь.");
+        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} РґРѕР±Р°РІР»РµРЅ РѕР±СЂР°С‚РЅРѕ РІ РѕС‡РµСЂРµРґСЊ.");
         activeObjectsCount--;
 
-        //Debug.Log($"ObjectPool: {gameObject.name} - Деспавн {obj.name}. Очередь пула: {ObjectQueue.Count}, Активных: {activeObjectsCount}");
+        //Debug.Log($"ObjectPool: {gameObject.name} - Р”РµСЃРїР°РІРЅ {obj.name}. РћС‡РµСЂРµРґСЊ РїСѓР»Р°: {ObjectQueue.Count}, РђРєС‚РёРІРЅС‹С…: {activeObjectsCount}");
     }
 
     public int CountActiveObjects()
