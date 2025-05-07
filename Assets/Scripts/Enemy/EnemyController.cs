@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -41,7 +41,7 @@ public class EnemyController : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            Debug.Log($"EnemyController: {gameObject.name} не имеет ссылки на игрока!");
+            Debug.Log($"EnemyController: {gameObject.name} РЅРµ РёРјРµРµС‚ СЃСЃС‹Р»РєРё РЅР° РёРіСЂРѕРєР°!");
             return;
         }
 

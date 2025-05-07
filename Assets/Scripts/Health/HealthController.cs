@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
@@ -21,7 +19,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("PlayerHealthController: PlayerHpUI íå íàéäåí â ñöåíå!");
+                Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
             }
             else
             {
@@ -63,6 +61,8 @@ public class HealthController : MonoBehaviour, IDamageable
 
         UpdateHeadUI();
 
+        OnDamageTaken(damage);
+
         if (healthData.CurrentHealth <= 0)
         {
             Die();
@@ -94,8 +94,8 @@ public class HealthController : MonoBehaviour, IDamageable
         }
     }
 
-    protected virtual void OnDamageTaken(int damage) 
+    protected virtual void OnDamageTaken(int damage)
     {
-        
+
     }
 }

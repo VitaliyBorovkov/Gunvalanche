@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class EnemySpawner : ObjectSpawner
 {
@@ -17,11 +17,11 @@ public class EnemySpawner : ObjectSpawner
             if (player != null)
             {
                 enemyController.SetPlayerTransform(player.transform);
-                //Debug.Log($"{enemyController.gameObject.name} получил ссылку на игрока: {player.transform.position}");
+                //Debug.Log($"{enemyController.gameObject.name} РїРѕР»СѓС‡РёР» СЃСЃС‹Р»РєСѓ РЅР° РёРіСЂРѕРєР°: {player.transform.position}");
             }
             else
             {
-                Debug.LogWarning("EnemySpawner: Игрок не найден при спавне врага!");
+                Debug.LogWarning("EnemySpawner: РРіСЂРѕРє РЅРµ РЅР°Р№РґРµРЅ РїСЂРё СЃРїР°РІРЅРµ РІСЂР°РіР°!");
             }
         }
 

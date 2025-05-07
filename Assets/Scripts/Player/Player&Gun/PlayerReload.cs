@@ -1,4 +1,4 @@
-using System.Collections;
+п»їusing System.Collections;
 using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
@@ -15,7 +15,7 @@ public class PlayerReload : MonoBehaviour
     {
         if (playerShoot == null || playerShoot.GetCurrentWeapon() == null)
         {
-            Debug.LogWarning("PlayerReload: Нет активного оружия!");
+            Debug.LogWarning("PlayerReload: РќРµС‚ Р°РєС‚РёРІРЅРѕРіРѕ РѕСЂСѓР¶РёСЏ!");
             return;
         }
 
@@ -35,7 +35,7 @@ public class PlayerReload : MonoBehaviour
 
         if (AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) <= 0)
         {
-            Debug.Log("PlayerReload: Нет патронов в запасе");
+            Debug.Log("PlayerReload: РќРµС‚ РїР°С‚СЂРѕРЅРѕРІ РІ Р·Р°РїР°СЃРµ");
             return;
         }
 
@@ -57,7 +57,7 @@ public class PlayerReload : MonoBehaviour
         AmmoManager.Instance.UseAmmo(weaponData.GunsType, ammoToReload);
 
         isReloading = false;
-        Debug.Log($"PlayerReload: Перезаряжено {ammoToReload} патронов. Остаток: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
+        Debug.Log($"PlayerReload: РџРµСЂРµР·Р°СЂСЏР¶РµРЅРѕ {ammoToReload} РїР°С‚СЂРѕРЅРѕРІ. РћСЃС‚Р°С‚РѕРє: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
     }
 
     public bool IsReloading()

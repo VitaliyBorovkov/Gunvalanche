@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+Ôªøusing System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectPoolManager : MonoBehaviour
@@ -35,7 +35,7 @@ public class ObjectPoolManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"ObjectPoolManager: œÛÎ Ò ID {poolID} ÌÂ Ì‡È‰ÂÌ!");
+            Debug.LogWarning($"ObjectPoolManager: –ü—É–ª —Å ID {poolID} –Ω–µ –Ω–∞–π–¥–µ–Ω!");
             return null;
         }
     }

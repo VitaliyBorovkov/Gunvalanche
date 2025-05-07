@@ -1,5 +1,5 @@
-using System;
 using System.Collections;
+
 using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
@@ -40,7 +40,7 @@ public class PlayerShoot : MonoBehaviour
         if (currentWeapon == null)
         {
 
-            Debug.LogWarning("PlayerShoot: ��� ��������� ������!");
+            Debug.LogWarning("PlayerShoot: Нет активного оружия!");
             return;
         }
 
@@ -79,7 +79,7 @@ public class PlayerShoot : MonoBehaviour
 
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
-            Debug.LogError($"PlayerShoot: {weapon.name} �� ����� WeaponConfigHolder!");
+            Debug.LogError($"PlayerShoot: {weapon.name} не найден в WeaponConfigHolder!");
             return;
         }
 
@@ -88,7 +88,7 @@ public class PlayerShoot : MonoBehaviour
         currentBulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
         if (currentBulletsPool == null)
         {
-            Debug.LogError($"PlayerShoot: �� ������ ��� ��� {weaponData.BulletsType}");
+            Debug.LogError($"PlayerShoot: Нет пула для типа {weaponData.BulletsType}");
         }
 
         bulletData = GetBulletDataForWeapon(weaponData.BulletsType);
@@ -105,7 +105,7 @@ public class PlayerShoot : MonoBehaviour
                 return bullet;
             }
         }
-        Debug.LogWarning($"PlayerShoot: �� ������ BulletsData ��� {bulletsType}");
+        Debug.LogWarning($"PlayerShoot: Не найден BulletsData для {bulletsType}");
         return new BulletsData();
     }
 
@@ -150,15 +150,14 @@ public class PlayerShoot : MonoBehaviour
     {
         if (currentWeapon == null || currentBulletsPool == null)
         {
-
-            Debug.LogWarning("PlayerShoot: ��� ��������� ������ ��� ��� �� ��������!");
+            Debug.LogWarning("PlayerShoot: Нет активного оружия или пул не назначен!");
             return;
         }
 
         weaponData = GetWeaponData();
         if (weaponData == null)
         {
-            Debug.LogWarning("PlayerShoot: ������ ��������� ������ ������!");
+            Debug.LogWarning("PlayerShoot: Попытка выстрелить без патронов!");
             return;
         }
 
@@ -167,73 +166,48 @@ public class PlayerShoot : MonoBehaviour
         Transform spawnPoint = currentWeapon.GetComponent<WeaponConfigHolder>().bulletSpawnPoint;
         if (spawnPoint == null)
         {
-            Debug.LogWarning("PlayerShoot: Bullet Spawn Point �� ��������!");
+            Debug.LogWarning("PlayerShoot: Bullet Spawn Point не назначен!");
             return;
         }
 
 
-        Debug.Log($"PlayerShoot: �������� {weaponData.Name}, ���������� ��� {currentBulletsPool.gameObject.name}");
+        //Debug.Log($"PlayerShoot: Оружие {weaponData.Name}, используется пул {currentBulletsPool.gameObject.name}");
 
         GameObject bullet = currentBulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation);
         bullet.transform.forward = spawnPoint.forward;
         if (bullet == null)
         {
-            Debug.LogWarning("PlayerShoot: Object Pool ������ null ��� ������� ������!");
+            Debug.LogWarning("PlayerShoot: Object Pool оказался null для текущего оружия!");
             return;
         }
 
         BulletsController bulletsController = bullet.GetComponent<BulletsController>();
         if (bulletsController == null)
         {
-            Debug.LogWarning("PlayerShoot: � ������� ���� ��� BulletsController!");
+            Debug.LogWarning("PlayerShoot: У компонента пули нет BulletsController!");
             return;
         }
 
-        //bulletsController.SetPool(currentBulletsPool);
+        Vector3 shootDirection;
+
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        RaycastHit hitInfo;
+        if (Physics.Raycast(ray, out hitInfo, weaponData.Range))
+        {
+            shootDirection = (hitInfo.point - spawnPoint.position).normalized;
+        }
+        else
+        {
+            shootDirection = ray.direction;
+        }
 
 
-        //float range = weaponData.Range;
-        //Vector3 target = cameraTransform.position + cameraTransform.forward * range;
-        //RaycastHit hit;
-        //if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, range))
-        //{
-        //    target = hit.point;
-
-        //    if (hit.collider.CompareTag("Enemy"))
-        //    {
-        //        HealthController healthController = hit.collider.GetComponentInParent<HealthController>();
-        //        if (healthController != null)
-        //        {
-        //            healthController.TakeDamage(weaponData.Damage);
-        //        }
-        //    }
-        //}
-        //bulletsController.bulletData.Target = target;
-        //bulletsController.bulletData.HitTarget = true;
-        //bullet.transform.forward = (target - bullet.transform.position).normalized;
-
-        //StartCoroutine(DespawnBulletAfterTime(bullet, bulletData.LifeTime));
-        Vector3 shootDirection = cameraTransform.forward;
         if (currentBulletsPool == null)
         {
-            Debug.LogError($"PlayerShoot: Object Pool �� ������ ��� {weaponData.BulletsType}");
+            Debug.LogError($"PlayerShoot: Object Pool не найден для {weaponData.BulletsType}");
             return;
         }
+
         bulletsController.Initialize(shootDirection, currentBulletsPool, weaponData);
     }
-
-    //private IEnumerator DespawnBulletAfterTime(GameObject bullet, float time)
-    //{
-    //    yield return new WaitForSeconds(time);
-
-    //    if (currentBulletsPool != null)
-    //    {
-    //        Debug.Log($"PlayerShoot: ��������� {bullet.name} ����� ObjectPool {currentBulletsPool.gameObject.name}");
-    //        currentBulletsPool.Despawn(bullet);
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError("PlayerShoot: Object Pool �� ������ ��� ������� ������� ����!");
-    //    }
-    //}
 }

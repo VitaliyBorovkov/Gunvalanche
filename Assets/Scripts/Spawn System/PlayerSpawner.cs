@@ -1,5 +1,4 @@
-using System;
-
+﻿using System;
 using UnityEngine;
 
 public class PlayerSpawner : MonoBehaviour
@@ -28,7 +27,8 @@ public class PlayerSpawner : MonoBehaviour
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
         if (playerShoot == null )
         {
-            Debug.LogWarning("PlayerSpawner: � ������ ����������� PlayerShoot!");
+            Debug.LogWarning("PlayerSpawner: У игрока отсутствует компонент PlayerShoot!");
+            Debug.LogWarning("PlayerSpawner: У игрока отсутствует компонент PlayerShoot!");
         }
 
         AssignPlayerToEnemies(player.transform);
