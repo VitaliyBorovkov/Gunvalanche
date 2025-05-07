@@ -1,5 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
+п»їusing System.Collections;
+
 using UnityEngine;
 
 public class BulletsController : MonoBehaviour
@@ -11,13 +11,19 @@ public class BulletsController : MonoBehaviour
     private Coroutine despawnCoroutine;
     private WeaponData weaponData;
 
+    private int enemyLayer;
+    private int environmentLayer;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         if (rb == null)
         {
-            Debug.LogWarning($"BulletsController: Rigidbody не найден на {gameObject.name}");
+            Debug.LogWarning($"BulletsController: Rigidbody РЅРµ РЅР°Р№РґРµРЅ РЅР° {gameObject.name}");
         }
+
+        enemyLayer = LayerMask.NameToLayer("Enemy");
+        environmentLayer = LayerMask.NameToLayer("Environment");
     }
     //private void Update()
     //{
@@ -26,7 +32,7 @@ public class BulletsController : MonoBehaviour
 
     private void OnEnable()
     {
-        Debug.Log($"BulletsController: {gameObject.name} активирована из пула. ObjectPool = {objectPool?.gameObject.name}");
+        //Debug.Log($"BulletsController: {gameObject.name} Р°РєС‚РёРІРёСЂРѕРІР°РЅР° РёР· РїСѓР»Р°. ObjectPool = {objectPool?.gameObject.name}");
         if (bulletData.LifeTime > 0)
         {
             despawnCoroutine = StartCoroutine(DespawnAfterTime(bulletData.LifeTime));
@@ -45,19 +51,19 @@ public class BulletsController : MonoBehaviour
     {
         if (pool == null)
         {
-            Debug.LogError($"BulletsController: Получен NULL пул для {gameObject.name}!");
+            Debug.LogError($"BulletsController: РџРѕР»СѓС‡РµРЅ NULL РїСѓР» РґР»СЏ {gameObject.name}!");
             return;
         }
         objectPool = pool;
         weaponData = weapon;
-        Debug.Log($"BulletsController: {gameObject.name} привязан к пулу {pool.gameObject.name}");
+        //Debug.Log($"BulletsController: {gameObject.name} РїСЂРёРІСЏР·Р°РЅ Рє РїСѓР»Сѓ {pool.gameObject.name}");
         rb.velocity = direction.normalized * bulletData.Speed;
     }
 
     //public void SetPool(ObjectPool pool)
     //{
     //    objectPool = pool;
-    //    Debug.Log($"BulletsController: {gameObject.name} привязан к пулу {pool.gameObject.name}");
+    //    Debug.Log($"BulletsController: {gameObject.name} РїСЂРёРІСЏР·Р°РЅ Рє РїСѓР»Сѓ {pool.gameObject.name}");
     //}
 
     //private void MoveBullet(BulletsData bulletData)
@@ -71,21 +77,26 @@ public class BulletsController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy") || other.CompareTag("Environment"))
+        Debug.Log($"BulletsController: Hit {other.name} on layer {LayerMask.LayerToName(other.gameObject.layer)}");
+
+        if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
         {
             //if (objectPool != null)
             //{
-            //    Debug.Log($"BulletsController: {gameObject.name} возвращена в пул {objectPool.gameObject.name}");
+            //    Debug.Log($"BulletsController: {gameObject.name} РІРѕР·РІСЂР°С‰РµРЅР° РІ РїСѓР» {objectPool.gameObject.name}");
             //    DespawnBullet();
             //}
             //else
             //{
-            //    Debug.LogError($"BulletsController: ObjectPool Не назначен для {gameObject.name}!");
+            //    Debug.LogError($"BulletsController: ObjectPool РЅРµ РЅР°Р·РЅР°С‡РµРЅ РґР»СЏ {gameObject.name}!");
             //}
             HealthController enemyHealth = other.GetComponentInParent<HealthController>();
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(weaponData.Damage);
+
+                DespawnBullet();
+                return;
             }
         }
         DespawnBullet();
@@ -101,12 +112,12 @@ public class BulletsController : MonoBehaviour
     {
         //if (objectPool == null)
         //{
-        //    Debug.LogError($"BulletsController: ObjectPool не найден при попытке деспавна {gameObject.name}!");
+        //    Debug.LogError($"BulletsController: ObjectPool РЅРµ РЅР°Р№РґРµРЅ РїСЂРё РїРѕРїС‹С‚РєРµ РґРµСЃРїР°РІРЅР° {gameObject.name}!");
         //    return;
         //}
         //gameObject.SetActive(false);
         //objectPool.Despawn(gameObject);
-        //Debug.Log($"BulletsController: {gameObject.name} успешно деспавнена в {objectPool.gameObject.name}");
+        //Debug.Log($"BulletsController: {gameObject.name} СѓСЃРїРµС€РЅРѕ РґРµСЃРїР°РІРЅРµРЅР° РІ {objectPool.gameObject.name}");
 
         rb.velocity = Vector3.zero;
         gameObject.SetActive(false);
@@ -116,7 +127,7 @@ public class BulletsController : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"BulletsController: ObjectPool не назначен для {gameObject.name}!");
+            Debug.LogError($"BulletsController: ObjectPool РЅРµ РЅР°Р·РЅР°С‡РµРЅ РґР»СЏ {gameObject.name}!");
         }
     }
 }

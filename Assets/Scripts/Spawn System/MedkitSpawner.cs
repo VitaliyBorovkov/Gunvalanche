@@ -1,4 +1,4 @@
-using System.Linq;
+п»їusing System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -27,7 +27,7 @@ public class MedkitSpawner : ObjectSpawner
         }
         else
         {
-            Debug.LogWarning($"MedkitSpawner: У объекта {spawnedMedKit.name} отсутствует компонент MedKit!");
+            Debug.LogWarning($"MedkitSpawner: РЈ РѕР±СЉРµРєС‚Р° {spawnedMedKit.name} РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РєРѕРјРїРѕРЅРµРЅС‚ MedKit!");
         }
     }
 

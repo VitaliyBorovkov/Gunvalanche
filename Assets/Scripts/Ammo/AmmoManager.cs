@@ -1,4 +1,4 @@
-using System;
+п»їusing System;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -44,14 +44,14 @@ public class AmmoManager : MonoBehaviour
     {
         if (poolPrefab == null)
         {
-            Debug.LogWarning($"AmmoManager: Префаб {poolName} не назначен!");
+            Debug.LogWarning($"AmmoManager: РџСЂРµС„Р°Р± {poolName} РЅРµ РЅР°Р·РЅР°С‡РµРЅ!");
             return null;
         }
 
         GameObject poolObject = Instantiate(poolPrefab);
-        Debug.Log($"AmmoManager: PistolBulletsPool = {pistolBulletsPool?.gameObject.name}");
-        Debug.Log($"AmmoManager: RiffleBulletsPool = {riffleBulletsPool?.gameObject.name}");
-        Debug.Log($"AmmoManager: RocketsPool = {rocketsPool?.gameObject.name}");
+        //Debug.Log($"AmmoManager: PistolBulletsPool = {pistolBulletsPool?.gameObject.name}");
+        //Debug.Log($"AmmoManager: RiffleBulletsPool = {riffleBulletsPool?.gameObject.name}");
+        //Debug.Log($"AmmoManager: RocketsPool = {rocketsPool?.gameObject.name}");
         poolObject.name = poolName;
         return poolObject.GetComponent<ObjectPool>();
     }
@@ -61,7 +61,7 @@ public class AmmoManager : MonoBehaviour
         WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
         if (weaponConfigs.Length == 0)
         {
-            Debug.LogError("AmmoManager: WeaponConfig не найден! Убедись, что он лежит в папке Resources/ScriptableObjects/Weapons.");
+            Debug.LogError("AmmoManager: WeaponConfig РЅРµ РЅР°Р№РґРµРЅ! РЈР±РµРґРёСЃСЊ, С‡С‚Рѕ РѕРЅ Р»РµР¶РёС‚ РІ РїР°РїРєРµ Resources/ScriptableObjects/Weapons.");
             return;
         }
 
@@ -72,7 +72,7 @@ public class AmmoManager : MonoBehaviour
                 if (!ammoStorage.ContainsKey(weapon.GunsType))
                 {
                     ammoStorage[weapon.GunsType] = weapon.TotalAmmo;
-                    Debug.Log($"AmmoManager: Установлено {weapon.TotalAmmo} патронов для {weapon.GunsType} из WeaponConfig.");
+                    Debug.Log($"AmmoManager: РЈСЃС‚Р°РЅРѕРІР»РµРЅРѕ {weapon.TotalAmmo} РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ {weapon.GunsType} РёР· WeaponConfig.");
                 }
             }
         }
@@ -86,7 +86,7 @@ public class AmmoManager : MonoBehaviour
         }
 
         ammoStorage[type] = Mathf.Clamp(ammoStorage[type] + amount, 0, maxAmmo);
-        Debug.Log($"AmmoManager: Добавлено {amount} патронов для {type}. Всего: {ammoStorage[type]}/{maxAmmo}");
+        Debug.Log($"AmmoManager: Р”РѕР±Р°РІР»РµРЅРѕ {amount} РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ {type}. Р’СЃРµРіРѕ: {ammoStorage[type]}/{maxAmmo}");
     }
 
     public bool UseAmmo(GunsType type, int amount)
@@ -99,10 +99,10 @@ public class AmmoManager : MonoBehaviour
         if (ammoStorage[type] >= amount)
         {
             ammoStorage[type] -= amount;
-            Debug.Log($"AmmoManager: Использовано {amount} патронов для {type}.");
+            Debug.Log($"AmmoManager: РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ {amount} РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ {type}.");
             return false;
         }
-        Debug.LogWarning($"AmmoManager: Недостаточно патронов для {type}! Требуется: {amount}, есть: {ammoStorage[type]}.");
+        Debug.LogWarning($"AmmoManager: РќРµРґРѕСЃС‚Р°С‚РѕС‡РЅРѕ РїР°С‚СЂРѕРЅРѕРІ РґР»СЏ {type}! РўСЂРµР±СѓРµС‚СЃСЏ: {amount}, РµСЃС‚СЊ: {ammoStorage[type]}.");
         return true;
     }
 
@@ -110,12 +110,12 @@ public class AmmoManager : MonoBehaviour
     {
         if (!ammoStorage.ContainsKey(type))
         {
-            Debug.LogError($"AmmoManager: ОШИБКА! {type} не найден в ammoStorage.");
+            Debug.LogError($"AmmoManager: РћРЁРР‘РљРђ! {type} РЅРµ РЅР°Р№РґРµРЅ РІ ammoStorage.");
             return 0;
         }
 
         int totalAmmo = ammoStorage[type];
-        Debug.Log($"AmmoManager: Получаем патроны для {type}: {totalAmmo}");
+        Debug.Log($"AmmoManager: РџРѕР»СѓС‡Р°РµРј РїР°С‚СЂРѕРЅС‹ РґР»СЏ {type}: {totalAmmo}");
         return totalAmmo;
     }
 
@@ -130,7 +130,7 @@ public class AmmoManager : MonoBehaviour
             BulletsType.Rocket => rocketsPool,
             _ => null
         };
-        Debug.Log($"AmmoManager: Выдаём пул {pool?.gameObject.name} для {bulletsType}");
+        //Debug.Log($"AmmoManager: Р’С‹РґР°С‘Рј РїСѓР» {pool?.gameObject.name} РґР»СЏ {bulletsType}");
         return pool;
     }
 }

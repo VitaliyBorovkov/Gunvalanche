@@ -1,4 +1,4 @@
-using System.Linq;
+п»їusing System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,7 +16,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (Instance != null && Instance != this)
         {
-            Debug.LogError($"SpawnPointManager: Найден ещё один экземпляр SpawnPointManager на объекте {gameObject.name}. Он будет уничтожен.");
+            Debug.LogError($"SpawnPointManager: РќР°Р№РґРµРЅ РµС‰С‘ РѕРґРёРЅ СЌРєР·РµРјРїР»СЏСЂ SpawnPointManager РЅР° РѕР±СЉРµРєС‚Рµ {gameObject.name}. РћРЅ Р±СѓРґРµС‚ СѓРЅРёС‡С‚РѕР¶РµРЅ.");
             Destroy(gameObject);
             return;
         }
@@ -62,13 +62,13 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (spawnCooldown.ContainsKey(spawnPoint) && spawnCooldown[spawnPoint] > 0)
         {
-            //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} не доступна. Кулдаун ещё активен: {spawnCooldown[spawnPoint]:F2} сек.");
+            //Debug.Log($"SpawnPointManager: РўРѕС‡РєР° {spawnPoint.name} РЅРµ РґРѕСЃС‚СѓРїРЅР°. РљСѓР»РґР°СѓРЅ РµС‰С‘ Р°РєС‚РёРІРµРЅ: {spawnCooldown[spawnPoint]:F2} СЃРµРє.");
             return false;
         }
 
         if (occupiedPoints.ContainsKey(spawnPoint) && occupiedPoints[spawnPoint] != null)
         {
-            //Debug.Log($"SpawnPointManager occupiedPoints: Точка {spawnPoint.name} занята объектом {occupiedPoints[spawnPoint]}.");
+            //Debug.Log($"SpawnPointManager occupiedPoints: РўРѕС‡РєР° {spawnPoint.name} Р·Р°РЅСЏС‚Р° РѕР±СЉРµРєС‚РѕРј {occupiedPoints[spawnPoint]}.");         
             return false;
         }
 
@@ -77,11 +77,11 @@ public class SpawnPointManager : MonoBehaviour
         {
             if (col.GetComponent<CollectibleItems>() != null)
             {
-                //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} занята объектом {col.gameObject.name}, тип: {col.GetComponent<CollectibleItems>().GetType().Name}.");
+                //Debug.Log($"SpawnPointManager: РўРѕС‡РєР° {spawnPoint.name} Р·Р°РЅСЏС‚Р° РѕР±СЉРµРєС‚РѕРј {col.gameObject.name}, С‚РёРї: {col.GetComponent<CollectibleItems>().GetType().Name}.");
                 //return false;
             }
         }
-        //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} доступна для спавна.");
+        //Debug.Log($"SpawnPointManager: РўРѕС‡РєР° {spawnPoint.name} РґРѕСЃС‚СѓРїРЅР° РґР»СЏ СЃРїР°РІРЅР°.");
         return true;
     }
 
@@ -97,12 +97,12 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (occupiedPoints.ContainsKey(spawnPoint))
         {
-            //Debug.Log($"SpawnPointManager: Освобождаем точку {spawnPoint.name}.");
+            //Debug.Log($"SpawnPointManager: РћСЃРІРѕР±РѕР¶РґР°РµРј С‚РѕС‡РєСѓ {spawnPoint.name}.");
             occupiedPoints[spawnPoint] = null;
         }
         else
         {
-            Debug.LogWarning($"SpawnPointManager: Попытка освободить несуществующую точку {spawnPoint.name}.");
+            Debug.LogWarning($"SpawnPointManager: РџРѕРїС‹С‚РєР° РѕСЃРІРѕР±РѕРґРёС‚СЊ РЅРµСЃСѓС‰РµСЃС‚РІСѓСЋС‰СѓСЋ С‚РѕС‡РєСѓ {spawnPoint.name}.");
         }
     }
 
@@ -110,7 +110,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         if (spawnCooldown.ContainsKey(spawnPoint))
         {
-            //Debug.Log($"SpawnPointManager: Устанавливаем кулдаун для точки {spawnPoint.name}, время: {minSpawnCooldown} сек.");
+            //Debug.Log($"SpawnPointManager: РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РєСѓР»РґР°СѓРЅ РґР»СЏ С‚РѕС‡РєРё {spawnPoint.name}, РІСЂРµРјСЏ: {minSpawnCooldown} СЃРµРє.");
             spawnCooldown[spawnPoint] = minSpawnCooldown;
         }
     }

@@ -1,4 +1,4 @@
-using UnityEngine;
+п»їusing UnityEngine;
 
 public class EnemyHealthController : HealthController
 {
@@ -11,6 +11,7 @@ public class EnemyHealthController : HealthController
     {
         enemyPool = pool;
     }
+
     protected override void OnDamageTaken(int damage)
     {
         if (damageTextPrefab != null && damageTextSpawnPoint != null)
@@ -30,11 +31,11 @@ public class EnemyHealthController : HealthController
         if (enemyPool != null)
         {
             enemyPool.Despawn(gameObject);
-            //Debug.Log($"EnemyHealthController: {gameObject.name} был возвращён в пул.");
+            //Debug.Log($"EnemyHealthController: {gameObject.name} Р±С‹Р» РІРѕР·РІСЂР°С‰С‘РЅ РІ РїСѓР».");
         }
         else
         {
-            Debug.LogWarning($"EnemyHealthController: ObjectPool не найден для {gameObject.name}!");
+            Debug.LogWarning($"EnemyHealthController: ObjectPool РЅРµ РЅР°Р№РґРµРЅ РґР»СЏ {gameObject.name}!");
         }
     }
 }
