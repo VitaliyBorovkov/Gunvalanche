@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2927316160016557264}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RocketlauncherAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 7599152916654176852}
   - component: {fileID: 6422661797668085779}
   - component: {fileID: 2120175984098725329}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Object004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -232,7 +232,7 @@ GameObject:
   - component: {fileID: 8880922312969577119}
   - component: {fileID: 7315970520888718960}
   - component: {fileID: 6554201603179587374}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Object005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -316,6 +316,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_rocket (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_LocalScale.x
       value: 10000
@@ -389,6 +397,14 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_Name
       value: ammo_rocket (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_LocalScale.x
@@ -464,6 +480,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_rocket (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_LocalScale.x
       value: 10000
@@ -537,6 +561,14 @@ PrefabInstance:
     - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_Name
       value: ammo_rocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: f004b602fcc6f6e4aa5b75fc0a550467, type: 3}
       propertyPath: m_LocalScale.x

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7520025084388535741}
   - component: {fileID: 3134982031535488007}
   - component: {fileID: 4838856812303756878}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Object005
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 7081520291157906688}
   - component: {fileID: 4355776109012704027}
   - component: {fileID: 1308703939202149194}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Object004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7053695570897885552}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PistolAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -263,7 +263,8 @@ MonoBehaviour:
   rotationSpeed: 43
   floatDistance: 0.5
   ammoInBox: 14
-  ammoType: 0
+  gunsType: 0
+  bulletsType: 0
   ammoPickUpSound: {fileID: 0}
 --- !u!54 &1019001418259302823
 Rigidbody:
@@ -324,6 +325,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -399,6 +412,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12029.998
@@ -472,6 +497,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -547,6 +584,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12030
@@ -620,6 +669,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -695,6 +756,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12030
@@ -768,6 +841,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -843,6 +928,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12029.999
@@ -916,6 +1013,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (13)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -991,6 +1100,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12030
@@ -1064,6 +1185,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
@@ -1139,6 +1272,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12030
@@ -1213,6 +1358,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: ammo_pistol (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
       value: 12029.999
@@ -1286,6 +1443,18 @@ PrefabInstance:
     - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_Name
       value: ammo_pistol (12)
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100002, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 93375713b9d6e4a4ab7099069b571d4d, type: 3}
       propertyPath: m_LocalScale.x
