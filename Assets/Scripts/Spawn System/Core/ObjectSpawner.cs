@@ -1,10 +1,10 @@
 ﻿using System.Linq;
+
 using UnityEngine;
 
 public abstract class ObjectSpawner : MonoBehaviour
 {
     [Header("Spawn Settings")]
-
     [SerializeField] protected Transform[] spawnPoints;
     [SerializeField] protected int maxObjects = 10;
     [SerializeField] protected float spawnInterval = 5f;

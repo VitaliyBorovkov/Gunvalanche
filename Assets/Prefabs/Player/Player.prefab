@@ -74,7 +74,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 511
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityKey: Player
   playerMovement: {fileID: 1806327806865103107}
-  health: {fileID: 0}
+  health: {fileID: 1608169243435678818}
   navMeshAgent: {fileID: 0}
 --- !u!114 &5775478313144440459
 MonoBehaviour:
@@ -543,15 +543,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthData:
     MaxHealth: 1000
-    CurrentHealth: 0
+    CurrentHealth: 1000
     OnEndedHealth:
       m_PersistentCalls:
         m_Calls: []
   entityData:
     Name: Player
     Health: 1000
-    WalkSpeed: 3
-    RunSpeed: 6
+    WalkSpeed: 5
+    RunSpeed: 10
     Prefab: {fileID: 5586268211691920688}
 --- !u!114 &912738931009291248
 MonoBehaviour:
