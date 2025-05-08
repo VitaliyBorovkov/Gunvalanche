@@ -1,10 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AmmoBoxSpawner : ObjectSpawner
 {
     [Header("Ammo Box Settings")]
-
     [SerializeField] private ObjectPool pistolAmmoPool;
     [SerializeField] private ObjectPool riffleAmmoPool;
     [SerializeField] private ObjectPool rocketLauncherAmmoPool;
@@ -14,10 +12,17 @@ public class AmmoBoxSpawner : ObjectSpawner
         Transform spawnPoint = GetAvailableSpawnPoint(spawnPointManager, checkRadius, typeof(AmmoBox));
         if (spawnPoint == null)
         {
+            //Debug.LogError("AmmoBoxSpawner: Нет доступной точки для спавна.");
             return;
         }
 
         ObjectPool selectedPool = GetRandomAmmoPool();
+
+        if (selectedPool == null)
+        {
+            Debug.LogError("AmmoBoxSpawner: selectedPool is null!");
+            return;
+        }
         GameObject spawnedAmmoBox = selectedPool.Spawn(spawnPoint.position, Quaternion.identity);
         AmmoBox ammoBox = spawnedAmmoBox.GetComponent<AmmoBox>();
         if (ammoBox != null)
@@ -34,7 +39,7 @@ public class AmmoBoxSpawner : ObjectSpawner
 
     private ObjectPool GetRandomAmmoPool()
     {
-        int randomIndex = UnityEngine.Random.Range(0, 3);
+        int randomIndex = Random.Range(0, 3);
         return randomIndex switch
         {
             0 => pistolAmmoPool,
@@ -46,7 +51,7 @@ public class AmmoBoxSpawner : ObjectSpawner
 
     protected override int CountActiveObjects()
     {
-        return pistolAmmoPool.CountActiveObjects() + riffleAmmoPool.CountActiveObjects() + 
+        return pistolAmmoPool.CountActiveObjects() + riffleAmmoPool.CountActiveObjects() +
             rocketLauncherAmmoPool.CountActiveObjects();
     }
 }

@@ -15,6 +15,6 @@ MonoBehaviour:
   entityData:
   - Name: Player
     Health: 100
-    WalkSpeed: 5
-    RunSpeed: 10
+    WalkSpeed: 100
+    RunSpeed: 100
     Prefab: {fileID: 5586268211691920688, guid: 2497c09b4185d0346b9fcf0d6fe06aee, type: 3}
