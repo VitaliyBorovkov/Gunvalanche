@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -7276377515370164713}
   - component: {fileID: 723511304171934796}
   - component: {fileID: 190833289434155203}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FirstAidKit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,9 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 43
   floatDistance: 0.5
-  OnCollected:
-    m_PersistentCalls:
-      m_Calls: []
   healAmount: 50
 --- !u!54 &723511304171934796
 Rigidbody:
@@ -112,7 +109,7 @@ GameObject:
   - component: {fileID: 6630082160259498678}
   - component: {fileID: 400728656251127483}
   - component: {fileID: 6688051368483052475}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: First_aid_kit
   m_TagString: Untagged
   m_Icon: {fileID: 0}

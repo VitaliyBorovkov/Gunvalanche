@@ -295,8 +295,8 @@ MonoBehaviour:
   entityData:
     Name: WeakEnemy
     Health: 100
-    WalkSpeed: 3
-    RunSpeed: 5
+    WalkSpeed: 100
+    RunSpeed: 100
     Prefab: {fileID: 1272129834453451683}
   damageTextPrefab: {fileID: 0}
   damageTextSpawnPoint: {fileID: 0}
@@ -1232,7 +1232,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.47
   m_Height: 2.53
   m_Direction: 1
   m_Center: {x: 0, y: 1.26, z: 0}
