@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1842627251761832835}
   - component: {fileID: 4794913572565059687}
   - component: {fileID: 2950590110342207023}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 1136994612195256367}
   - component: {fileID: 3000623882847174513}
   - component: {fileID: 2097610665355853501}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: PistolBullet
   m_TagString: Bullet
   m_Icon: {fileID: 0}
@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 5854562758367784299}
   - component: {fileID: 5025362233429036223}
   - component: {fileID: 406076829077936648}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -278,7 +278,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2971161890365462586}
-  m_Layer: 3
+  m_Layer: 10
   m_Name: BulletRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
