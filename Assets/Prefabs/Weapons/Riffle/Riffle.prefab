@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7819212591617405478}
+  - component: {fileID: 1700445566322591642}
   m_Layer: 9
   m_Name: RiffleBulletSpawnPoint
   m_TagString: Untagged
@@ -25,12 +26,26 @@ Transform:
   m_GameObject: {fileID: 2161357159569149145}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06492156, y: -0.081692226, z: 0.7139392}
+  m_LocalPosition: {x: 0.058, y: -0.077, z: 0.727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7522231556062472599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1700445566322591642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2161357159569149145}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5dfabf13280f07b4faf4a71422a81f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  length: 0.5
+  color: {r: 0, g: 0, b: 1, a: 1}
 --- !u!1 &6670325427321337975
 GameObject:
   m_ObjectHideFlags: 0
