@@ -16,7 +16,7 @@ public abstract class ObjectSpawner : MonoBehaviour
 
     private void Start()
     {
-        InitializeSpawnPoinManager();
+        InitializeSpawnPointManager();
     }
 
     protected virtual void Update()
@@ -43,7 +43,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         return 0;
     }
 
-    private void InitializeSpawnPoinManager()
+    private void InitializeSpawnPointManager()
     {
         spawnPointManager = FindObjectOfType<SpawnPointManager>();
         if (spawnPointManager == null)
