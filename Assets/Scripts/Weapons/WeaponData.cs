@@ -1,11 +1,12 @@
 using System;
+
 using UnityEngine;
 
 [Serializable]
 public class WeaponData
 {
     public string Name;
-    
+
     public int Damage;
     public int TotalAmmo;
     public int CurrentAmmo;
@@ -18,5 +19,6 @@ public class WeaponData
     public BulletsType BulletsType;
 
     public GameObject GunPrefab;
+    public GameObject MuzzleFlashPrefab;
     public Transform BulletSpawnPoint;
 }

@@ -209,5 +209,26 @@ public class PlayerShoot : MonoBehaviour
         }
 
         bulletsController.Initialize(shootDirection, currentBulletsPool, weaponData);
+
+        if (weaponData.MuzzleFlashPrefab != null && spawnPoint != null)
+        {
+            GameObject muzzleFlash = Instantiate(weaponData.MuzzleFlashPrefab, spawnPoint.position, spawnPoint.rotation,
+                spawnPoint);
+
+            ParticleSystem particalSystem = muzzleFlash.GetComponent<ParticleSystem>();
+            if (particalSystem != null)
+            {
+                particalSystem.Play();
+                Destroy(muzzleFlash, particalSystem.main.duration);
+            }
+            else
+            {
+                Debug.LogWarning($"PlayerShoot: {weaponData.MuzzleFlashPrefab.name} не имеет ParticalSystem!");
+                Destroy(muzzleFlash, 1f);
+            }
+
+            Debug.Log($"PlayerShoot: Spawned muzzle flash for weapon {weaponData.Name}");
+            Debug.Log($"Muzzle flash position: {spawnPoint.position}, rotation: {spawnPoint.rotation}, weapon: {weaponData.Name}");
+        }
     }
 }
