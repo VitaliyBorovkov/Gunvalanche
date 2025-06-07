@@ -47,5 +47,5 @@ MonoBehaviour:
     GunsType: 2
     BulletsType: 2
     GunPrefab: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
-    MuzzleFlashPrefab: {fileID: 0}
+    MuzzleFlashPrefab: {fileID: 8541957050630807375, guid: 635a2bdcdc360ef49b4df8017e21184d, type: 3}
     BulletSpawnPoint: {fileID: 0}

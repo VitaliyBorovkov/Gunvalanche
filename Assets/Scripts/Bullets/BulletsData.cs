@@ -1,4 +1,5 @@
 using System;
+
 using UnityEngine;
 
 [Serializable]
@@ -11,6 +12,7 @@ public struct BulletsData
     public float LifeTime;
 
     public GameObject BulletPrefab;
+    public GameObject ExplosionEffectPrefab;
     public BulletsType BulletsType;
 
     public bool HitTarget { get; set; }
