@@ -1,15 +1,16 @@
 ﻿using System.Collections;
+using System.Linq;
 
 using UnityEngine;
 
 public class BulletsController : MonoBehaviour
 {
-    [SerializeField] public BulletsData bulletData;
+    private BulletsData bulletsData;
 
-    private ObjectPool objectPool;
     private Rigidbody rb;
-    private Coroutine despawnCoroutine;
+    private ObjectPool objectPool;
     private WeaponData weaponData;
+    private Coroutine despawnCoroutine;
 
     private int enemyLayer;
     private int environmentLayer;
@@ -29,9 +30,9 @@ public class BulletsController : MonoBehaviour
     private void OnEnable()
     {
         //Debug.Log($"BulletsController: {gameObject.name} активирована из пула. ObjectPool = {objectPool?.gameObject.name}");
-        if (bulletData.LifeTime > 0)
+        if (bulletsData.LifeTime > 0)
         {
-            despawnCoroutine = StartCoroutine(DespawnAfterTime(bulletData.LifeTime));
+            despawnCoroutine = StartCoroutine(DespawnAfterTime(bulletsData.LifeTime));
         }
     }
 
@@ -43,7 +44,7 @@ public class BulletsController : MonoBehaviour
         }
     }
 
-    public void Initialize(Vector3 direction, ObjectPool pool, WeaponData weapon)
+    public void Initialize(Vector3 direction, ObjectPool pool, WeaponData weapon, BulletsConfig bulletsConfig)
     {
         if (pool == null)
         {
@@ -52,8 +53,15 @@ public class BulletsController : MonoBehaviour
         }
         objectPool = pool;
         weaponData = weapon;
-        //Debug.Log($"BulletsController: {gameObject.name} привязан к пулу {pool.gameObject.name}");
-        rb.velocity = direction.normalized * bulletData.Speed;
+
+        bulletsData = bulletsConfig.bulletsData.FirstOrDefault(b => b.BulletsType == weapon.BulletsType);
+        if (bulletsData.BulletPrefab == null)
+        {
+            Debug.LogError($"BulletsController: Не найден BulletsData для {weapon.BulletsType} в {gameObject.name}!");
+            return;
+        }
+
+        rb.velocity = direction.normalized * bulletsData.Speed;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -81,6 +89,12 @@ public class BulletsController : MonoBehaviour
     private void DespawnBullet()
     {
         rb.velocity = Vector3.zero;
+
+        if (bulletsData.BulletsType == BulletsType.Rocket && bulletsData.ExplosionEffectPrefab != null)
+        {
+            Instantiate(bulletsData.ExplosionEffectPrefab, transform.position, Quaternion.identity);
+        }
+
         gameObject.SetActive(false);
         if (objectPool != null)
         {

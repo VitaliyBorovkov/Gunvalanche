@@ -516,7 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   WeaponsHolder: {fileID: 302710563676770984}
   playerReload: {fileID: 4443374691479103321}
-  bulletConfig: {fileID: 11400000, guid: cafaa0dcf0d84654eb943221c8db1c37, type: 2}
+  bulletsConfig: {fileID: 11400000, guid: cafaa0dcf0d84654eb943221c8db1c37, type: 2}
 --- !u!114 &4443374691479103321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -743,7 +743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2901763252424374121, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0642
+      value: 0.0846
       objectReference: {fileID: 0}
     - target: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
       propertyPath: m_Name
@@ -751,7 +751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4720197619940796575, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
       propertyPath: bulletSpawnPoint
@@ -922,7 +922,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
       propertyPath: m_TagString

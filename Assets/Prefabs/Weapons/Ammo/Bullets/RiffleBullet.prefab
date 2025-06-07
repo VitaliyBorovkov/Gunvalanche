@@ -253,6 +253,7 @@ MonoBehaviour:
     DistanceToTarget: 0.1
     LifeTime: 2
     BulletPrefab: {fileID: 6371162566170336153}
+    ExplosionEffectPrefab: {fileID: 0}
     BulletsType: 1
 --- !u!65 &6978733607568801909
 BoxCollider:
