@@ -6,10 +6,10 @@ public class PlayerShoot : MonoBehaviour
 {
     [SerializeField] private Transform WeaponsHolder;
     [SerializeField] private PlayerReload playerReload;
-    [SerializeField] private BulletsConfig bulletConfig;
+    [SerializeField] private BulletsConfig bulletsConfig;
 
     private WeaponData weaponData;
-    private BulletsData bulletData;
+    private BulletsData bulletsData;
     private GameObject currentWeapon;
     private Transform cameraTransform;
     private ObjectPool currentBulletsPool;
@@ -91,14 +91,14 @@ public class PlayerShoot : MonoBehaviour
             Debug.LogError($"PlayerShoot: Нет пула для типа {weaponData.BulletsType}");
         }
 
-        bulletData = GetBulletDataForWeapon(weaponData.BulletsType);
+        bulletsData = GetBulletDataForWeapon(weaponData.BulletsType);
 
         UpdateWeaponData();
     }
 
     private BulletsData GetBulletDataForWeapon(BulletsType bulletsType)
     {
-        foreach (var bullet in bulletConfig.bulletsData)
+        foreach (var bullet in bulletsConfig.bulletsData)
         {
             if (bullet.BulletsType == bulletsType)
             {
@@ -208,7 +208,7 @@ public class PlayerShoot : MonoBehaviour
             return;
         }
 
-        bulletsController.Initialize(shootDirection, currentBulletsPool, weaponData);
+        bulletsController.Initialize(shootDirection, currentBulletsPool, weaponData, bulletsConfig);
 
         if (weaponData.MuzzleFlashPrefab != null && spawnPoint != null)
         {
@@ -226,9 +226,6 @@ public class PlayerShoot : MonoBehaviour
                 Debug.LogWarning($"PlayerShoot: {weaponData.MuzzleFlashPrefab.name} не имеет ParticalSystem!");
                 Destroy(muzzleFlash, 1f);
             }
-
-            Debug.Log($"PlayerShoot: Spawned muzzle flash for weapon {weaponData.Name}");
-            Debug.Log($"Muzzle flash position: {spawnPoint.position}, rotation: {spawnPoint.rotation}, weapon: {weaponData.Name}");
         }
     }
 }
