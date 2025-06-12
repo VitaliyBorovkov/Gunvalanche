@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Linq;
 
 using UnityEngine;
 
@@ -41,10 +40,14 @@ public class BulletsController : MonoBehaviour
         if (despawnCoroutine != null)
         {
             StopCoroutine(despawnCoroutine);
+            despawnCoroutine = null;
         }
+
+        weaponData = null;
+        objectPool = null;
     }
 
-    public void Initialize(Vector3 direction, ObjectPool pool, WeaponData weapon, BulletsConfig bulletsConfig)
+    public void Initialize(Vector3 direction, ObjectPool pool, WeaponData weapon, BulletsData bullets)
     {
         if (pool == null)
         {
@@ -53,8 +56,8 @@ public class BulletsController : MonoBehaviour
         }
         objectPool = pool;
         weaponData = weapon;
+        bulletsData = bullets;
 
-        bulletsData = bulletsConfig.bulletsData.FirstOrDefault(b => b.BulletsType == weapon.BulletsType);
         if (bulletsData.BulletPrefab == null)
         {
             Debug.LogError($"BulletsController: Не найден BulletsData для {weapon.BulletsType} в {gameObject.name}!");
@@ -102,7 +105,7 @@ public class BulletsController : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"BulletsController: ObjectPool не назначен для {gameObject.name}!");
+            Debug.LogError($"BulletsController: ObjectPool is not assigned to {gameObject.name}!");
         }
     }
 }
