@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: -3606179375731577792}
   - component: {fileID: 2617132131175332452}
   - component: {fileID: 4720197619940796575}
+  - component: {fileID: 3125344162302381310}
   m_Layer: 9
   m_Name: RocketLauncher
   m_TagString: Weapon
@@ -144,6 +145,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponConfig: {fileID: 11400000, guid: 032b65d1d9673554188c52576086d257, type: 2}
   bulletSpawnPoint: {fileID: 2901763252424374121}
+--- !u!114 &3125344162302381310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3059680616655201781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7545ec1385b3ef344bddabdadffc05d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weaponConfigHolder: {fileID: 4720197619940796575}
+  bulletsConfig: {fileID: 11400000, guid: a880dbb6cce69b2418c5a64ce8f791bd, type: 2}
 --- !u!1 &4866659970225455259
 GameObject:
   m_ObjectHideFlags: 0
