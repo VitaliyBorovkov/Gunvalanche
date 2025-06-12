@@ -514,9 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5e781d9c2e7fcc42965bec4bd2dd919, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WeaponsHolder: {fileID: 302710563676770984}
-  playerReload: {fileID: 4443374691479103321}
-  bulletsConfig: {fileID: 11400000, guid: cafaa0dcf0d84654eb943221c8db1c37, type: 2}
 --- !u!114 &4443374691479103321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -959,6 +956,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3013873378800758759, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+      propertyPath: bulletsConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: df0f26c0378ef9940a85bc61a145c6ee, type: 2}
+    - target: {fileID: 3013873378800758759, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+      propertyPath: weaponConfigHolder
+      value: 
+      objectReference: {fileID: 8640345249296759891}
     - target: {fileID: 3039024031896939484, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
       propertyPath: length
       value: 100
@@ -1075,3 +1080,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6834337222945441097, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
   m_PrefabInstance: {fileID: 8349431554850456823}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8640345249296759891 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 303869807103424676, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
+  m_PrefabInstance: {fileID: 8349431554850456823}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 318472a21a21324438f67773748b6420, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

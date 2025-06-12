@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+
 using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
@@ -19,14 +20,21 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
-        WeaponData weaponData = playerShoot.GetWeaponData();
+        var weapon = playerShoot.GetCurrentWeapon();
+        if (weapon == null)
+        {
+            Debug.LogWarning("PlayerReload: No current weapon found.");
+            return;
+        }
+
+        WeaponData weaponData = weapon.GetWeaponData();
 
         if (isReloading)
         {
             Debug.Log(" PlayerReload. Already reloading");
             return;
         }
-       
+
         if (weaponData.CurrentAmmo == weaponData.MagazineSize)
         {
             Debug.Log(" PlayerReload. Magazine is full");
