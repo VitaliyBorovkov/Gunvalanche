@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerHealthController : HealthController
@@ -19,7 +18,7 @@ public class PlayerHealthController : HealthController
     {
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log("PlayerHealthController: Heal() отменён: игрок мёртв!");
+            Debug.Log("PlayerHealthController: Heal() пїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ!");
             return;
         }
 

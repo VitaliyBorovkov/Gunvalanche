@@ -1,15 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 using UnityEngine.InputSystem;
-using System.Collections.Generic;
 
 public class PlayerSwitchWeapon : MonoBehaviour
 {
     [Header("Weapon Config")]
-
     public Transform weaponsHolder;
 
-    private List<GameObject> weaponInstances = new List<GameObject>();
-    private WeaponConfig currentWeaponConfig;
+    //private List<GameObject> weaponInstances = new List<GameObject>();
+    private List<IWeapon> weaponList = new List<IWeapon>();
+    //private WeaponConfig currentWeaponConfig;
     private int currentWeaponIndex = 0;
     private PlayerShoot playerShoot;
 
@@ -19,19 +20,37 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (weaponsHolder == null)
         {
-            Debug.Log("PlayerSwitchWeapon: WeaponsHolder не назначен!");
+            Debug.Log("PlayerSwitchWeapon: WeaponsHolder not assigned!");
             return;
         }
 
-        foreach (Transform weapon in weaponsHolder)
+        foreach (Transform weaponTransform in weaponsHolder)
         {
-            weaponInstances.Add(weapon.gameObject);
-            weapon.gameObject.SetActive(false);
+            GameObject weaponGO = weaponTransform.gameObject;
+            IWeapon weapon = weaponGO.GetComponent<IWeapon>();
+            if (weapon != null)
+            {
+                weaponList.Add(weapon);
+                weaponGO.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning($"PlayerSwitchWeapon: {weaponGO.name} does not implement IWeapon interface!");
+            }
         }
+        //foreach (Transform weapon in weaponsHolder)
+        //{
+        //    weaponInstances.Add(weapon.gameObject);
+        //    weapon.gameObject.SetActive(false);
+        //}
 
-        if (weaponInstances.Count > 0)
+        if (weaponList.Count > 0)
         {
             SwitchWeaponByIndex(0);
+        }
+        else
+        {
+            Debug.LogWarning("PlayerSwitchWeapon:  No weapons have been added to the list.");
         }
     }
 
@@ -50,66 +69,86 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
     private void SwitchToNextWeapon()
     {
-        if (weaponInstances.Count == 0)
+        if (weaponList.Count == 0)
         {
             return;
         }
 
-        currentWeaponIndex++;
-        if (currentWeaponIndex >= weaponInstances.Count)
-        {
-            currentWeaponIndex = 0;
-        }
+        currentWeaponIndex = (currentWeaponIndex + 1) % weaponList.Count;
+        //currentWeaponIndex++;
+        //if (currentWeaponIndex >= weaponList.Count)
+        //{
+        //    currentWeaponIndex = 0;
+        //}
 
         SwitchWeaponByIndex(currentWeaponIndex);
     }
 
     private void SwitchToPreviousWeapon()
     {
-        if (weaponInstances.Count == 0)
+        if (weaponList.Count == 0)
         {
             return;
         }
 
-        currentWeaponIndex--;
-        if (currentWeaponIndex < 0)
-        {
-            currentWeaponIndex = weaponInstances.Count - 1;
-        }
+        currentWeaponIndex = (currentWeaponIndex - 1 + weaponList.Count) % weaponList.Count;
+        //currentWeaponIndex--;
+        //if (currentWeaponIndex < 0)
+        //{
+        //    currentWeaponIndex = weaponList.Count - 1;
+        //}
 
         SwitchWeaponByIndex(currentWeaponIndex);
     }
 
     public void SwitchWeaponByIndex(int index)
     {
-        if (weaponInstances.Count == 0 || index < 0 || index >= weaponInstances.Count)
+        if (weaponList.Count == 0 || index < 0 || index >= weaponList.Count)
         {
             return;
         }
 
-        foreach (var weapon in weaponInstances)
+
+
+        for (int i = 0; i < weaponList.Count; i++)
         {
-            weapon.SetActive(false);
+            MonoBehaviour weaponMB = weaponList[i] as MonoBehaviour;
+            if (weaponMB != null)
+            {
+                weaponMB.gameObject.SetActive(i == index);
+            }
         }
 
         currentWeaponIndex = index;
-        weaponInstances[currentWeaponIndex].SetActive(true);
+
+        if (playerShoot != null)
+        {
+            playerShoot.SetCurrentWeapon(weaponList[currentWeaponIndex]);
+        }
+
+        //foreach (var weapon in weaponList)
+        //{
+        //    weapon.SetActive(false);
+        //}
+
+        //currentWeaponIndex = index;
+        //weaponList[currentWeaponIndex].SetActive(true);
 
 
-        WeaponConfigHolder  holder = weaponInstances[currentWeaponIndex].GetComponent<WeaponConfigHolder>();
-        if (holder != null && holder.weaponConfig != null)
-        {
-            currentWeaponConfig = holder.weaponConfig;
-        
-            if (playerShoot != null)
-            {
-                playerShoot.SetCurrentWeapon(weaponInstances[currentWeaponIndex]);
-                playerShoot.UpdateWeaponData();
-            }
-        }
-        else
-        {
-            Debug.LogWarning($"PlayerSwitchWeapon: У {weaponInstances[currentWeaponIndex].name} нет WeaponConfigHolder или WeaponConfig!");
-        }
+        //WeaponConfigHolder  holder = weaponInstances[currentWeaponIndex].GetComponent<WeaponConfigHolder>();
+        //if (holder != null && holder.weaponConfig != null)
+        //{
+        //    currentWeaponConfig = holder.weaponConfig;
+
+        //    if (playerShoot != null)
+        //    {
+        //        playerShoot.SetCurrentWeapon(weaponInstances[currentWeaponIndex]);
+        //        playerShoot.UpdateWeaponData();
+        //    }
+        //}
+        //else
+        //{
+        //    Debug.LogWarning($"PlayerSwitchWeapon: У {weaponInstances[currentWeaponIndex].name} нет WeaponConfigHolder или WeaponConfig!");
+        //}
     }
 }

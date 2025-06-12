@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AmmoBox : CollectibleItems
 {
@@ -25,8 +24,8 @@ public class AmmoBox : CollectibleItems
 
     protected override void Collect(GameObject player)
     {
-        WeaponData weaponData = player.GetComponent<PlayerShoot>().GetWeaponData();
-        if (weaponData == null) 
+        WeaponData weaponData = player.GetComponent<IWeapon>().GetWeaponData();
+        if (weaponData == null)
         {
             return;
         }
