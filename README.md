@@ -1,4 +1,4 @@
-# SeriousVetal
+# Gunvananch
 
 SeriousVetal is a small shooter prototype built with Unity. The repository contains all Unity assets and sources needed to open and run the project.
 
