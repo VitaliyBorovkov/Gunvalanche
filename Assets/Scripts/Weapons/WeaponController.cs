@@ -50,11 +50,16 @@ public class WeaponController : MonoBehaviour, IWeapon
 
         weaponData.CurrentAmmo--;
 
-        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation);
-        if (bullet.TryGetComponent(out BulletsController bulletsController))
+        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
+
+        if (bullet.TryGetComponent(out IBullet bulletsController))
         {
             Vector3 direction = GetShootDirection();
             bulletsController.Initialize(direction, bulletsPool, weaponData, bulletsData);
+        }
+        else
+        {
+            Debug.LogError($"WeaponController: {bullet.name} does not have BaseBulletController!");
         }
 
         PlayMuzzleFlash();

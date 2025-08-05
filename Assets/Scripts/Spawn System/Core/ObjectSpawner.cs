@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -62,12 +62,20 @@ public abstract class ObjectSpawner : MonoBehaviour
     {
         if (!CheckerToNull.CheckArrayNotEmpty(spawnPoints, nameof(spawnPoints)))
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: Точки спавна не настроены.");
+            Debug.Log($"ObjectSpawner: {GetType().Name}: Spawn points are not configured.");
             return null;
         }
 
-        var availablePoints = spawnPoints.Where(point =>
-            spawnPointManager.IsPointAvailable(point, checkRadius, itemType)).ToList();
+        List<Transform> availablePoints = new List<Transform>();
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            Transform point = spawnPoints[i];
+            if (spawnPointManager.IsPointAvailable(point, checkRadius, itemType))
+            {
+                availablePoints.Add(point);
+            }
+        }
+
         if (availablePoints.Count == 0)
         {
             return null;

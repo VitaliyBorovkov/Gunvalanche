@@ -1,16 +1,16 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class PoolableObject : MonoBehaviour
-{
-    private string PoolID;
+//public class PoolableObject : MonoBehaviour
+//{
+//    private string PoolID;
 
-    public void SetPoolID(string poolID)
-    {
-        PoolID = poolID;
-    }
+//    public void SetPoolID(string poolID)
+//    {
+//        PoolID = poolID;
+//    }
 
-    public string GetPoolID()
-    {
-        return PoolID;
-    }
-}
+//    public string GetPoolID()
+//    {
+//        return PoolID;
+//    }
+//}
