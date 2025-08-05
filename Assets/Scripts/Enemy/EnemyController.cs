@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
+    private bool hasLoggedMissingPlayer = false;
+
     private void OnEnable()
     {
         if (playerTransform == null)
@@ -41,9 +43,14 @@ public class EnemyController : MonoBehaviour
     {
         if (playerTransform == null)
         {
-            Debug.Log($"EnemyController: {gameObject.name} не имеет ссылки на игрока!");
+            if (!hasLoggedMissingPlayer)
+            {
+                Debug.Log($"EnemyController:{gameObject.name}does not have a reference to the player!");
+                hasLoggedMissingPlayer = true;
+            }
             return;
         }
+        hasLoggedMissingPlayer = false;
 
         navMeshAgent.SetDestination(playerTransform.position);
 
@@ -84,7 +91,7 @@ public class EnemyController : MonoBehaviour
 
     public void SetPlayerTransform(Transform player)
     {
-        playerTransform = player; 
+        playerTransform = player;
     }
 }
 

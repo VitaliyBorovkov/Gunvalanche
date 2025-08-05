@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(Collider))]
 [RequireComponent(typeof(Rigidbody))]
@@ -51,9 +49,9 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         }
     }
 
-    public virtual void Collect() 
+    public virtual void Collect()
     {
-        Collect(null); 
+        Collect(null);
     }
 
     protected virtual void Collect(GameObject player)

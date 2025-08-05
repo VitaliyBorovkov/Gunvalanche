@@ -209,9 +209,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752082409461162038}
-  - component: {fileID: 2435466060220192050}
   - component: {fileID: 6978733607568801909}
   - component: {fileID: 8438554041054577412}
+  - component: {fileID: 2435466060220192050}
   m_Layer: 10
   m_Name: RiffleBullet
   m_TagString: Bullet
@@ -235,26 +235,6 @@ Transform:
   - {fileID: 7961043291673389456}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2435466060220192050
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6371162566170336153}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b8ac218be86bc744b0b9c89791bdcb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletData:
-    Name: RiffleBullet
-    Speed: 50
-    DistanceToTarget: 0.1
-    LifeTime: 2
-    BulletPrefab: {fileID: 6371162566170336153}
-    ExplosionEffectPrefab: {fileID: 0}
-    BulletsType: 1
 --- !u!65 &6978733607568801909
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -303,3 +283,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &2435466060220192050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6371162566170336153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8ac218be86bc744b0b9c89791bdcb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
