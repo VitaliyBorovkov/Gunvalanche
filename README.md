@@ -1,6 +1,6 @@
 # Gunvananch
 
-SeriousVetal is a small shooter prototype built with Unity. The repository contains all Unity assets and sources needed to open and run the project.
+Gunvananch is a small shooter prototype built with Unity. The repository contains all Unity assets and sources needed to open and run the project.
 
 ## Prerequisites
 - **Unity 2022.3.5f1** or newer (see `ProjectSettings/ProjectVersion.txt`).
