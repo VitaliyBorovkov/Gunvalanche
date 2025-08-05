@@ -27,7 +27,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
-    public GameObject Spawn(Vector3 position, Quaternion rotation)
+    public GameObject Spawn(Vector3 position, Quaternion rotation, bool autoActivate = true)
     {
         if (ObjectQueue.Count == 0)
         {
@@ -38,7 +38,12 @@ public class ObjectPool : MonoBehaviour
         GameObject obj = ObjectQueue.Dequeue();
         obj.transform.position = position;
         obj.transform.rotation = rotation;
-        obj.SetActive(true);
+
+        if (autoActivate)
+        {
+            obj.SetActive(true);
+        }
+
 
         activeObjectsCount++;
 
