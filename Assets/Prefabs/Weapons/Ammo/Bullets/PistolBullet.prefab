@@ -93,9 +93,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7744545537230779748}
-  - component: {fileID: 1136994612195256367}
   - component: {fileID: 3000623882847174513}
   - component: {fileID: 2097610665355853501}
+  - component: {fileID: 3275029178820760495}
   m_Layer: 10
   m_Name: PistolBullet
   m_TagString: Bullet
@@ -119,25 +119,6 @@ Transform:
   - {fileID: 2971161890365462586}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1136994612195256367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4033052067013613883}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b8ac218be86bc744b0b9c89791bdcb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bulletData:
-    Name: PistolBullet
-    Speed: 30
-    DistanceToTarget: 0.1
-    LifeTime: 3
-    BulletPrefab: {fileID: 4033052067013613883}
-    BulletsType: 0
 --- !u!65 &3000623882847174513
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -186,6 +167,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &3275029178820760495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4033052067013613883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b8ac218be86bc744b0b9c89791bdcb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4183362447969786891
 GameObject:
   m_ObjectHideFlags: 0
