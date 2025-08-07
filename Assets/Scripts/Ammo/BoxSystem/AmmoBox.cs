@@ -24,20 +24,29 @@ public class AmmoBox : CollectibleItems
 
     protected override void Collect(GameObject player)
     {
-        WeaponData weaponData = player.GetComponent<IWeapon>().GetWeaponData();
-        if (weaponData == null)
+
+        PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
+        if (playerShoot == null)
         {
+            Debug.LogWarning($"AmmoBox: {player.name} does not contain PlayerShoot!");
             return;
         }
 
-        int currentTotalAmmo = AmmoManager.Instance.GetTotalAmmo(gunsType);
-        int maxAmmo = GetMaxAmmoFromConfig(gunsType);
-
-        if (currentTotalAmmo >= maxAmmo)
+        var weapon = playerShoot.GetCurrentWeapon();
+        if (weapon == null)
         {
-            Debug.Log($"AmmoBox: Боезапас для {gunsType} уже полный ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+            Debug.LogWarning($"AmmoBox: Player {player.name} has no active weapon selected..");
             return;
         }
+
+        WeaponData weaponData = weapon.GetWeaponData();
+        if (weaponData.Equals(default(WeaponData)))
+        {
+            Debug.LogWarning($"AmmoBox: Unable to obtain WeaponData from {weapon}.");
+            return;
+        }
+
+        //int maxAmmo = GetMaxAmmoFromConfig(gunsType);
 
         PlayPickUpSound();
 
@@ -48,7 +57,7 @@ public class AmmoBox : CollectibleItems
         }
         else
         {
-            Debug.LogWarning($"AmmoBox: ObjectPool не установлен для {gameObject.name}!");
+            Debug.LogWarning($"AmmoBox: ObjectPool not set for {gameObject.name}!");
         }
 
         if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -72,7 +81,7 @@ public class AmmoBox : CollectibleItems
             }
         }
 
-        Debug.LogWarning($"AmmoBox: Не найден maxAmmo для {gunsType} в WeaponConfig!");
+        Debug.LogWarning($"AmmoBox: MaxAmmo not found for {gunsType} в WeaponConfig!");
         return 0;
     }
 
@@ -91,18 +100,20 @@ public class AmmoBox : CollectibleItems
 
                     if (currentTotalAmmo >= maxAmmo)
                     {
-                        Debug.Log($"AmmoBox: Боезапас для {weapon.GunsType} уже полный ({currentTotalAmmo}/{maxAmmo}). Ящик не исчезает.");
+                        Debug.Log($"AmmoBox: The ammunition for {gunsType} is already full ({currentTotalAmmo}/" +
+                            $"{maxAmmo}). The box does not disappear.");
                         return false;
                     }
 
                     AmmoManager.Instance.AddAmmo(weapon.GunsType, ammoInBox, maxAmmo);
-                    Debug.Log($"AmmoBox: Игрок подобрал {ammoInBox} патронов для {weapon.GunsType}. Теперь в запасе: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
+                    Debug.Log($"AmmoBox: The player has picked up {ammoInBox} rounds of ammunition for " +
+                        $"{weapon.GunsType}. Now in stock: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
                     return true;
                 }
             }
         }
 
-        Debug.LogWarning($"AmmoBox: Оружие с типом {gunsType} не найдено в WeaponConfig!");
+        Debug.LogWarning($"AmmoBox: Weapons of type {gunsType} not found in WeaponConfig!");
         return false;
     }
 
