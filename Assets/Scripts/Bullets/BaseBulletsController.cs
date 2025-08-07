@@ -69,7 +69,6 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         }
 
         weaponData = null;
-        //objectPool = null;
     }
 
     protected virtual void OnTriggerEnter(Collider other)

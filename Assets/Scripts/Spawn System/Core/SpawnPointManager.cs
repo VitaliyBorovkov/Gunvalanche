@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SpawnPointManager : MonoBehaviour
 {
@@ -42,7 +41,7 @@ public class SpawnPointManager : MonoBehaviour
     {
         List<Transform> keys = new List<Transform>(spawnCooldown.Keys);
 
-        foreach(Transform spawnPoint in keys)
+        foreach (Transform spawnPoint in keys)
         {
             if (spawnCooldown[spawnPoint] > 0)
             {
@@ -78,7 +77,7 @@ public class SpawnPointManager : MonoBehaviour
             if (col.GetComponent<CollectibleItems>() != null)
             {
                 //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} занята объектом {col.gameObject.name}, тип: {col.GetComponent<CollectibleItems>().GetType().Name}.");
-                //return false;
+                return false;
             }
         }
         //Debug.Log($"SpawnPointManager: Точка {spawnPoint.name} доступна для спавна.");
