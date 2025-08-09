@@ -4,4 +4,6 @@ public interface IWeapon
     float GetFireRate();
     void Shoot();
     WeaponData GetWeaponData();
+    int GetCurrentAmmoInClip();
+    int GetTotalAmmo();
 }

@@ -20,5 +20,4 @@ public class WeaponData
 
     public GameObject GunPrefab;
     public GameObject MuzzleFlashPrefab;
-    //public Transform BulletSpawnPoint;
 }
