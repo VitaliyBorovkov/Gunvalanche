@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -44,7 +43,7 @@ public class AmmoManager : MonoBehaviour
     {
         if (poolPrefab == null)
         {
-            Debug.LogWarning($"AmmoManager: Префаб {poolName} не назначен!");
+            Debug.LogWarning($"AmmoManager: Prefab {poolName} not assigned!");
             return null;
         }
 
@@ -61,7 +60,6 @@ public class AmmoManager : MonoBehaviour
         WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
         if (weaponConfigs.Length == 0)
         {
-            Debug.LogError("AmmoManager: WeaponConfig не найден! Убедись, что он лежит в папке Resources/ScriptableObjects/Weapons.");
             return;
         }
 
@@ -72,7 +70,6 @@ public class AmmoManager : MonoBehaviour
                 if (!ammoStorage.ContainsKey(weapon.GunsType))
                 {
                     ammoStorage[weapon.GunsType] = weapon.TotalAmmo;
-                    Debug.Log($"AmmoManager: Установлено {weapon.TotalAmmo} патронов для {weapon.GunsType} из WeaponConfig.");
                 }
             }
         }
@@ -86,7 +83,7 @@ public class AmmoManager : MonoBehaviour
         }
 
         ammoStorage[type] = Mathf.Clamp(ammoStorage[type] + amount, 0, maxAmmo);
-        Debug.Log($"AmmoManager: Добавлено {amount} патронов для {type}. Всего: {ammoStorage[type]}/{maxAmmo}");
+        Debug.Log($"AmmoManager: Added {amount} ammo for {type}. Total: {ammoStorage[type]}/{maxAmmo}");
     }
 
     public bool UseAmmo(GunsType type, int amount)
@@ -99,10 +96,10 @@ public class AmmoManager : MonoBehaviour
         if (ammoStorage[type] >= amount)
         {
             ammoStorage[type] -= amount;
-            Debug.Log($"AmmoManager: Использовано {amount} патронов для {type}.");
+            Debug.Log($"AmmoManager: {amount} ammo used for {type}.");
             return false;
         }
-        Debug.LogWarning($"AmmoManager: Недостаточно патронов для {type}! Требуется: {amount}, есть: {ammoStorage[type]}.");
+        Debug.LogWarning($"AmmoManager: Not enough ammo for {type}! Required: {amount}, available: {ammoStorage[type]}.");
         return true;
     }
 
@@ -110,19 +107,17 @@ public class AmmoManager : MonoBehaviour
     {
         if (!ammoStorage.ContainsKey(type))
         {
-            Debug.LogError($"AmmoManager: ОШИБКА! {type} не найден в ammoStorage.");
+            //Debug.LogError($"AmmoManager: {type} not found in ammoStorage.");
             return 0;
         }
 
         int totalAmmo = ammoStorage[type];
-        Debug.Log($"AmmoManager: Получаем патроны для {type}: {totalAmmo}");
+        //Debug.Log($"AmmoManager: Receive ammo for {type}: {totalAmmo}");
         return totalAmmo;
     }
 
     public ObjectPool GetBulletsPool(BulletsType bulletsType)
     {
-
-        //return bulletsType switch
         ObjectPool pool = bulletsType switch
         {
             BulletsType.Pistol => pistolBulletsPool,
@@ -130,7 +125,6 @@ public class AmmoManager : MonoBehaviour
             BulletsType.Rocket => rocketsPool,
             _ => null
         };
-        //Debug.Log($"AmmoManager: Выдаём пул {pool?.gameObject.name} для {bulletsType}");
         return pool;
     }
 }
