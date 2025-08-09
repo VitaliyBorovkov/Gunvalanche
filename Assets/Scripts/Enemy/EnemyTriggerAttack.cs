@@ -17,7 +17,6 @@ public class EnemyTriggerAttack : MonoBehaviour
             {
                 playerHealth.TakeDamage(damage);
                 lastAttackTime = Time.time;
-                Debug.Log($"EnemyTriggerAttack: Нанесён урон - {damage}. Здоровье игрока: {playerHealth.GetCurrentHealth()}");
             }
         }
     }

@@ -20,7 +20,7 @@ public class MedKit : CollectibleItems
             if (playerHealthController.GetCurrentHealth() < playerHealthController.GetMaxHealth())
             {
                 playerHealthController.Heal(healAmount);
-                Debug.Log($"MedKit: {gameObject.name}: Игрок {player.name} исцелён на {healAmount} HP.");
+                Debug.Log($"MedKit: {gameObject.name}: {player.name} has been healed for {healAmount} HP.");
                 base.Collect(player);
 
                 if (medKitPool != null)
@@ -29,7 +29,7 @@ public class MedKit : CollectibleItems
                 }
                 else
                 {
-                    Debug.LogWarning($"MedKit: ObjectPool не установлен для {gameObject.name}!");
+                    Debug.LogWarning($"MedKit: ObjectPool not set for {gameObject.name}!");
                 }
 
                 if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -40,12 +40,12 @@ public class MedKit : CollectibleItems
             }
             else
             {
-                Debug.LogWarning($"MedKit: {gameObject.name}: У игрока {player.name} полное здоровье и аптечка не была подобрана.");
+                Debug.LogWarning($"MedKit: {gameObject.name}: {player.name} has full health and no first aid kit has been picked up.");
             }
         }
         else
         {
-            Debug.LogWarning($"MedKit: {player.name} не имеет PlayerHealthController!", this);
+            Debug.LogWarning($"MedKit: {player.name} does not have PlayerHealthController!", this);
         }
     }
 

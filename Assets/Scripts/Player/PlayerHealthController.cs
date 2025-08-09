@@ -18,7 +18,6 @@ public class PlayerHealthController : HealthController
     {
         if (healthData.CurrentHealth <= 0)
         {
-            Debug.Log("PlayerHealthController: Heal() ������: ����� ����!");
             return;
         }
 

@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 using UnityEngine;
@@ -11,8 +12,11 @@ public class WeaponController : MonoBehaviour, IWeapon
     private BulletsData bulletsData;
     private ObjectPool bulletsPool;
     private Transform spawnPoint;
+    private IAutoReload autoReloadHandler;
 
-    private void Start()
+    public event Action OnAmmoChanged;
+
+    private void Awake()
     {
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
@@ -26,9 +30,20 @@ public class WeaponController : MonoBehaviour, IWeapon
             weaponData.CurrentAmmo = weaponData.MagazineSize;
         }
 
-        bulletsData = bulletsConfig.bulletsData.FirstOrDefault(b => b.BulletsType == weaponData.BulletsType);
-        bulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
         spawnPoint = weaponConfigHolder.bulletSpawnPoint;
+    }
+
+    private void Start()
+    {
+        if (bulletsConfig != null)
+        {
+            bulletsData = bulletsConfig.bulletsData.FirstOrDefault(b => b.BulletsType == weaponData.BulletsType);
+        }
+
+        if (AmmoManager.Instance != null)
+        {
+            bulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
+        }
     }
 
     public bool CanShoot()
@@ -50,6 +65,8 @@ public class WeaponController : MonoBehaviour, IWeapon
 
         weaponData.CurrentAmmo--;
 
+        autoReloadHandler?.TryAutoReload();
+
         GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
 
         if (bullet.TryGetComponent(out IBullet bulletsController))
@@ -63,6 +80,8 @@ public class WeaponController : MonoBehaviour, IWeapon
         }
 
         PlayMuzzleFlash();
+
+        OnAmmoChanged?.Invoke();
     }
 
     public WeaponData GetWeaponData()
@@ -94,5 +113,31 @@ public class WeaponController : MonoBehaviour, IWeapon
         {
             Destroy(flash, 1f);
         }
+    }
+
+    public int GetCurrentAmmoInClip()
+    {
+        return weaponData != null ? weaponData.CurrentAmmo : 0;
+    }
+
+    public int GetTotalAmmo()
+    {
+        if (weaponData == null)
+        {
+            Debug.LogWarning("WeaponController: weaponData is null in GetTotalAmmo()");
+            return 0;
+        }
+
+        return AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType);
+    }
+
+    public void InvokeAmmoChanged()
+    {
+        OnAmmoChanged?.Invoke();
+    }
+
+    public void SetAutoReloadHandler(IAutoReload autoReload)
+    {
+        autoReloadHandler = autoReload;
     }
 }
