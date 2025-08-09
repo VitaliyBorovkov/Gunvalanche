@@ -16,7 +16,7 @@ public class PlayerReload : MonoBehaviour
     {
         if (playerShoot == null || playerShoot.GetCurrentWeapon() == null)
         {
-            Debug.LogWarning("PlayerReload: Нет активного оружия!");
+            Debug.LogWarning("PlayerReload: No active weapons!");
             return;
         }
 
@@ -43,7 +43,7 @@ public class PlayerReload : MonoBehaviour
 
         if (AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) <= 0)
         {
-            Debug.Log("PlayerReload: Нет патронов в запасе");
+            Debug.Log("PlayerReload: No ammo in reserve");
             return;
         }
 
@@ -65,7 +65,12 @@ public class PlayerReload : MonoBehaviour
         AmmoManager.Instance.UseAmmo(weaponData.GunsType, ammoToReload);
 
         isReloading = false;
-        Debug.Log($"PlayerReload: Перезаряжено {ammoToReload} патронов. Остаток: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
+        //Debug.Log($"PlayerReload: Reload {ammoToReload} ammo. Left: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
+
+        if (playerShoot.GetCurrentWeapon() is WeaponController weaponController)
+        {
+            weaponController.InvokeAmmoChanged();
+        }
     }
 
     public bool IsReloading()

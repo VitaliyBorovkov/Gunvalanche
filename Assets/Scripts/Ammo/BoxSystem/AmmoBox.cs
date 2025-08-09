@@ -65,6 +65,15 @@ public class AmmoBox : CollectibleItems
             SpawnPointManager.Instance.ReleasePoint(spawnPoint);
             SpawnPointManager.Instance.SetCooldown(spawnPoint);
         }
+
+        if (player.TryGetComponent<PlayerShoot>(out var playerShoot1))
+        {
+            var currentWeapon = playerShoot1.GetCurrentWeapon();
+            if (currentWeapon is WeaponController weaponController)
+            {
+                weaponController.InvokeAmmoChanged();
+            }
+        }
     }
 
     private int GetMaxAmmoFromConfig(GunsType gunsType)
