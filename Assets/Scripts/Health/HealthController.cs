@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
@@ -8,6 +10,9 @@ public class HealthController : MonoBehaviour, IDamageable
     protected PlayerHpUI playerHpUI;
     private bool isPlayer;
     private bool isDead = false;
+
+    public event Action OnDied;
+    public bool IsDead => isDead;
 
     protected virtual void Start()
     {
@@ -50,6 +55,11 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public virtual void TakeDamage(int damage)
     {
+        if (isDead)
+        {
+            //Debug.LogWarning($"HealthController: {entityData.Name} is already dead. Cannot take damage.");
+            return;
+        }
 
         if (healthData.CurrentHealth <= 0)
         {
@@ -71,6 +81,11 @@ public class HealthController : MonoBehaviour, IDamageable
 
     public void SetHealth(int health)
     {
+        if (isDead)
+        {
+            return;
+        }
+
         healthData.CurrentHealth = Mathf.Clamp(health, 0, entityData.Health);
         Debug.Log($"HealthController: {entityData.Name} health set to: {healthData.CurrentHealth}");
 
@@ -79,11 +94,17 @@ public class HealthController : MonoBehaviour, IDamageable
 
     protected virtual void Die()
     {
+        if (isDead)
+        {
+            return;
+        }
+
+        isDead = true;
+
         Debug.Log($"HealthController:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
-        if (isDead) return;
-        isDead = true;
+        OnDied?.Invoke();
     }
 
     private void UpdateHeadUI()
@@ -96,6 +117,5 @@ public class HealthController : MonoBehaviour, IDamageable
 
     protected virtual void OnDamageTaken(int damage)
     {
-
     }
 }

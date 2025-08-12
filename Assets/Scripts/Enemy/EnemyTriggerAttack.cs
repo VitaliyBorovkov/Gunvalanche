@@ -18,6 +18,11 @@ public class EnemyTriggerAttack : MonoBehaviour
                 playerHealth.TakeDamage(damage);
                 lastAttackTime = Time.time;
             }
+
+            if (playerHealth.IsDead)
+            {
+                return;
+            }
         }
     }
 }
