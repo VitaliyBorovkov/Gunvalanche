@@ -9,6 +9,7 @@ public class PlayerShoot : MonoBehaviour
 
     private IWeapon currentWeapon;
     private Coroutine shootingCoroutine;
+    private HealthController playerHealth;
 
     private bool isBlockedByReload = false;
 
@@ -19,6 +20,8 @@ public class PlayerShoot : MonoBehaviour
             reload.OnReloadStarted += () => isBlockedByReload = true;
             reload.OnReloadEnded += () => isBlockedByReload = false;
         }
+
+        playerHealth = GetComponent<HealthController>();
     }
 
     public void SetCurrentWeapon(IWeapon weapon)
@@ -51,6 +54,12 @@ public class PlayerShoot : MonoBehaviour
 
     public void StartFiring()
     {
+        if (playerHealth != null && playerHealth.IsDead)
+        {
+            Debug.Log("PlayerShoot: Can't shoot when player is dead.");
+            return;
+        }
+
         if (isBlockedByReload)
         {
             Debug.Log("PlayerShoot: Can't shoot while reloading.");

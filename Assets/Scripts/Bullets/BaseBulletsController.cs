@@ -6,7 +6,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 {
     protected BulletsData bulletsData;
 
-    protected Rigidbody rb;
+    protected Rigidbody rigidBody;
     protected ObjectPool objectPool;
     protected WeaponData weaponData;
     protected Coroutine despawnCoroutine;
@@ -16,8 +16,8 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     protected virtual void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        if (rb == null)
+        rigidBody = GetComponent<Rigidbody>();
+        if (rigidBody == null)
         {
             Debug.LogWarning($"BulletsController: Rigidbody not found on {gameObject.name}");
         }
@@ -52,7 +52,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
             return;
         }
 
-        rb.velocity = direction.normalized * bulletsData.Speed;
+        rigidBody.velocity = direction.normalized * bulletsData.Speed;
 
         if (bulletsData.LifeTime > 0)
         {
@@ -95,7 +95,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     public virtual void DespawnBullet()
     {
-        rb.velocity = Vector3.zero;
+        rigidBody.velocity = Vector3.zero;
 
         DespawnEffect();
 

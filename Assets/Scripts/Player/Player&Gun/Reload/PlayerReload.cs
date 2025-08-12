@@ -26,6 +26,13 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
+        var playerHealth = GetComponent<HealthController>();
+        if (playerHealth != null && playerHealth.IsDead)
+        {
+            Debug.Log("PlayerReload: Can't reload when player is dead.");
+            return;
+        }
+
         var weapon = playerShoot.GetCurrentWeapon();
         if (weapon == null)
         {

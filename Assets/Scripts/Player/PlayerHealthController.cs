@@ -16,6 +16,11 @@ public class PlayerHealthController : HealthController
 
     public void Heal(int amount)
     {
+        if (IsDead)
+        {
+            return;
+        }
+
         if (healthData.CurrentHealth <= 0)
         {
             return;
@@ -36,6 +41,5 @@ public class PlayerHealthController : HealthController
     protected override void Die()
     {
         base.Die();
-        Debug.Log("PlayerHealthController: Player has died!");
     }
 }
