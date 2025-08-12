@@ -3,7 +3,6 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    [Header("Player Settings")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float attackRange = 2f;
 
@@ -11,9 +10,12 @@ public class EnemyController : MonoBehaviour
     private Animator animator;
 
     private bool hasLoggedMissingPlayer = false;
+    private bool isPlayerDead = false;
 
     private void OnEnable()
     {
+        PlayerDeathHandler.PlayerDied += OnPlayerDied;
+
         if (playerTransform == null)
         {
             GameObject player = GameObject.FindWithTag("Player");
@@ -26,6 +28,11 @@ public class EnemyController : MonoBehaviour
                 Debug.Log("EnemyController: Player with tag 'Player' not found.");
             }
         }
+    }
+
+    private void OnDisable()
+    {
+        PlayerDeathHandler.PlayerDied -= OnPlayerDied;
     }
 
     private void Start()
@@ -41,6 +48,18 @@ public class EnemyController : MonoBehaviour
 
     private void Update()
     {
+        if (isPlayerDead)
+        {
+            if (navMeshAgent != null && !navMeshAgent.isStopped)
+            {
+                navMeshAgent.isStopped = true;
+            }
+
+            SetWalking(false);
+            SetAttacking(false);
+            return;
+        }
+
         if (playerTransform == null)
         {
             if (!hasLoggedMissingPlayer)
@@ -92,6 +111,11 @@ public class EnemyController : MonoBehaviour
     public void SetPlayerTransform(Transform player)
     {
         playerTransform = player;
+    }
+
+    private void OnPlayerDied()
+    {
+        isPlayerDead = true;
     }
 }
 

@@ -9,6 +9,8 @@ TagManager:
   - Enemy
   - Bullet
   - Weapon
+  - AmmoBoxes
+  - GameOverUI
   layers:
   - Default
   - TransparentFX
