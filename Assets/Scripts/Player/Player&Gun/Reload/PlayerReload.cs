@@ -1,11 +1,17 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
 {
     private PlayerShoot playerShoot;
+    private Coroutine reloadCoroutine;
+
     private bool isReloading = false;
+
+    public event Action OnReloadStarted;
+    public event Action OnReloadEnded;
 
     private void Awake()
     {
@@ -47,8 +53,16 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
+        if (TryGetComponent<PlayerShoot>(out var shoot))
+        {
+            shoot.StopFiring();
+        }
+
+        isReloading = true;
+        OnReloadStarted?.Invoke();
+
         Debug.Log(" PlayerReload. Starting reload...");
-        StartCoroutine(ReloadRoutine(weaponData));
+        reloadCoroutine = StartCoroutine(ReloadRoutine(weaponData));
     }
 
     private IEnumerator ReloadRoutine(WeaponData weaponData)
@@ -71,10 +85,32 @@ public class PlayerReload : MonoBehaviour
         {
             weaponController.InvokeAmmoChanged();
         }
+
+        isReloading = false;
+        OnReloadEnded?.Invoke();
     }
 
     public bool IsReloading()
     {
         return isReloading;
+    }
+
+    public void CancelReload()
+    {
+        if (!isReloading)
+        {
+            return;
+        }
+
+        if (reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+        }
+
+        isReloading = false;
+        OnReloadEnded?.Invoke();
+
+        Debug.Log("PlayerReload: Reload cancelled due to weapon switch.");
     }
 }

@@ -31,7 +31,12 @@ public class AmmoUIHandler : MonoBehaviour
         this.playerShoot = playerShoot;
         playerShoot.OnWeaponChanged += HandleWeaponChanged;
 
-        HandleWeaponChanged(playerShoot.GetCurrentWeapon());
+        var weapon = playerShoot.GetCurrentWeapon();
+        if (weapon != null)
+        {
+            HandleWeaponChanged(weapon);
+        }
+
 
         CheckerCurrentWeaponToNullThenUpdateUI();
     }
