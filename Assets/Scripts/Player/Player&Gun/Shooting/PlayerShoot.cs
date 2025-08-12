@@ -10,6 +10,17 @@ public class PlayerShoot : MonoBehaviour
     private IWeapon currentWeapon;
     private Coroutine shootingCoroutine;
 
+    private bool isBlockedByReload = false;
+
+    private void Awake()
+    {
+        if (TryGetComponent<PlayerReload>(out var reload))
+        {
+            reload.OnReloadStarted += () => isBlockedByReload = true;
+            reload.OnReloadEnded += () => isBlockedByReload = false;
+        }
+    }
+
     public void SetCurrentWeapon(IWeapon weapon)
     {
         if (currentWeapon == weapon)
@@ -25,6 +36,11 @@ public class PlayerShoot : MonoBehaviour
             weaponController.SetAutoReloadHandler(autoReload);
         }
 
+        if (TryGetComponent<PlayerReload>(out var reload))
+        {
+            reload.CancelReload();
+        }
+
         OnWeaponChanged?.Invoke(currentWeapon);
     }
 
@@ -35,11 +51,17 @@ public class PlayerShoot : MonoBehaviour
 
     public void StartFiring()
     {
-        //if (currentWeapon == null || !currentWeapon.CanShoot())
-        //{
-        //    Debug.Log("PlayerShoot: No weapon or cannot shoot.");
-        //    return;
-        //}
+        if (isBlockedByReload)
+        {
+            Debug.Log("PlayerShoot: Can't shoot while reloading.");
+            return;
+        }
+
+        if (currentWeapon == null || !currentWeapon.CanShoot())
+        {
+            Debug.Log("PlayerShoot: No ammo or reload processing.");
+            return;
+        }
 
         shootingCoroutine = StartCoroutine(ShootRoutine());
     }
