@@ -76,23 +76,23 @@ public class AmmoBox : CollectibleItems
         }
     }
 
-    private int GetMaxAmmoFromConfig(GunsType gunsType)
-    {
-        WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
-        foreach (var config in weaponConfigs)
-        {
-            foreach (var weapon in config.weaponData)
-            {
-                if (weapon.GunsType == gunsType)
-                {
-                    return weapon.TotalAmmo;
-                }
-            }
-        }
+    //private int GetMaxAmmoFromConfig(GunsType gunsType)
+    //{
+    //    WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
+    //    foreach (var config in weaponConfigs)
+    //    {
+    //        foreach (var weapon in config.weaponData)
+    //        {
+    //            if (weapon.GunsType == gunsType)
+    //            {
+    //                return weapon.TotalAmmo;
+    //            }
+    //        }
+    //    }
 
-        Debug.LogWarning($"AmmoBox: MaxAmmo not found for {gunsType} в WeaponConfig!");
-        return 0;
-    }
+    //    Debug.LogWarning($"AmmoBox: MaxAmmo not found for {gunsType} в WeaponConfig!");
+    //    return 0;
+    //}
 
     protected virtual bool AddAmmoToPlayer(GameObject player)
     {
