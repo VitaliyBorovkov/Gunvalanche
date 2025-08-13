@@ -268,6 +268,7 @@ GameObject:
   - component: {fileID: 8296220029764513475}
   - component: {fileID: 5775478313144440459}
   - component: {fileID: 6036285002621063731}
+  - component: {fileID: 7645129165562597729}
   - component: {fileID: 1806327806865103107}
   - component: {fileID: 4217731190848682491}
   - component: {fileID: 4946228932811068358}
@@ -435,6 +436,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c917a1a46ca86b747bfd03f2782d7e56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7645129165562597729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5586268211691920688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbe150f35927ab24c85ef7dd3ea020f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1806327806865103107
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,8 +579,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthData:
-    MaxHealth: 1000
-    CurrentHealth: 1000
+    MaxHealth: 100
+    CurrentHealth: 100
     OnEndedHealth:
       m_PersistentCalls:
         m_Calls: []
