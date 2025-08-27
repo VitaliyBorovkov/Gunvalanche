@@ -579,7 +579,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthData:
-    MaxHealth: 1000
+    MaxHealth: 100
     CurrentHealth: 1000
     OnEndedHealth:
       m_PersistentCalls:

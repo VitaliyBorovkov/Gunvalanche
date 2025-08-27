@@ -40,7 +40,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""3cca44bc-b70b-433c-bc9c-43b1f09991d3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -58,7 +58,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""name"": ""Run"",
                     ""type"": ""Button"",
                     ""id"": ""8320ec39-0bcf-40ef-ae4c-f4de6a669dc9"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -113,6 +113,15 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""type"": ""Button"",
                     ""id"": ""e757ee2a-2e60-4313-ae99-0743c8cab6f0"",
                     ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""528a8f98-a994-4637-afa2-b57d13c74265"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -272,6 +281,17 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""action"": ""WeaponSlot3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03f9591a-5791-462d-b041-c9523f4d7550"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -290,6 +310,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         m_Player_WeaponSlot1 = m_Player.FindAction("WeaponSlot1", throwIfNotFound: true);
         m_Player_WeaponSlot2 = m_Player.FindAction("WeaponSlot2", throwIfNotFound: true);
         m_Player_WeaponSlot3 = m_Player.FindAction("WeaponSlot3", throwIfNotFound: true);
+        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@PlayerMove()
@@ -366,6 +387,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_WeaponSlot1;
     private readonly InputAction m_Player_WeaponSlot2;
     private readonly InputAction m_Player_WeaponSlot3;
+    private readonly InputAction m_Player_Pause;
     public struct PlayerActions
     {
         private @PlayerMove m_Wrapper;
@@ -380,6 +402,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         public InputAction @WeaponSlot1 => m_Wrapper.m_Player_WeaponSlot1;
         public InputAction @WeaponSlot2 => m_Wrapper.m_Player_WeaponSlot2;
         public InputAction @WeaponSlot3 => m_Wrapper.m_Player_WeaponSlot3;
+        public InputAction @Pause => m_Wrapper.m_Player_Pause;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -419,6 +442,9 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @WeaponSlot3.started += instance.OnWeaponSlot3;
             @WeaponSlot3.performed += instance.OnWeaponSlot3;
             @WeaponSlot3.canceled += instance.OnWeaponSlot3;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -453,6 +479,9 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @WeaponSlot3.started -= instance.OnWeaponSlot3;
             @WeaponSlot3.performed -= instance.OnWeaponSlot3;
             @WeaponSlot3.canceled -= instance.OnWeaponSlot3;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -482,5 +511,6 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         void OnWeaponSlot1(InputAction.CallbackContext context);
         void OnWeaponSlot2(InputAction.CallbackContext context);
         void OnWeaponSlot3(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

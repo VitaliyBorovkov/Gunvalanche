@@ -18,7 +18,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "3cca44bc-b70b-433c-bc9c-43b1f09991d3",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -36,7 +36,7 @@
                     "name": "Run",
                     "type": "Button",
                     "id": "8320ec39-0bcf-40ef-ae4c-f4de6a669dc9",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -91,6 +91,15 @@
                     "type": "Button",
                     "id": "e757ee2a-2e60-4313-ae99-0743c8cab6f0",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "528a8f98-a994-4637-afa2-b57d13c74265",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -248,6 +257,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "WeaponSlot3",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03f9591a-5791-462d-b041-c9523f4d7550",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
