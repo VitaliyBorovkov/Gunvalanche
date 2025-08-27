@@ -1,19 +1,16 @@
 using System;
 
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerDeathHandler : MonoBehaviour
 {
     public static event Action PlayerDied;
+    public event Action Died;
 
     [SerializeField] private HealthController playerHealth;
     [SerializeField] private PlayerShoot playerShoot;
     [SerializeField] private PlayerReload playerReload;
-    [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private GameOverUI gameOverUI;
-
-    [SerializeField] private float fadeOutDuration = 0.8f;
+    [SerializeField] private InputHandler inputHandler;
 
     private bool handled = false;
 
@@ -22,7 +19,7 @@ public class PlayerDeathHandler : MonoBehaviour
         playerHealth = GetComponent<HealthController>();
         playerShoot = GetComponent<PlayerShoot>();
         playerReload = GetComponent<PlayerReload>();
-        playerInput = GetComponent<PlayerInput>();
+        inputHandler = GetComponent<InputHandler>();
     }
 
     private void Awake()
@@ -42,25 +39,9 @@ public class PlayerDeathHandler : MonoBehaviour
             playerReload = GetComponent<PlayerReload>();
         }
 
-        if (playerInput == null)
+        if (inputHandler == null)
         {
-            playerInput = GetComponent<PlayerInput>();
-        }
-
-        if (gameOverUI == null)
-        {
-            gameOverUI = FindObjectOfType<GameOverUI>(true);
-
-            if (gameOverUI == null)
-            {
-                var tagged = GameObject.FindGameObjectWithTag("GameOverUI");
-                if (tagged != null)
-                {
-                    gameOverUI = tagged.GetComponent<GameOverUI>();
-                }
-
-                Debug.LogWarning("PlayerDeathHandler: GameOverUI not found in the scene!");
-            }
+            inputHandler = GetComponent<InputHandler>();
         }
     }
 
@@ -88,35 +69,16 @@ public class PlayerDeathHandler : MonoBehaviour
         }
         handled = true;
 
-        if (playerInput != null)
-        {
-            playerInput.enabled = false;
-        }
-
-        if (playerShoot != null)
-        {
-            playerShoot.enabled = false;
-        }
-
-        if (playerReload != null)
-        {
-            playerReload.enabled = false;
-        }
+        inputHandler?.SetEnabled(false);
+        playerShoot?.StopFiring();
+        playerReload?.CancelReload();
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        Died?.Invoke();
         PlayerDied?.Invoke();
 
         Time.timeScale = 0f;
-
-        if (gameOverUI != null)
-        {
-            gameOverUI.ShowGameOverScreen(fadeOutDuration);
-        }
-        else
-        {
-            Debug.LogWarning("PlayerDeathHandler: GameOverUI is not assigned!");
-        }
     }
 }

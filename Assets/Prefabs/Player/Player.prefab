@@ -592,8 +592,9 @@ MonoBehaviour:
   playerHealth: {fileID: 1608169243435678818}
   playerShoot: {fileID: 9202750033256993497}
   playerReload: {fileID: 4443374691479103321}
-  playerInput: {fileID: 5775478313144440459}
+  inputHandler: {fileID: 7645129165562597729}
   gameOverUI: {fileID: 0}
+  gameStateMachine: {fileID: 0}
   fadeOutDuration: 0.8
 --- !u!1 &8329266339058135400
 GameObject:

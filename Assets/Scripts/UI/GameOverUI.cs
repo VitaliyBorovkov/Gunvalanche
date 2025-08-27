@@ -55,7 +55,7 @@ public class GameOverUI : MonoBehaviour
         canvasGroup.interactable = true;
     }
 
-    private void HideImmediate()
+    public void HideImmediate()
     {
         if (canvasGroup != null)
         {
