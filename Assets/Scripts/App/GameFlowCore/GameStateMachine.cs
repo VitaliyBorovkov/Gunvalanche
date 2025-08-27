@@ -7,7 +7,7 @@ public class GameStateMachine : MonoBehaviour
 {
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private GameOverUI gameOverUI;
-    //[SerializeField] private PauseUI pauseUI;
+    [SerializeField] private PauseUI pauseUI;
 
     private GameStateContext gameStateContext;
     private readonly Dictionary<Type, IGameState> states = new();
@@ -20,7 +20,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        gameStateContext = new GameStateContext(inputHandler, gameOverUI/*, pauseUI*/);
+        gameStateContext = new GameStateContext(inputHandler, gameOverUI, pauseUI);
 
         states[typeof(GameplayState)] = new GameplayState(gameStateContext);
         states[typeof(GameOverState)] = new GameOverState(gameStateContext);
@@ -95,8 +95,6 @@ public class GameStateMachine : MonoBehaviour
 
         playerDeathHandler.Died -= HandlePlayerDeath;
         playerDeathHandler.Died += HandlePlayerDeath;
-
-        Debug.Log("GameStateMachine: PlayerDeathHandler registered from spawner.");
     }
 
     public void ChangeState<T>() where T : IGameState

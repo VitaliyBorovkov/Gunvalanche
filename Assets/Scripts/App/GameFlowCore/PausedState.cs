@@ -13,14 +13,16 @@ public sealed class PausedState : IGameState
     {
         Time.timeScale = 0f;
         GameStateContext.InputHandler.SetEnabled(false);
-        //GameStateContext.PauseUI.Show();
+        GameStateContext.PauseUI.ShowPausePanel();
         GameStateContext.SetCursor(true);
         Debug.Log("PausedState: Entered.");
     }
 
     public void ExitState()
     {
-        //GameStateContext.PauseUI?.HideImmediate();
+        GameStateContext.PauseUI?.Hide();
+        GameStateContext.SetCursor(false);
+        Time.timeScale = 1f;
         Debug.Log("PausedState: Exited.");
     }
 
