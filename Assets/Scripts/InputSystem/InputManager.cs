@@ -16,6 +16,7 @@ public class InputManager : MonoBehaviour
     public InputAction WeaponSlot1 => playerInput.actions["WeaponSlot1"];
     public InputAction WeaponSlot2 => playerInput.actions["WeaponSlot2"];
     public InputAction WeaponSlot3 => playerInput.actions["WeaponSlot3"];
+    public InputAction Pause => playerInput.actions["Pause"];
 
     private void Awake()
     {
