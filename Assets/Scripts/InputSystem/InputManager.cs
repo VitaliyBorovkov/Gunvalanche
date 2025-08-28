@@ -52,4 +52,41 @@ public class InputManager : MonoBehaviour
             WeaponSlot3.Disable();
         }
     }
+
+    public void SwitchToGameplayActionMap()
+    {
+        TrySwitchActionMap(GameplayMapName);
+    }
+
+    public void SwitchToUIActionMap()
+    {
+        TrySwitchActionMap(UIMapName);
+    }
+
+    private void TrySwitchActionMap(string mapName)
+    {
+        if (playerInput == null)
+        {
+            //Debug.LogWarning($"InputManager: playerInput is null, cannot switch to '{mapName}'.");
+            return;
+        }
+
+        if (playerInput.actions == null)
+        {
+            Debug.LogWarning($"InputManager: PlayerInput.actions is null, cannot switch to '{mapName}'.");
+            return;
+        }
+
+        var map = playerInput.actions.FindActionMap(mapName, throwIfNotFound: false);
+        if (map == null)
+        {
+            Debug.LogWarning($"InputManager: action map '{mapName}' not found in actions '{playerInput.actions.name}'. Available maps:");
+            foreach (var m in playerInput.actions.actionMaps)
+                Debug.Log($"  - {m.name}");
+            return;
+        }
+
+        playerInput.SwitchCurrentActionMap(mapName);
+        Debug.Log($"InputManager: Switched to action map '{mapName}'.");
+    }
 }

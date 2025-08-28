@@ -120,7 +120,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""528a8f98-a994-4637-afa2-b57d13c74265"",
+                    ""id"": ""ad1206e4-a954-4fe0-aaf1-129a21f2c5f0"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -284,7 +284,35 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""03f9591a-5791-462d-b041-c9523f4d7550"",
+                    ""id"": ""0c40d6c1-ac6e-42b1-a622-26c2fecd4d3a"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UIActionMap"",
+            ""id"": ""c94d5b88-57d5-481e-a2ad-ca9cd34cec3a"",
+            ""actions"": [
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5901ddc4-c297-4832-a1d5-b3f4a662e287"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4d3bff5a-3c3c-4fd1-8931-f43bb5f17cdd"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
