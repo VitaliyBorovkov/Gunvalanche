@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GameStateMachine : MonoBehaviour
 {
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private PauseUI pauseUI;
@@ -20,7 +21,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        gameStateContext = new GameStateContext(inputHandler, gameOverUI, pauseUI);
+        gameStateContext = new GameStateContext(inputManager, inputHandler, gameOverUI, pauseUI);
 
         states[typeof(GameplayState)] = new GameplayState(gameStateContext);
         states[typeof(GameOverState)] = new GameOverState(gameStateContext);
