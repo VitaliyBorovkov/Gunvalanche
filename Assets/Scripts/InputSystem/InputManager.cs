@@ -6,6 +6,9 @@ public class InputManager : MonoBehaviour
 {
     private PlayerInput playerInput;
 
+    private const string GameplayMapName = "GameplayActionMap";
+    private const string UIMapName = "UIActionMap";
+
     public InputAction Movement => playerInput.actions["Movement"];
     public InputAction Jump => playerInput.actions["Jump"];
     public InputAction Look => playerInput.actions["Look"];
@@ -51,5 +54,63 @@ public class InputManager : MonoBehaviour
             WeaponSlot2.Disable();
             WeaponSlot3.Disable();
         }
+    }
+
+    //public void SwitchToGameplayActionMap()
+    //{
+    //    if (playerInput == null)
+    //    {
+    //        return;
+    //    }
+
+    //    playerInput.SwitchCurrentActionMap("GameplayActionMap");
+    //    Debug.Log("InputManager: Switched to GameplayActionMap.");
+    //}
+
+    //public void SwitchToUIActionMap()
+    //{
+    //    if (playerInput == null)
+    //    {
+    //        return;
+    //    }
+    //    playerInput.SwitchCurrentActionMap("UIActionMap");
+    //    Debug.Log("InputManager: Switched to UIActionMap.");
+    //}
+
+    public void SwitchToGameplayActionMap()
+    {
+        TrySwitchActionMap(GameplayMapName);
+    }
+
+    public void SwitchToUIActionMap()
+    {
+        TrySwitchActionMap(UIMapName);
+    }
+
+    private void TrySwitchActionMap(string mapName)
+    {
+        if (playerInput == null)
+        {
+            //Debug.LogWarning($"InputManager: playerInput is null, cannot switch to '{mapName}'.");
+            return;
+        }
+
+        if (playerInput.actions == null)
+        {
+            Debug.LogWarning($"InputManager: PlayerInput.actions is null, cannot switch to '{mapName}'.");
+            return;
+        }
+
+        var map = playerInput.actions.FindActionMap(mapName, throwIfNotFound: false);
+        if (map == null)
+        {
+            Debug.LogWarning($"InputManager: action map '{mapName}' not found in actions '{playerInput.actions.name}'. Available maps:");
+            foreach (var m in playerInput.actions.actionMaps)
+                Debug.Log($"  - {m.name}");
+            return;
+        }
+
+        playerInput.SwitchCurrentActionMap(mapName);
+        Debug.Log($"InputManager: Switched to action map '{mapName}'.");
     }
 }

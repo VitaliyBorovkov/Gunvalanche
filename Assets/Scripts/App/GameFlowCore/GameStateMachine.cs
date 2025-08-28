@@ -6,12 +6,13 @@ using UnityEngine;
 public class GameStateMachine : MonoBehaviour
 {
     [SerializeField] private InputHandler inputHandler;
+    [SerializeField] private InputManager inputManager;
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private PauseUI pauseUI;
 
     private GameStateContext gameStateContext;
     private readonly Dictionary<Type, IGameState> states = new();
-    private IGameState current;
+    private IGameState currentState;
 
     private PlayerDeathHandler playerDeathHandler;
 
@@ -20,7 +21,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void Awake()
     {
-        gameStateContext = new GameStateContext(inputHandler, gameOverUI, pauseUI);
+        gameStateContext = new GameStateContext(inputHandler, inputManager, gameOverUI, pauseUI);
 
         states[typeof(GameplayState)] = new GameplayState(gameStateContext);
         states[typeof(GameOverState)] = new GameOverState(gameStateContext);
@@ -46,7 +47,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void Update()
     {
-        current?.UpdateState();
+        currentState?.UpdateState();
     }
 
     private void OnDestroy()
@@ -72,7 +73,27 @@ public class GameStateMachine : MonoBehaviour
 
     private void OnPlayerSpawned(PlayerShoot playerShoot)
     {
-        if (playerShoot == null) return;
+        var input = playerShoot.GetComponent<InputManager>();
+        if (input != null)
+        {
+            inputManager = input;
+            gameStateContext.SetInputManager(inputManager);
+            Debug.Log("GameStateMachine: registered InputManager from PlayerSpawner.");
+
+            if (currentState != null && currentState.GetType() == typeof(GameplayState))
+            {
+                inputManager.SwitchToGameplayActionMap();
+            }
+        }
+        else
+        {
+            Debug.LogWarning("GameStateMachine: spawned player has no InputManager.");
+        }
+
+        if (playerShoot == null)
+        {
+            return;
+        }
 
         var playerDeathHandler = playerShoot.GetComponent<PlayerDeathHandler>();
         if (playerDeathHandler == null)
@@ -105,10 +126,10 @@ public class GameStateMachine : MonoBehaviour
 
     private void ChangeState(IGameState next)
     {
-        current?.ExitState();
-        current = next;
-        current.EnterState();
-        Debug.Log($"GameStateMachine: state -> {current.GetType().Name}");
+        currentState?.ExitState();
+        currentState = next;
+        currentState.EnterState();
+        //Debug.Log($"GameStateMachine: state -> {current.GetType().Name}");
     }
 
     public void ToGameplay()
@@ -128,7 +149,7 @@ public class GameStateMachine : MonoBehaviour
 
     private void HandlePlayerDeath()
     {
-        if (current != null && current.GetType() == typeof(GameOverState))
+        if (currentState != null && currentState.GetType() == typeof(GameOverState))
         {
             Debug.Log("GameStateMachine: already in GameOverState, ignoring duplicate death.");
             return;

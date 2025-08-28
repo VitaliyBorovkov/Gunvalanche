@@ -2,7 +2,7 @@
     "name": "PlayerMove",
     "maps": [
         {
-            "name": "Player",
+            "name": "GameplayActionMap",
             "id": "84da9051-e82f-4e38-b5de-e13fb985b6a9",
             "actions": [
                 {
@@ -98,7 +98,7 @@
                 {
                     "name": "Pause",
                     "type": "Button",
-                    "id": "528a8f98-a994-4637-afa2-b57d13c74265",
+                    "id": "272575f8-d05f-44fd-8eb1-dd562faab3dd",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -262,7 +262,35 @@
                 },
                 {
                     "name": "",
-                    "id": "03f9591a-5791-462d-b041-c9523f4d7550",
+                    "id": "59d5be2b-c4c5-4302-900f-a1a50752e9c7",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UIActionMap",
+            "id": "c94d5b88-57d5-481e-a2ad-ca9cd34cec3a",
+            "actions": [
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "5901ddc4-c297-4832-a1d5-b3f4a662e287",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4d3bff5a-3c3c-4fd1-8931-f43bb5f17cdd",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
