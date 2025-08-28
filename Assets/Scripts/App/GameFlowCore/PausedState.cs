@@ -13,14 +13,26 @@ public sealed class PausedState : IGameState
     {
         Time.timeScale = 0f;
         GameStateContext.InputHandler.SetEnabled(false);
-        GameStateContext.PauseUI.ShowPausePanel();
+
+        var player = GameObject.FindWithTag("Player");
+        if (player != null)
+        {
+            var shoot = player.GetComponent<PlayerShoot>();
+            shoot?.StopFiring();
+            var reload = player.GetComponent<PlayerReload>();
+            reload?.CancelReload();
+        }
+
+        GameStateContext.PauseUI.ShowScreen();
         GameStateContext.SetCursor(true);
         Debug.Log("PausedState: Entered.");
     }
 
     public void ExitState()
     {
-        GameStateContext.PauseUI?.Hide();
+        GameStateContext.PauseUI?.HideScreen();
+        GameStateContext.InputHandler.SetEnabled(true);
+        GameStateContext.InputManager?.SwitchToGameplayActionMap();
         GameStateContext.SetCursor(false);
         Time.timeScale = 1f;
         Debug.Log("PausedState: Exited.");
