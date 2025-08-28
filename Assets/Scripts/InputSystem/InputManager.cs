@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
+    private const string GameplayMapName = "GameplayActionMap";
+    private const string UIMapName = "UIActionMap";
+
     private PlayerInput playerInput;
 
     public InputAction Movement => playerInput.actions["Movement"];
