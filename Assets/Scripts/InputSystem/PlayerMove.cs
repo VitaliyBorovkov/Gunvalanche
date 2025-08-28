@@ -24,7 +24,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
     ""name"": ""PlayerMove"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""GameplayActionMap"",
             ""id"": ""84da9051-e82f-4e38-b5de-e13fb985b6a9"",
             ""actions"": [
                 {
@@ -326,24 +326,28 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
     ],
     ""controlSchemes"": []
 }");
-        // Player
-        m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Movement = m_Player.FindAction("Movement", throwIfNotFound: true);
-        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-        m_Player_Run = m_Player.FindAction("Run", throwIfNotFound: true);
-        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
-        m_Player_Reload = m_Player.FindAction("Reload", throwIfNotFound: true);
-        m_Player_SwitchWeaponByScroll = m_Player.FindAction("SwitchWeaponByScroll", throwIfNotFound: true);
-        m_Player_WeaponSlot1 = m_Player.FindAction("WeaponSlot1", throwIfNotFound: true);
-        m_Player_WeaponSlot2 = m_Player.FindAction("WeaponSlot2", throwIfNotFound: true);
-        m_Player_WeaponSlot3 = m_Player.FindAction("WeaponSlot3", throwIfNotFound: true);
-        m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+        // GameplayActionMap
+        m_GameplayActionMap = asset.FindActionMap("GameplayActionMap", throwIfNotFound: true);
+        m_GameplayActionMap_Movement = m_GameplayActionMap.FindAction("Movement", throwIfNotFound: true);
+        m_GameplayActionMap_Jump = m_GameplayActionMap.FindAction("Jump", throwIfNotFound: true);
+        m_GameplayActionMap_Look = m_GameplayActionMap.FindAction("Look", throwIfNotFound: true);
+        m_GameplayActionMap_Run = m_GameplayActionMap.FindAction("Run", throwIfNotFound: true);
+        m_GameplayActionMap_Fire = m_GameplayActionMap.FindAction("Fire", throwIfNotFound: true);
+        m_GameplayActionMap_Reload = m_GameplayActionMap.FindAction("Reload", throwIfNotFound: true);
+        m_GameplayActionMap_SwitchWeaponByScroll = m_GameplayActionMap.FindAction("SwitchWeaponByScroll", throwIfNotFound: true);
+        m_GameplayActionMap_WeaponSlot1 = m_GameplayActionMap.FindAction("WeaponSlot1", throwIfNotFound: true);
+        m_GameplayActionMap_WeaponSlot2 = m_GameplayActionMap.FindAction("WeaponSlot2", throwIfNotFound: true);
+        m_GameplayActionMap_WeaponSlot3 = m_GameplayActionMap.FindAction("WeaponSlot3", throwIfNotFound: true);
+        m_GameplayActionMap_Pause = m_GameplayActionMap.FindAction("Pause", throwIfNotFound: true);
+        // UIActionMap
+        m_UIActionMap = asset.FindActionMap("UIActionMap", throwIfNotFound: true);
+        m_UIActionMap_Pause = m_UIActionMap.FindAction("Pause", throwIfNotFound: true);
     }
 
     ~@PlayerMove()
     {
-        UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerMove.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_GameplayActionMap.enabled, "This will cause a leak and performance issues, PlayerMove.GameplayActionMap.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_UIActionMap.enabled, "This will cause a leak and performance issues, PlayerMove.UIActionMap.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -402,44 +406,44 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         return asset.FindBinding(bindingMask, out action);
     }
 
-    // Player
-    private readonly InputActionMap m_Player;
-    private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Movement;
-    private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_Look;
-    private readonly InputAction m_Player_Run;
-    private readonly InputAction m_Player_Fire;
-    private readonly InputAction m_Player_Reload;
-    private readonly InputAction m_Player_SwitchWeaponByScroll;
-    private readonly InputAction m_Player_WeaponSlot1;
-    private readonly InputAction m_Player_WeaponSlot2;
-    private readonly InputAction m_Player_WeaponSlot3;
-    private readonly InputAction m_Player_Pause;
-    public struct PlayerActions
+    // GameplayActionMap
+    private readonly InputActionMap m_GameplayActionMap;
+    private List<IGameplayActionMapActions> m_GameplayActionMapActionsCallbackInterfaces = new List<IGameplayActionMapActions>();
+    private readonly InputAction m_GameplayActionMap_Movement;
+    private readonly InputAction m_GameplayActionMap_Jump;
+    private readonly InputAction m_GameplayActionMap_Look;
+    private readonly InputAction m_GameplayActionMap_Run;
+    private readonly InputAction m_GameplayActionMap_Fire;
+    private readonly InputAction m_GameplayActionMap_Reload;
+    private readonly InputAction m_GameplayActionMap_SwitchWeaponByScroll;
+    private readonly InputAction m_GameplayActionMap_WeaponSlot1;
+    private readonly InputAction m_GameplayActionMap_WeaponSlot2;
+    private readonly InputAction m_GameplayActionMap_WeaponSlot3;
+    private readonly InputAction m_GameplayActionMap_Pause;
+    public struct GameplayActionMapActions
     {
         private @PlayerMove m_Wrapper;
-        public PlayerActions(@PlayerMove wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Movement => m_Wrapper.m_Player_Movement;
-        public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @Look => m_Wrapper.m_Player_Look;
-        public InputAction @Run => m_Wrapper.m_Player_Run;
-        public InputAction @Fire => m_Wrapper.m_Player_Fire;
-        public InputAction @Reload => m_Wrapper.m_Player_Reload;
-        public InputAction @SwitchWeaponByScroll => m_Wrapper.m_Player_SwitchWeaponByScroll;
-        public InputAction @WeaponSlot1 => m_Wrapper.m_Player_WeaponSlot1;
-        public InputAction @WeaponSlot2 => m_Wrapper.m_Player_WeaponSlot2;
-        public InputAction @WeaponSlot3 => m_Wrapper.m_Player_WeaponSlot3;
-        public InputAction @Pause => m_Wrapper.m_Player_Pause;
-        public InputActionMap Get() { return m_Wrapper.m_Player; }
+        public GameplayActionMapActions(@PlayerMove wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Movement => m_Wrapper.m_GameplayActionMap_Movement;
+        public InputAction @Jump => m_Wrapper.m_GameplayActionMap_Jump;
+        public InputAction @Look => m_Wrapper.m_GameplayActionMap_Look;
+        public InputAction @Run => m_Wrapper.m_GameplayActionMap_Run;
+        public InputAction @Fire => m_Wrapper.m_GameplayActionMap_Fire;
+        public InputAction @Reload => m_Wrapper.m_GameplayActionMap_Reload;
+        public InputAction @SwitchWeaponByScroll => m_Wrapper.m_GameplayActionMap_SwitchWeaponByScroll;
+        public InputAction @WeaponSlot1 => m_Wrapper.m_GameplayActionMap_WeaponSlot1;
+        public InputAction @WeaponSlot2 => m_Wrapper.m_GameplayActionMap_WeaponSlot2;
+        public InputAction @WeaponSlot3 => m_Wrapper.m_GameplayActionMap_WeaponSlot3;
+        public InputAction @Pause => m_Wrapper.m_GameplayActionMap_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_GameplayActionMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-        public void AddCallbacks(IPlayerActions instance)
+        public static implicit operator InputActionMap(GameplayActionMapActions set) { return set.Get(); }
+        public void AddCallbacks(IGameplayActionMapActions instance)
         {
-            if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_GameplayActionMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_GameplayActionMapActionsCallbackInterfaces.Add(instance);
             @Movement.started += instance.OnMovement;
             @Movement.performed += instance.OnMovement;
             @Movement.canceled += instance.OnMovement;
@@ -475,7 +479,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @Pause.canceled += instance.OnPause;
         }
 
-        private void UnregisterCallbacks(IPlayerActions instance)
+        private void UnregisterCallbacks(IGameplayActionMapActions instance)
         {
             @Movement.started -= instance.OnMovement;
             @Movement.performed -= instance.OnMovement;
@@ -512,22 +516,68 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @Pause.canceled -= instance.OnPause;
         }
 
-        public void RemoveCallbacks(IPlayerActions instance)
+        public void RemoveCallbacks(IGameplayActionMapActions instance)
         {
-            if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_GameplayActionMapActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
-        public void SetCallbacks(IPlayerActions instance)
+        public void SetCallbacks(IGameplayActionMapActions instance)
         {
-            foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_GameplayActionMapActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_GameplayActionMapActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
-    public PlayerActions @Player => new PlayerActions(this);
-    public interface IPlayerActions
+    public GameplayActionMapActions @GameplayActionMap => new GameplayActionMapActions(this);
+
+    // UIActionMap
+    private readonly InputActionMap m_UIActionMap;
+    private List<IUIActionMapActions> m_UIActionMapActionsCallbackInterfaces = new List<IUIActionMapActions>();
+    private readonly InputAction m_UIActionMap_Pause;
+    public struct UIActionMapActions
+    {
+        private @PlayerMove m_Wrapper;
+        public UIActionMapActions(@PlayerMove wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Pause => m_Wrapper.m_UIActionMap_Pause;
+        public InputActionMap Get() { return m_Wrapper.m_UIActionMap; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActionMapActions set) { return set.Get(); }
+        public void AddCallbacks(IUIActionMapActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIActionMapActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIActionMapActionsCallbackInterfaces.Add(instance);
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+        }
+
+        private void UnregisterCallbacks(IUIActionMapActions instance)
+        {
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+        }
+
+        public void RemoveCallbacks(IUIActionMapActions instance)
+        {
+            if (m_Wrapper.m_UIActionMapActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIActionMapActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIActionMapActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIActionMapActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIActionMapActions @UIActionMap => new UIActionMapActions(this);
+    public interface IGameplayActionMapActions
     {
         void OnMovement(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
@@ -539,6 +589,10 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         void OnWeaponSlot1(InputAction.CallbackContext context);
         void OnWeaponSlot2(InputAction.CallbackContext context);
         void OnWeaponSlot3(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+    }
+    public interface IUIActionMapActions
+    {
         void OnPause(InputAction.CallbackContext context);
     }
 }
