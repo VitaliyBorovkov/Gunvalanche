@@ -1735,6 +1735,7 @@ Transform:
   m_Children:
   - {fileID: 480822792}
   - {fileID: 356978459}
+  - {fileID: 882114543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
@@ -1939,14 +1940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96490c6202c7c748ac877bb883fed42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuCanvasGroup: {fileID: 720872351}
-  pausePanel: {fileID: 720872349}
-  resumeButton: {fileID: 59442998}
-  settingsButton: {fileID: 403061429}
-  mainMenuButton: {fileID: 1643353055}
-  quitButton: {fileID: 1859986188}
-  mainMenuSceneName: MainMenu
-  fadeDuration: 0.8
+  canvasGroup: {fileID: 720872351}
+  screenRoot: {fileID: 720872349}
 --- !u!1 &741985343
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,6 +2294,60 @@ Transform:
   - {fileID: 187209195}
   m_Father: {fileID: 1491358015}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &882114542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 882114543}
+  - component: {fileID: 882114544}
+  m_Layer: 0
+  m_Name: ButtonHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &882114543
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882114542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 692693226}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &882114544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 882114542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff44186c026d694ba3b84f1a87df6b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStateMachine: {fileID: 792736372}
+  mainMenuSceneName: MainMenu
+  playButton: {fileID: 0}
+  quitButton: {fileID: 1859986188}
+  resumeButton: {fileID: 59442998}
+  restartButton: {fileID: 1973694730}
+  settingsButton: {fileID: 403061429}
+  mainMenuButtons:
+  - {fileID: 1643353055}
+  - {fileID: 922762696}
 --- !u!1 &922762694
 GameObject:
   m_ObjectHideFlags: 0
@@ -5085,6 +5134,7 @@ GameObject:
   - component: {fileID: 1999834143}
   - component: {fileID: 1999834146}
   - component: {fileID: 1999834145}
+  - component: {fileID: 1999834147}
   m_Layer: 0
   m_Name: GameOverPanel
   m_TagString: Untagged
@@ -5165,9 +5215,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 1999834146}
-  restartButton: {fileID: 1973694730}
-  mainMenuButton: {fileID: 922762696}
-  mainMenuSceneName: MainMenu
+  screenRoot: {fileID: 1999834141}
+  fader: {fileID: 1999834147}
 --- !u!225 &1999834146
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5180,6 +5229,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1999834147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999834141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ec450cb038949d47928f29f6db063a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &2032901559 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6910137737166382480, guid: bc969c63d4bc7024ba183d2cb460d362, type: 3}

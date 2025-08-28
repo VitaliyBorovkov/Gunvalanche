@@ -20,7 +20,7 @@ public class GameOverState : IGameState
 
     public void ExitState()
     {
-        GameStateContext.GameOverUI.HideImmediate();
+        GameStateContext.GameOverUI.HideScreen();
         Debug.Log("GameOverState: Exited.");
     }
 
