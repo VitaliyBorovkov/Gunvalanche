@@ -2043,6 +2043,8 @@ GameObject:
   - component: {fileID: 792736373}
   - component: {fileID: 792736372}
   - component: {fileID: 792736374}
+  - component: {fileID: 792736376}
+  - component: {fileID: 792736375}
   m_Layer: 0
   m_Name: GameFlow
   m_TagString: Untagged
@@ -2094,6 +2096,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameStateMachine: {fileID: 792736372}
+  inputManager: {fileID: 6036285002621063731, guid: 2497c09b4185d0346b9fcf0d6fe06aee, type: 3}
+--- !u!114 &792736375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792736371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7037944bd5a84694ca3f87ea52af7cdc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStateMachine: {fileID: 792736372}
+--- !u!114 &792736376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792736371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e107902c7046bd4e9c9c059abe9f5f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   inputManager: {fileID: 6036285002621063731, guid: 2497c09b4185d0346b9fcf0d6fe06aee, type: 3}
 --- !u!1 &827366547
 GameObject:
