@@ -70,7 +70,7 @@ public class InputManager : MonoBehaviour
     {
         if (playerInput == null)
         {
-            //Debug.LogWarning($"InputManager: playerInput is null, cannot switch to '{mapName}'.");
+            Debug.LogWarning($"InputManager: playerInput is null, cannot switch to '{mapName}'.");
             return;
         }
 

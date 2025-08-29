@@ -1,3 +1,5 @@
+using System;
+
 using UnityEngine;
 
 public sealed class GameStateContext
@@ -7,6 +9,9 @@ public sealed class GameStateContext
     public readonly InputHandler InputHandler;
     public readonly GameOverUI GameOverUI;
     public readonly PauseUI PauseUI;
+
+    public Action RequestGameplayMap;
+    public Action RequestUIMap;
 
     public GameStateContext(InputManager inputManager, InputHandler inputHandler, GameOverUI gameOverUI, PauseUI pauseUI)
     {
