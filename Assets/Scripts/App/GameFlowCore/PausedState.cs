@@ -23,6 +23,7 @@ public sealed class PausedState : IGameState
             reload?.CancelReload();
         }
 
+        GameStateContext.RequestUIMap?.Invoke();
         GameStateContext.PauseUI.ShowScreen();
         GameStateContext.SetCursor(true);
         Debug.Log("PausedState: Entered.");
@@ -32,7 +33,8 @@ public sealed class PausedState : IGameState
     {
         GameStateContext.PauseUI?.HideScreen();
         GameStateContext.InputHandler.SetEnabled(true);
-        GameStateContext.InputManager?.SwitchToGameplayActionMap();
+        GameStateContext.RequestGameplayMap?.Invoke();
+        //GameStateContext.InputManager?.SwitchToGameplayActionMap();
         GameStateContext.SetCursor(false);
         Time.timeScale = 1f;
         Debug.Log("PausedState: Exited.");

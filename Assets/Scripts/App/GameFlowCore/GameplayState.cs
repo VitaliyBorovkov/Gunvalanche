@@ -13,7 +13,8 @@ public sealed class GameplayState : IGameState
     {
         Time.timeScale = 1f;
         GameStateContext.InputHandler.SetEnabled(true);
-        GameStateContext.InputManager?.SwitchToGameplayActionMap();
+        //GameStateContext.InputManager?.SwitchToGameplayActionMap();
+        GameStateContext.RequestGameplayMap?.Invoke();
         GameStateContext.PauseUI.HideScreen();
         GameStateContext.GameOverUI.HideScreen();
         GameStateContext.SetCursor(false);
