@@ -43,7 +43,10 @@ public class InputHandler : MonoBehaviour
 
     private void OnEnable()
     {
-        input.SetActionsEnabled(true);
+        if (isEnabled)
+        {
+            input.SetActionsEnabled(true);
+        }
 
         input.Movement.performed += OnMovePerformed;
         input.Movement.canceled += OnMoveCanceled;

@@ -19,9 +19,14 @@ public class GameStateMachine : MonoBehaviour
     private bool subscribedToStatic = false;
     private bool subscribedToSpawner = false;
 
+    private string pendingActionMap = null;
+
     private void Awake()
     {
         gameStateContext = new GameStateContext(inputManager, inputHandler, gameOverUI, pauseUI);
+
+        gameStateContext.RequestGameplayMap = RequestGameplayMap;
+        gameStateContext.RequestUIMap = RequestUIMap;
 
         states[typeof(GameplayState)] = new GameplayState(gameStateContext);
         states[typeof(GameOverState)] = new GameOverState(gameStateContext);
@@ -73,16 +78,31 @@ public class GameStateMachine : MonoBehaviour
 
     private void OnPlayerSpawned(PlayerShoot playerShoot)
     {
-        if (playerShoot == null) return;
-
-        var playerDeathHandler = playerShoot.GetComponent<PlayerDeathHandler>();
-        if (playerDeathHandler == null)
+        if (playerShoot == null)
         {
-            Debug.LogWarning("GameStateMachine: spawned player has no PlayerDeathHandler.");
             return;
         }
 
-        RegisterPlayerDeathHandler(playerDeathHandler);
+        var playerDeathHandler = playerShoot.GetComponent<PlayerDeathHandler>();
+        if (playerDeathHandler != null)
+        {
+            RegisterPlayerDeathHandler(playerDeathHandler);
+        }
+
+        var input = playerShoot.GetComponent<InputManager>();
+        if (input != null)
+        {
+            inputManager = input;
+
+            if (!string.IsNullOrEmpty(pendingActionMap))
+            {
+                RequestActionMap(pendingActionMap);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("GameStateMachine: spawned player has no InputManager.");
+        }
     }
 
     private void RegisterPlayerDeathHandler(PlayerDeathHandler playerDeathHandler)
@@ -94,7 +114,7 @@ public class GameStateMachine : MonoBehaviour
             playerDeathHandler.Died -= HandlePlayerDeath;
         }
 
-        playerDeathHandler.Died -= HandlePlayerDeath;
+        //playerDeathHandler.Died -= HandlePlayerDeath;
         playerDeathHandler.Died += HandlePlayerDeath;
     }
 
@@ -137,5 +157,23 @@ public class GameStateMachine : MonoBehaviour
 
         Debug.Log("GameStateMachine: HandlePlayerDeath -> ToGameOver");
         ToGameOver();
+    }
+
+    public void RequestGameplayMap() => RequestActionMap("GameplayActionMap");
+    public void RequestUIMap() => RequestActionMap("UIActionMap");
+
+    private void RequestActionMap(string mapName)
+    {
+        if (inputManager != null)
+        {
+            if (mapName == "GameplayActionMap") inputManager.SwitchToGameplayActionMap();
+            else if (mapName == "UIActionMap") inputManager.SwitchToUIActionMap();
+            pendingActionMap = null;
+        }
+        else
+        {
+            pendingActionMap = mapName;
+            Debug.Log($"GameStateMachine: InputManager not ready, pending action map '{mapName}'.");
+        }
     }
 }
