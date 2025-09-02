@@ -19,6 +19,8 @@ public class InputHandler : MonoBehaviour
 
     private bool isEnabled = true;
 
+    public bool IsEnabled => isEnabled;
+
     private void Awake()
     {
         input = GetComponent<InputManager>();
@@ -126,34 +128,153 @@ public class InputHandler : MonoBehaviour
         }
     }
 
-    private void OnMovePerformed(InputAction.CallbackContext ctx) => moveInput = ctx.ReadValue<Vector2>();
-    private void OnMoveCanceled(InputAction.CallbackContext ctx) => moveInput = Vector2.zero;
+    private void OnMovePerformed(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
 
-    private void OnLookPerformed(InputAction.CallbackContext ctx) => lookInput = ctx.ReadValue<Vector2>();
-    private void OnLookCanceled(InputAction.CallbackContext ctx) => lookInput = Vector2.zero;
+        moveInput = ctx.ReadValue<Vector2>();
+    }
 
-    private void OnJumpPerformed(InputAction.CallbackContext ctx) => playerJump?.Jump();
+    private void OnMoveCanceled(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
 
-    private void OnRunStarted(InputAction.CallbackContext ctx) => playerRun?.OnTryRunStart();
-    private void OnRunCanceled(InputAction.CallbackContext ctx) => playerRun?.OnTryRunEnd();
+        moveInput = Vector2.zero;
+    }
 
-    private void OnFireStarted(InputAction.CallbackContext ctx) => playerShoot?.StartFiring();
-    private void OnFireCanceled(InputAction.CallbackContext ctx) => playerShoot?.StopFiring();
+    private void OnLookPerformed(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
 
-    private void OnReloadPerformed(InputAction.CallbackContext ctx) => playerReload?.Reload();
+        lookInput = ctx.ReadValue<Vector2>();
+    }
+
+    private void OnLookCanceled(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        lookInput = Vector2.zero;
+    }
+
+    private void OnJumpPerformed(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerJump?.Jump();
+    }
+
+    private void OnRunStarted(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerRun?.OnTryRunStart();
+    }
+
+    private void OnRunCanceled(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerRun?.OnTryRunEnd();
+    }
+
+    private void OnFireStarted(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerShoot?.StartFiring();
+    }
+
+    private void OnFireCanceled(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerShoot?.StopFiring();
+    }
+
+    private void OnReloadPerformed(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerReload?.Reload();
+    }
 
     private void OnSwitchScrollPerformed(InputAction.CallbackContext ctx)
-        => playerSwitchWeapon?.HandleScrollWeapon(ctx);
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerSwitchWeapon?.HandleScrollWeapon(ctx);
+    }
 
     private void OnWeaponSlot1Performed(InputAction.CallbackContext ctx)
-        => playerSwitchWeapon?.SwitchWeaponByIndex(0);
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerSwitchWeapon?.SwitchWeaponByIndex(0);
+    }
+
     private void OnWeaponSlot2Performed(InputAction.CallbackContext ctx)
-        => playerSwitchWeapon?.SwitchWeaponByIndex(1);
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerSwitchWeapon?.SwitchWeaponByIndex(1);
+    }
+
     private void OnWeaponSlot3Performed(InputAction.CallbackContext ctx)
-        => playerSwitchWeapon?.SwitchWeaponByIndex(2);
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+
+        playerSwitchWeapon?.SwitchWeaponByIndex(2);
+    }
 
     public void SetEnabled(bool value)
     {
+        if (isEnabled == value)
+        {
+            return;
+        }
+
         isEnabled = value;
         if (!isEnabled)
         {
@@ -161,5 +282,11 @@ public class InputHandler : MonoBehaviour
             moveInput = Vector2.zero;
             lookInput = Vector2.zero;
         }
+
+        if (input != null)
+        {
+            input.SetActionsEnabled(isEnabled);
+        }
+        Debug.Log($"InputHandler: Input is now {(isEnabled ? "enabled" : "disabled")}");
     }
 }
