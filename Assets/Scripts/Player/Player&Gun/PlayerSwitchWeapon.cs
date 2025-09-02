@@ -7,9 +7,9 @@ public class PlayerSwitchWeapon : MonoBehaviour
 {
     public Transform weaponsHolder;
 
-    private List<IWeapon> weaponList = new List<IWeapon>();
-    private int currentWeaponIndex = 0;
     private PlayerShoot playerShoot;
+    private int currentWeaponIndex = 0;
+    private List<IWeapon> weaponList = new List<IWeapon>();
 
     private void Start()
     {
