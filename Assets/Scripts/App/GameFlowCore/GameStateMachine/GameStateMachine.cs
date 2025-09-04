@@ -8,6 +8,7 @@ public class GameStateMachine : MonoBehaviour
     [SerializeField] private InputHandler inputHandler;
     [SerializeField] private GameOverUI gameOverUI;
     [SerializeField] private PauseUI pauseUI;
+    [SerializeField] private HPAmmoVisibilityController hpAmmoVisibilityController;
 
     private GameStateContext gameStateContext;
     private GameStateController gameStateController;
@@ -18,7 +19,7 @@ public class GameStateMachine : MonoBehaviour
     {
         actionMapRequester = GetComponent<ActionMapRequester>();
 
-        gameStateContext = new GameStateContext(inputManager, inputHandler, gameOverUI, pauseUI);
+        gameStateContext = new GameStateContext(inputManager, inputHandler, gameOverUI, pauseUI, hpAmmoVisibilityController);
 
         gameStateContext.RequestGameplayMap = actionMapRequester.RequestGameplayMap;
         gameStateContext.RequestUIMap = actionMapRequester.RequestUIMap;
