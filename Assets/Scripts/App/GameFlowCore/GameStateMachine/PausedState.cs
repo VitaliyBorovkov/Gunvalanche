@@ -11,7 +11,8 @@ public sealed class PausedState : IGameState
 
     public void EnterState()
     {
-        Time.timeScale = 0f;
+        GameStateContext.RequestUIMap?.Invoke();
+
         GameStateContext.InputHandler.SetEnabled(false);
 
         var player = GameObject.FindWithTag("Player");
@@ -23,7 +24,14 @@ public sealed class PausedState : IGameState
             reload?.CancelReload();
         }
 
-        GameStateContext.RequestUIMap?.Invoke();
+        var hpAmmoController = GameStateContext.GetOrResolveHPAmmoVisibilityController();
+        if (hpAmmoController != null)
+        {
+            hpAmmoController.FadeOut();
+        }
+
+        Time.timeScale = 0f;
+
         GameStateContext.PauseUI.ShowScreen();
         GameStateContext.SetCursor(true);
         Debug.Log("PausedState: Entered.");
@@ -34,9 +42,15 @@ public sealed class PausedState : IGameState
         GameStateContext.PauseUI?.HideScreen();
         GameStateContext.InputHandler.SetEnabled(true);
         GameStateContext.RequestGameplayMap?.Invoke();
-        //GameStateContext.InputManager?.SwitchToGameplayActionMap();
-        GameStateContext.SetCursor(false);
         Time.timeScale = 1f;
+
+        var hpAmmoController = GameStateContext.GetOrResolveHPAmmoVisibilityController();
+        if (hpAmmoController != null)
+        {
+            hpAmmoController.FadeIn();
+        }
+
+        GameStateContext.SetCursor(false);
         Debug.Log("PausedState: Exited.");
     }
 
