@@ -40,7 +40,7 @@ public class MedKit : CollectibleItems
             }
             else
             {
-                Debug.LogWarning($"MedKit: {gameObject.name}: {player.name} has full health and no first aid kit has been picked up.");
+                Debug.Log($"MedKit: {gameObject.name}: {player.name} has full health and no first aid kit has been picked up.");
             }
         }
         else
