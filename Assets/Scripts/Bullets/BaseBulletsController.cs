@@ -14,6 +14,8 @@ public class BaseBulletsController : MonoBehaviour, IBullet
     protected int enemyLayer;
     protected int environmentLayer;
 
+    private bool isDespawning = false;
+
     protected virtual void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();
@@ -26,14 +28,21 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         environmentLayer = LayerMask.NameToLayer("Environment");
     }
 
-    //private void OnEnable()
-    //{
-    //    //Debug.Log($"BulletsController: {gameObject.name} активирована из пула. ObjectPool = {objectPool?.gameObject.name}");
-    //    if (bulletsData.LifeTime > 0)
-    //    {
-    //        despawnCoroutine = StartCoroutine(DespawnAfterTime(bulletsData.LifeTime));
-    //    }
-    //}
+    protected virtual void OnEnable()
+    {
+        isDespawning = false;
+    }
+
+    protected virtual void OnDisable()
+    {
+        if (despawnCoroutine != null)
+        {
+            StopCoroutine(despawnCoroutine);
+            despawnCoroutine = null;
+        }
+
+        weaponData = null;
+    }
 
     public virtual void Initialize(Vector3 direction, ObjectPool pool, WeaponData weapon, BulletsData bullets)
     {
@@ -60,17 +69,6 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         }
     }
 
-    protected virtual void OnDisable()
-    {
-        if (despawnCoroutine != null)
-        {
-            StopCoroutine(despawnCoroutine);
-            despawnCoroutine = null;
-        }
-
-        weaponData = null;
-    }
-
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
@@ -79,9 +77,6 @@ public class BaseBulletsController : MonoBehaviour, IBullet
             if (enemyHealth != null)
             {
                 enemyHealth.TakeDamage(weaponData.Damage);
-
-                DespawnBullet();
-                return;
             }
         }
         DespawnBullet();
@@ -95,6 +90,19 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     public virtual void DespawnBullet()
     {
+        if (isDespawning)
+        {
+            Debug.Log($"BaseBulletsController: DespawnBullet called again for {gameObject.name}, ignoring.");
+            return;
+        }
+
+        isDespawning = true;
+
+        if (rigidBody != null)
+        {
+            rigidBody.velocity = Vector3.zero;
+        }
+
         rigidBody.velocity = Vector3.zero;
 
         DespawnEffect();

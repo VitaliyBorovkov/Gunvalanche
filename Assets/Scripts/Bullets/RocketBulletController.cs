@@ -4,9 +4,17 @@ public class RocketBulletController : BaseBulletsController
 {
     [SerializeField] ExplosionSettings explosionSettings;
 
+    private bool hasExploded = false;
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        hasExploded = false;
+    }
+
     protected override void DespawnEffect()
     {
-        if (explosionSettings.explosionEffectPrefub != null)
+        if (explosionSettings != null && explosionSettings.explosionEffectPrefub != null)
         {
             Instantiate(explosionSettings.explosionEffectPrefub, transform.position, Quaternion.identity);
         }
@@ -19,6 +27,11 @@ public class RocketBulletController : BaseBulletsController
 
         foreach (Collider hitCollider in hitColliders)
         {
+            if (hitCollider.attachedRigidbody == rigidBody)
+            {
+                continue;
+            }
+
             HealthController healthController = hitCollider.GetComponentInParent<HealthController>();
             if (healthController != null)
             {
@@ -27,14 +40,20 @@ public class RocketBulletController : BaseBulletsController
                     $"with {explosionSettings.explosionDamage} damage.");
             }
         }
-        DespawnEffect();
     }
 
     protected override void OnTriggerEnter(Collider other)
     {
+        if (hasExploded)
+        {
+            return;
+        }
+
         if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
         {
+            hasExploded = true;
             Explode();
+            DespawnBullet();
         }
     }
 }
