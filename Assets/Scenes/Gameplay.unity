@@ -735,7 +735,7 @@ GameObject:
   - component: {fileID: 362450172}
   - component: {fileID: 362450174}
   - component: {fileID: 362450173}
-  m_Layer: 5
+  m_Layer: 11
   m_Name: WeaponIconImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2003,7 +2003,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.13995361, y: 0.11999512}
+  m_AnchoredPosition: {x: 0.13989258, y: 0.11999512}
   m_SizeDelta: {x: -0.27991, y: 0.23999}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &720872351
@@ -4402,7 +4402,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.44783333, y: 0.026222223}
   m_AnchorMax: {x: 0.5504792, y: 0.16800001}
-  m_AnchoredPosition: {x: -0.11999512, y: 0.7999878}
+  m_AnchoredPosition: {x: -0.11999512, y: 0.8000488}
   m_SizeDelta: {x: 0.08000183, y: -2.880005}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1418137979
@@ -5093,7 +5093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.333, y: 0.08335065}
   m_AnchorMax: {x: 0.66563696, y: 0.22464935}
-  m_AnchoredPosition: {x: 1, y: -1.5000305}
+  m_AnchoredPosition: {x: 1, y: -1.5}
   m_SizeDelta: {x: 1.1300049, y: -2.5110016}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1859986188

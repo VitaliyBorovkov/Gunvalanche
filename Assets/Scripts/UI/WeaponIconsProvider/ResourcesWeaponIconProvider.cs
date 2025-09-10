@@ -28,7 +28,7 @@ public class ResourcesWeaponIconProvider : MonoBehaviour, IWeaponIconProvider
 
         string path = $"{resourcesSubFolder}/{iconKey}";
         Sprite icon = Resources.Load<Sprite>(path);
-        if (icon != null)
+        if (icon == null)
         {
             Debug.LogWarning($"{LOG_PREFIX}: Sprite not found at Resources/{path}");
             onLoaded?.Invoke(null);

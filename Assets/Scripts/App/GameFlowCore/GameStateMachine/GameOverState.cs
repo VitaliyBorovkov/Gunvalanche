@@ -25,14 +25,14 @@ public class GameOverState : IGameState
 
         GameStateContext.GameOverUI.ShowGameOverScreen(0.8f);
         GameStateContext.SetCursor(true);
-        Debug.Log("GameOverState: Entered.");
+        //Debug.Log("GameOverState: Entered.");
     }
 
     public void ExitState()
     {
         GameStateContext.GameOverUI.HideScreen();
 
-        Debug.Log("GameOverState: Exited.");
+        //Debug.Log("GameOverState: Exited.");
     }
 
     public void UpdateState()
