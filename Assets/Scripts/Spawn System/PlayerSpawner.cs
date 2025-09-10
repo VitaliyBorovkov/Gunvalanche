@@ -7,6 +7,8 @@ public class PlayerSpawner : MonoBehaviour
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private GameObject playerPrefab;
 
+    private const string LOG_PREFIX = "PlayerSpawner";
+
     public static event Action<PlayerShoot> OnPlayerSpawned;
 
     private void Start()
@@ -18,7 +20,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         if (playerSpawnPoint == null)
         {
-            Debug.Log("Player spawn point is not assigned!");
+            Debug.Log($"{LOG_PREFIX}: Player spawn point is not assigned!");
             return;
         }
 
@@ -27,10 +29,25 @@ public class PlayerSpawner : MonoBehaviour
         //player.transform.position = playerSpawnPoint.position;
         //player.transform.rotation = playerSpawnPoint.rotation;
 
+        var switcher = player.GetComponent<PlayerSwitchWeapon>();
+        if (switcher != null)
+        {
+            var iconManager = FindObjectOfType<WeaponIconManager>();
+            if (iconManager != null)
+            {
+                switcher.SetWeaponIconManager(iconManager);
+                Debug.Log($"{LOG_PREFIX}: Assigned WeaponIconManager '{iconManager.name}' to spawned player.");
+            }
+            else
+            {
+                Debug.LogWarning($"{LOG_PREFIX}: WeaponIconManager not found in the scene!");
+            }
+        }
+
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
         if (playerShoot == null)
         {
-            Debug.LogWarning("PlayerSpawner: The player is missing a component PlayerShoot!");
+            Debug.LogWarning($"{LOG_PREFIX}: The player is missing a component PlayerShoot!");
         }
         else
         {
@@ -45,6 +62,7 @@ public class PlayerSpawner : MonoBehaviour
             //}
 
             OnPlayerSpawned?.Invoke(playerShoot);
+            //Debug.Log($"{LOG_PREFIX}: OnPlayerSpawned invoked.");
         }
 
         AssignPlayerToEnemies(player.transform);

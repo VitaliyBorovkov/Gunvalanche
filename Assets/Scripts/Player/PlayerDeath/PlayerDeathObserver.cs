@@ -79,7 +79,7 @@ public class PlayerDeathObserver : MonoBehaviour
         if (playerDeathHandler != null)
         {
             RegisterPlayerDeathHandler(playerDeathHandler);
-            Debug.Log($"PlayerDeathObserver: registered instance death handler from spawned player ({playerShoot.gameObject.name}).");
+            //Debug.Log($"PlayerDeathObserver: registered instance death handler from spawned player ({playerShoot.gameObject.name}).");
         }
     }
 

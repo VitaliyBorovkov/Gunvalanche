@@ -54,32 +54,32 @@ public class ButtonHandler : MonoBehaviour
 
     private void PlayGame()
     {
-        Debug.Log("ButtonHandler: PlayGame clicked.");
+        //Debug.Log("ButtonHandler: PlayGame clicked.");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     public void Resume()
     {
-        Debug.Log("ButtonHandler: Resume button clicked.");
+        //Debug.Log("ButtonHandler: Resume button clicked.");
         gameStateMachine?.ToGameplay();
     }
 
     public void Settings()
     {
-        Debug.Log("ButtonHandler: Settings button clicked.");
+        //Debug.Log("ButtonHandler: Settings button clicked.");
     }
 
     public void RestartScene()
     {
-        Debug.Log("ButtonHandler: Restart current scene.");
+        //Debug.Log("ButtonHandler: Restart current scene.");
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void LoadMainMenu()
     {
-        Debug.Log("ButtonHandler: Load Main Menu.");
+        //Debug.Log("ButtonHandler: Load Main Menu.");
         Time.timeScale = 1f;
 
         if (!string.IsNullOrEmpty(mainMenuSceneName))
@@ -94,7 +94,7 @@ public class ButtonHandler : MonoBehaviour
 
     public void QuitGame()
     {
-        Debug.Log("ButtonHandler: Quit button clicked.");
+        //Debug.Log("ButtonHandler: Quit button clicked.");
 #if UNITY_EDITOR
         EditorApplication.isPlaying = false;
 #else
