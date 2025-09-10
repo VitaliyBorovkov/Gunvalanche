@@ -36,7 +36,7 @@ public class ResourcesWeaponIconProvider : MonoBehaviour, IWeaponIconProvider
         }
 
         loadedIcons[iconKey] = icon;
-        Debug.Log($"{LOG_PREFIX}: Loaded sprite '{iconKey}' from Resources.");
+        //Debug.Log($"{LOG_PREFIX}: Loaded sprite '{iconKey}' from Resources.");
         onLoaded?.Invoke(icon);
     }
 
@@ -45,7 +45,7 @@ public class ResourcesWeaponIconProvider : MonoBehaviour, IWeaponIconProvider
         if (loadedIcons.ContainsKey(iconKey))
         {
             loadedIcons.Remove(iconKey);
-            Debug.Log($"{LOG_PREFIX}: Removed '{iconKey}' from cache (no Addressables release).");
+            //Debug.Log($"{LOG_PREFIX}: Removed '{iconKey}' from cache (no Addressables release).");
         }
     }
 }
