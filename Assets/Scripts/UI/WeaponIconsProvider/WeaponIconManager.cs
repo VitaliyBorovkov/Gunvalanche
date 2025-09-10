@@ -46,18 +46,26 @@ public class WeaponIconManager : MonoBehaviour
             return;
         }
 
-        string iconKey = weaponPrefab.name;
+        string iconKey = weaponPrefab.name.Replace("(Clone)", "").Trim();
         ShowIconForKey(iconKey);
     }
 
     public void ShowIconForKey(string iconKey)
     {
+        if (string.IsNullOrEmpty(iconKey))
+        {
+            SetSprite(null);
+            return;
+        }
+
         if (provider == null)
         {
-            var fallback = Resources.Load<Sprite>("WeaponIcons/{iconKey}");
+            string path = $"WeaponIcons/{iconKey}";
+            var fallback = Resources.Load<Sprite>(path);
             SetSprite(fallback ?? fallbackSprite);
             Debug.LogWarning($"{LOG_PREFIX}: provider == null. Using direct Resources fallback for key '" +
                 $"{iconKey}'.");
+            currentKey = iconKey;
             return;
         }
 
@@ -75,7 +83,7 @@ public class WeaponIconManager : MonoBehaviour
         });
     }
 
-    public void SetSprite(Sprite sprite)
+    private void SetSprite(Sprite sprite)
     {
         if (targetImage == null)
         {

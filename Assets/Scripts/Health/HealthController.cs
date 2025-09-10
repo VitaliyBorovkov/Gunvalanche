@@ -67,7 +67,7 @@ public class HealthController : MonoBehaviour, IDamageable
         }
 
         healthData.CurrentHealth -= damage;
-        Debug.Log($"HealthController: {entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
+        //Debug.Log($"HealthController: {entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
 
         UpdateHeadUI();
 
@@ -101,7 +101,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
         isDead = true;
 
-        Debug.Log($"HealthController:{entityData.Name} has died.");
+        //Debug.Log($"HealthController:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
         OnDied?.Invoke();

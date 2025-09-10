@@ -56,14 +56,14 @@ public class PlayerDeathObserver : MonoBehaviour
 
     private void HandleStaticPlayerDeath()
     {
-        Debug.Log("PlayerDeathObserver: static PlayerDied invoked.");
+        //Debug.Log("PlayerDeathObserver: static PlayerDied invoked.");
         OnPlayerDied?.Invoke();
         RequestGameOver();
     }
 
     private void HandleInstancePlayerDeath()
     {
-        Debug.Log("PlayerDeathObserver: instance Died invoked.");
+        //Debug.Log("PlayerDeathObserver: instance Died invoked.");
         OnPlayerDied?.Invoke();
         RequestGameOver();
     }
@@ -106,7 +106,7 @@ public class PlayerDeathObserver : MonoBehaviour
             }
         }
 
-        Debug.Log("PlayerDeathObserver: requesting GameOver.");
+        //Debug.Log("PlayerDeathObserver: requesting GameOver.");
         gameStateMachine.ToGameOver();
     }
 }
