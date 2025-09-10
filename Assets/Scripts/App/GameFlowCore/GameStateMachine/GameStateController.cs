@@ -42,7 +42,7 @@ public class GameStateController
         current = next;
         CurrentStateId = stateId;
         current.EnterState();
-        Debug.Log($"GameStateMachine: state -> {CurrentStateId}");
+        //Debug.Log($"GameStateMachine: state -> {CurrentStateId}");
     }
 
     public bool IsInState(GameStateId stateId)

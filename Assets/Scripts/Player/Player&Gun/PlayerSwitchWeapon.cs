@@ -5,11 +5,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerSwitchWeapon : MonoBehaviour
 {
-    public Transform weaponsHolder;
+    [Header("UI")]
+    [SerializeField] private WeaponIconManager weaponIconManager;
+
+    [Header("Weapon")]
+    [SerializeField] private Transform weaponsHolder;
 
     private PlayerShoot playerShoot;
     private int currentWeaponIndex = 0;
     private List<IWeapon> weaponList = new List<IWeapon>();
+
+    private const string LOG_PREFIX = "PlayerSwitchWeapon";
 
     private void Start()
     {
@@ -17,7 +23,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (weaponsHolder == null)
         {
-            Debug.Log("PlayerSwitchWeapon: WeaponsHolder not assigned!");
+            Debug.Log($"{LOG_PREFIX}: WeaponsHolder not assigned!");
             return;
         }
 
@@ -32,7 +38,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"PlayerSwitchWeapon: {weaponGO.name} does not implement IWeapon interface!");
+                Debug.LogWarning($"{LOG_PREFIX}: {weaponGO.name} does not implement IWeapon interface!");
             }
         }
 
@@ -42,7 +48,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("PlayerSwitchWeapon:  No weapons have been added to the list.");
+            Debug.LogWarning($"{LOG_PREFIX}:  No weapons have been added to the list.");
         }
     }
 
@@ -105,5 +111,55 @@ public class PlayerSwitchWeapon : MonoBehaviour
         {
             playerShoot.SetCurrentWeapon(weaponList[currentWeaponIndex]);
         }
+
+        string iconKey = GetIconKeyFromWeapon(weaponList[currentWeaponIndex]);
+        if (weaponIconManager != null)
+        {
+            if (!string.IsNullOrEmpty(iconKey))
+            {
+                weaponIconManager.ShowIconForKey(iconKey);
+                Debug.Log($"{LOG_PREFIX}: Requested icon for '{iconKey}'.");
+            }
+            else
+            {
+                weaponIconManager.ClearIcon();
+                Debug.Log($"{LOG_PREFIX}: No key found - cleared icon.");
+            }
+        }
+        else
+        {
+            Debug.Log($"{LOG_PREFIX}: weaponIconManager not assigned (no UI update).");
+        }
+    }
+
+    private string GetIconKeyFromWeapon(IWeapon weapon)
+    {
+        if (weapon == null)
+        {
+            return null;
+        }
+
+        var monoBehaviour = weapon as MonoBehaviour;
+        if (monoBehaviour != null)
+        {
+            return null;
+        }
+
+        var identity = monoBehaviour.GetComponent<WeaponIdentity>();
+        if (identity != null && !string.IsNullOrEmpty(identity.iconKey))
+        {
+            return identity.iconKey.Trim();
+        }
+
+        string name = monoBehaviour.gameObject.name;
+        name = name.Replace("(Clone)", "").Trim();
+        return string.IsNullOrEmpty(name) ? null : name;
+    }
+
+    public void SetWeaponIconManager(WeaponIconManager iconManager)
+    {
+        weaponIconManager = iconManager;
+        Debug.Log($"{LOG_PREFIX}: WeaponIconManager assigned via SetWeaponIconManager -> " +
+            $"{(iconManager != null ? iconManager.name : "null")}");
     }
 }
