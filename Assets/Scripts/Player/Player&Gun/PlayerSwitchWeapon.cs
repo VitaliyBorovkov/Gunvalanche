@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerSwitchWeapon : MonoBehaviour
 {
-    [Header("UI")]
-    [SerializeField] private WeaponIconManager weaponIconManager;
-
-    [Header("Weapon")]
+    [Header("WeaponHolder")]
     [SerializeField] private Transform weaponsHolder;
+
+    [Header("Provider")]
+    [SerializeField] private MonoBehaviour keyProviderComponent;
+    private IWeaponKeyProvider keyProvider;
 
     private PlayerShoot playerShoot;
     private int currentWeaponIndex = 0;
@@ -19,18 +21,33 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
     private const string LOG_PREFIX = "PlayerSwitchWeapon";
 
+    public event Action<string> OnWeaponIconKeyChanged;
+
+    private void Awake()
+    {
+        if (keyProviderComponent != null)
+        {
+            keyProvider = keyProviderComponent as IWeaponKeyProvider;
+            if (keyProvider == null)
+            {
+                Debug.LogWarning($"{LOG_PREFIX}: keyProviderComponent is not IWeaponKeyProvider!");
+            }
+        }
+
+        if (keyProvider == null)
+        {
+            var found = FindObjectOfType<WeaponKeyProvider>();
+            if (found != null)
+            {
+                keyProvider = found;
+                //Debug.Log($"{LOG_PREFIX}: Using WeaponKeyProvider from scene '{found.gameObject.name}'.");
+            }
+        }
+    }
+
     private void Start()
     {
         playerShoot = GetComponent<PlayerShoot>();
-
-        if (weaponIconManager == null)
-        {
-            var found = FindObjectOfType<WeaponIconManager>();
-            if (found != null)
-            {
-                weaponIconManager = found;
-            }
-        }
 
         if (weaponsHolder == null)
         {
@@ -38,20 +55,6 @@ public class PlayerSwitchWeapon : MonoBehaviour
             return;
         }
 
-        //foreach (Transform weaponTransform in weaponsHolder)
-        //{
-        //    GameObject weaponGO = weaponTransform.gameObject;
-        //    IWeapon weapon = weaponGO.GetComponent<IWeapon>();
-        //    if (weapon != null)
-        //    {
-        //        weaponList.Add(weapon);
-        //        weaponGO.SetActive(false);
-        //    }
-        //    else
-        //    {
-        //        Debug.LogWarning($"{LOG_PREFIX}: {weaponGO.name} does not implement IWeapon interface!");
-        //    }
-        //}
         CollectWeapon();
 
         if (weaponList.Count > 0)
@@ -82,8 +85,8 @@ public class PlayerSwitchWeapon : MonoBehaviour
                 string info = identity != null && !string.IsNullOrEmpty(identity.iconKey)
                     ? $"(identity='{identity.iconKey}')" : "(no identity)";
 
-                Debug.Log($"{LOG_PREFIX}: Added weapon -> name='{monoBehaviour.gameObject.name}'" +
-                    $" component='{monoBehaviour.GetType().Name}' {info}");
+                //Debug.Log($"{LOG_PREFIX}: Added weapon -> name='{monoBehaviour.gameObject.name}'" +
+                //    $" component='{monoBehaviour.GetType().Name}' {info}");
             }
         }
     }
@@ -148,54 +151,28 @@ public class PlayerSwitchWeapon : MonoBehaviour
             playerShoot.SetCurrentWeapon(weaponList[currentWeaponIndex]);
         }
 
-        string iconKey = GetIconKeyFromWeapon(weaponList[currentWeaponIndex]);
-        if (weaponIconManager != null)
+        string resolvedKey = null;
+        var gameObject = (currentWeaponIndex >= 0 && currentWeaponIndex < weaponGameObjects.Count) ?
+            weaponGameObjects[currentWeaponIndex] : null;
+
+        if (keyProvider != null && gameObject != null)
         {
-            if (!string.IsNullOrEmpty(iconKey))
-            {
-                weaponIconManager.ShowIconForKey(iconKey);
-                Debug.Log($"{LOG_PREFIX}: Requested icon for '{iconKey}'.");
-            }
-            else
-            {
-                weaponIconManager.ClearIcon();
-                Debug.Log($"{LOG_PREFIX}: No key found - cleared icon.");
-            }
+            resolvedKey = keyProvider.GetKey(gameObject);
         }
-        else
-        {
-            Debug.Log($"{LOG_PREFIX}: weaponIconManager not assigned (no UI update).");
-        }
+
+        //Debug.Log($"{LOG_PREFIX}: Resolved icon key='{resolvedKey}' for '{gameObject?.name}'");
+
+        OnWeaponIconKeyChanged?.Invoke(resolvedKey);
     }
 
-    private string GetIconKeyFromWeapon(IWeapon weapon)
+    public void SetKeyProvider(IWeaponKeyProvider provider)
     {
-        if (weapon == null)
-        {
-            return null;
-        }
-
-        var monoBehaviour = weapon as MonoBehaviour;
-        if (monoBehaviour == null)
-        {
-            return null;
-        }
-
-        var identity = monoBehaviour.GetComponent<WeaponIdentity>();
-        if (identity != null && !string.IsNullOrEmpty(identity.iconKey))
-        {
-            return identity.iconKey.Trim();
-        }
-
-        string name = monoBehaviour.gameObject.name;
-        name = name.Replace("(Clone)", "").Trim();
-        return string.IsNullOrEmpty(name) ? null : name;
+        keyProvider = provider;
+        //Debug.Log($"{LOG_PREFIX}: Key provider set -> " +
+        //    $"{(provider is MonoBehaviour mb ? mb.name : provider?.GetType().Name)}");
     }
 
-    public void SetWeaponIconManager(WeaponIconManager iconManager)
-    {
-        weaponIconManager = iconManager;
-        Debug.Log($"{LOG_PREFIX}: WeaponIconManager assigned via SetWeaponIconManager -> " +
-            $"{(iconManager != null ? iconManager.name : "null")}");
-    }
+    public int GetCurrentWeaponIndex() => currentWeaponIndex;
+    public GameObject GetCurrentWeaponGameObject() => (currentWeaponIndex >= 0 && currentWeaponIndex <
+        weaponGameObjects.Count) ? weaponGameObjects[currentWeaponIndex] : null;
 }
