@@ -92,7 +92,7 @@ public class Pauser : MonoBehaviour
         pause.Enable();
         pause.performed += OnPausePerformed;
         subscribedToInput = true;
-        Debug.Log($"Pauser: subscribed to Pause action '{pause.name}' on '{inputManager.gameObject.name}'.");
+        //Debug.Log($"Pauser: subscribed to Pause action '{pause.name}' on '{inputManager.gameObject.name}'.");
     }
 
     private void Unregister()
@@ -113,21 +113,21 @@ public class Pauser : MonoBehaviour
         }
 
         subscribedToInput = false;
-        Debug.Log("Pauser: unsubscribed from Pause action.");
+        //Debug.Log("Pauser: unsubscribed from Pause action.");
     }
 
     private void OnPausePerformed(InputAction.CallbackContext ctx)
     {
-        Debug.Log("Pauser: Pause action triggered.");
+        //Debug.Log("Pauser: Pause action triggered.");
         if (Time.timeScale > 0.5f)
         {
             gameStateMachine?.ToPause();
-            Debug.Log("Pauser: Paused.");
+            //Debug.Log("Pauser: Paused.");
         }
         else
         {
             gameStateMachine?.ToGameplay();
-            Debug.Log("Pauser: Resumed.");
+            //Debug.Log("Pauser: Resumed.");
         }
     }
 }

@@ -89,6 +89,6 @@ public class InputManager : MonoBehaviour
         }
 
         playerInput.SwitchCurrentActionMap(mapName);
-        Debug.Log($"InputManager: Switched to action map '{mapName}'.");
+        //Debug.Log($"InputManager: Switched to action map '{mapName}'.");
     }
 }

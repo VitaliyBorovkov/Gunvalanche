@@ -27,7 +27,7 @@ public class ActionMapRequester : MonoBehaviour
         if (inputManager != null)
         {
             SetInputManager(inputManager);
-            Debug.Log($"ActionMapRequester: received InputManager from spawned player ({inputManager.gameObject.name}).");
+            //Debug.Log($"ActionMapRequester: received InputManager from spawned player ({inputManager.gameObject.name}).");
         }
     }
 
@@ -41,7 +41,7 @@ public class ActionMapRequester : MonoBehaviour
 
         this.inputManager = inputManager;
 
-        Debug.Log($"ActionMapRequester: SetInputManager -> {inputManager.gameObject.name}");
+        //Debug.Log($"ActionMapRequester: SetInputManager -> {inputManager.gameObject.name}");
 
         if (!string.IsNullOrEmpty(pendingActionMap))
         {

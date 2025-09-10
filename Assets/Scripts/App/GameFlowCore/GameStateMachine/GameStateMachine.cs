@@ -23,7 +23,7 @@ public class GameStateMachine : MonoBehaviour
 
         gameStateContext.RequestGameplayMap = actionMapRequester.RequestGameplayMap;
         gameStateContext.RequestUIMap = actionMapRequester.RequestUIMap;
-        Debug.Log("GameStateMachine: wired GameStateContext -> ActionMapRequester.");
+        //Debug.Log("GameStateMachine: wired GameStateContext -> ActionMapRequester.");
 
         gameStateController = new GameStateController(gameStateContext);
     }

@@ -34,7 +34,7 @@ public sealed class PausedState : IGameState
 
         GameStateContext.PauseUI.ShowScreen();
         GameStateContext.SetCursor(true);
-        Debug.Log("PausedState: Entered.");
+        //Debug.Log("PausedState: Entered.");
     }
 
     public void ExitState()
@@ -51,7 +51,7 @@ public sealed class PausedState : IGameState
         }
 
         GameStateContext.SetCursor(false);
-        Debug.Log("PausedState: Exited.");
+        //Debug.Log("PausedState: Exited.");
     }
 
     public void UpdateState()
