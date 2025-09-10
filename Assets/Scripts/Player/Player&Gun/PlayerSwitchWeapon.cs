@@ -13,7 +13,9 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
     private PlayerShoot playerShoot;
     private int currentWeaponIndex = 0;
+
     private List<IWeapon> weaponList = new List<IWeapon>();
+    private List<GameObject> weaponGameObjects = new List<GameObject>();
 
     private const string LOG_PREFIX = "PlayerSwitchWeapon";
 
@@ -21,26 +23,36 @@ public class PlayerSwitchWeapon : MonoBehaviour
     {
         playerShoot = GetComponent<PlayerShoot>();
 
+        if (weaponIconManager == null)
+        {
+            var found = FindObjectOfType<WeaponIconManager>();
+            if (found != null)
+            {
+                weaponIconManager = found;
+            }
+        }
+
         if (weaponsHolder == null)
         {
             Debug.Log($"{LOG_PREFIX}: WeaponsHolder not assigned!");
             return;
         }
 
-        foreach (Transform weaponTransform in weaponsHolder)
-        {
-            GameObject weaponGO = weaponTransform.gameObject;
-            IWeapon weapon = weaponGO.GetComponent<IWeapon>();
-            if (weapon != null)
-            {
-                weaponList.Add(weapon);
-                weaponGO.SetActive(false);
-            }
-            else
-            {
-                Debug.LogWarning($"{LOG_PREFIX}: {weaponGO.name} does not implement IWeapon interface!");
-            }
-        }
+        //foreach (Transform weaponTransform in weaponsHolder)
+        //{
+        //    GameObject weaponGO = weaponTransform.gameObject;
+        //    IWeapon weapon = weaponGO.GetComponent<IWeapon>();
+        //    if (weapon != null)
+        //    {
+        //        weaponList.Add(weapon);
+        //        weaponGO.SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        Debug.LogWarning($"{LOG_PREFIX}: {weaponGO.name} does not implement IWeapon interface!");
+        //    }
+        //}
+        CollectWeapon();
 
         if (weaponList.Count > 0)
         {
@@ -49,6 +61,30 @@ public class PlayerSwitchWeapon : MonoBehaviour
         else
         {
             Debug.LogWarning($"{LOG_PREFIX}:  No weapons have been added to the list.");
+        }
+    }
+
+    private void CollectWeapon()
+    {
+        weaponList.Clear();
+        weaponGameObjects.Clear();
+
+        var weaponComponents = weaponsHolder.GetComponentsInChildren<MonoBehaviour>(true);
+        foreach (var monoBehaviour in weaponComponents)
+        {
+            if (monoBehaviour is IWeapon iWeapon)
+            {
+                weaponList.Add(iWeapon);
+                weaponGameObjects.Add(monoBehaviour.gameObject);
+                monoBehaviour.gameObject.SetActive(false);
+
+                var identity = monoBehaviour.GetComponent<WeaponIdentity>();
+                string info = identity != null && !string.IsNullOrEmpty(identity.iconKey)
+                    ? $"(identity='{identity.iconKey}')" : "(no identity)";
+
+                Debug.Log($"{LOG_PREFIX}: Added weapon -> name='{monoBehaviour.gameObject.name}'" +
+                    $" component='{monoBehaviour.GetType().Name}' {info}");
+            }
         }
     }
 
@@ -140,7 +176,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
         }
 
         var monoBehaviour = weapon as MonoBehaviour;
-        if (monoBehaviour != null)
+        if (monoBehaviour == null)
         {
             return null;
         }
