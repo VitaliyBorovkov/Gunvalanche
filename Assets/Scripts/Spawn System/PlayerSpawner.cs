@@ -26,22 +26,47 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject player = Instantiate(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
 
-        //player.transform.position = playerSpawnPoint.position;
-        //player.transform.rotation = playerSpawnPoint.rotation;
-
         var switcher = player.GetComponent<PlayerSwitchWeapon>();
+        var iconManager = FindObjectOfType<WeaponIconManager>();
+        var keyProvider = FindObjectOfType<WeaponKeyProvider>();
+
         if (switcher != null)
         {
-            var iconManager = FindObjectOfType<WeaponIconManager>();
+            if (keyProvider != null)
+            {
+                switcher.SetKeyProvider(keyProvider);
+                //Debug.Log($"{LOG_PREFIX}: Injected KeyProvider '{keyProvider.name}' into PlayerSwitchWeapon.");
+            }
+            else
+            {
+                Debug.LogWarning($"{LOG_PREFIX}: WeaponKeyProvider not found in the scene!");
+            }
+
             if (iconManager != null)
             {
-                switcher.SetWeaponIconManager(iconManager);
-                Debug.Log($"{LOG_PREFIX}: Assigned WeaponIconManager '{iconManager.name}' to spawned player.");
+                switcher.OnWeaponIconKeyChanged += (keyProvider) =>
+                {
+                    if (string.IsNullOrEmpty(keyProvider))
+                    {
+                        iconManager.ClearIcon();
+                    }
+                    else
+                    {
+                        iconManager.ShowIconForKey(keyProvider);
+                    }
+                };
+
+                //Debug.Log($"{LOG_PREFIX}: Subscribed PlayerSwitchWeapon.OnWeaponIconKeyChanged -> " +
+                //        $"WeaponIconManager '{iconManager.name}'.");
             }
             else
             {
                 Debug.LogWarning($"{LOG_PREFIX}: WeaponIconManager not found in the scene!");
             }
+        }
+        else
+        {
+            Debug.LogWarning($"{LOG_PREFIX}: PlayerSwitchWeapon not found on spawned player.");
         }
 
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
@@ -51,16 +76,6 @@ public class PlayerSpawner : MonoBehaviour
         }
         else
         {
-            //AmmoUIHandler ammoUIHandler = FindObjectOfType<AmmoUIHandler>();
-            //if (ammoUIHandler != null)
-            //{
-            //    ammoUIHandler.SetPlayerShoot(playerShoot);
-            //}
-            //else
-            //{
-            //    Debug.LogWarning("AmmoUIHandler not found in the scene!");
-            //}
-
             OnPlayerSpawned?.Invoke(playerShoot);
             //Debug.Log($"{LOG_PREFIX}: OnPlayerSpawned invoked.");
         }

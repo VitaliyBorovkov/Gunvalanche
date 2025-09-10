@@ -79,7 +79,7 @@ public class WeaponIconManager : MonoBehaviour
         {
             SetSprite(sprite ?? fallbackSprite);
             currentKey = iconKey;
-            Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
+            //Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
         });
     }
 
