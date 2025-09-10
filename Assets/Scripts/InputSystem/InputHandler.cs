@@ -287,6 +287,6 @@ public class InputHandler : MonoBehaviour
         {
             input.SetActionsEnabled(isEnabled);
         }
-        Debug.Log($"InputHandler: Input is now {(isEnabled ? "enabled" : "disabled")}");
+        //Debug.Log($"InputHandler: Input is now {(isEnabled ? "enabled" : "disabled")}");
     }
 }

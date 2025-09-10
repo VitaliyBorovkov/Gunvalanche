@@ -18,12 +18,12 @@ public sealed class GameplayState : IGameState
         GameStateContext.PauseUI.HideScreen();
         GameStateContext.GameOverUI.HideScreen();
         GameStateContext.SetCursor(false);
-        Debug.Log("GameplayState: Entered.");
+        //Debug.Log("GameplayState: Entered.");
     }
 
     public void ExitState()
     {
-        Debug.Log("GameplayState: Exited.");
+        //Debug.Log("GameplayState: Exited.");
     }
 
     public void UpdateState()

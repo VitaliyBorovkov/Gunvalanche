@@ -36,8 +36,8 @@ public class RocketBulletController : BaseBulletsController
             if (healthController != null)
             {
                 healthController.TakeDamage(explosionSettings.explosionDamage);
-                Debug.Log($"RocketBulletController: {gameObject.name} damaged {hitCollider.name} " +
-                    $"with {explosionSettings.explosionDamage} damage.");
+                //Debug.Log($"RocketBulletController: {gameObject.name} damaged {hitCollider.name} " +
+                //    $"with {explosionSettings.explosionDamage} damage.");
             }
         }
     }
