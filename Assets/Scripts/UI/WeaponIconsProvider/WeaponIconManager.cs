@@ -5,12 +5,15 @@ public class WeaponIconManager : MonoBehaviour
 {
     [Header("UI")]
     [SerializeField] private Image targetImage;
-    [SerializeField] private Sprite fallbackSprite;
 
     [Header("Provider")]
     [SerializeField] private MonoBehaviour providerComponent;
 
+    [Header("Visibility controller")]
+    [SerializeField] private MonoBehaviour visibilityControllerComponent;
+
     private IWeaponIconProvider provider;
+    private UIVisibilityBase visibilityController;
 
     private const string LOG_PREFIX = "WeaponIconManager";
 
@@ -36,13 +39,28 @@ public class WeaponIconManager : MonoBehaviour
                 Debug.LogWarning($"{LOG_PREFIX}: Assigned providerComponent does not implement IWeaponIconProvider.");
             }
         }
+
+        if (visibilityControllerComponent != null)
+        {
+            visibilityController = visibilityControllerComponent as UIVisibilityBase;
+            if (visibilityController == null)
+            {
+                Debug.LogWarning($"{LOG_PREFIX}: Assigned visibilityControllerComponent does not inherit UIVisibilityBase.");
+            }
+        }
+
+        if (targetImage != null)
+        {
+            targetImage.sprite = null;
+            targetImage.enabled = false;
+        }
     }
 
     public void ShowIconPrefab(GameObject weaponPrefab)
     {
         if (weaponPrefab == null)
         {
-            SetSprite(null);
+            ClearIcon();
             return;
         }
 
@@ -54,36 +72,58 @@ public class WeaponIconManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(iconKey))
         {
-            SetSprite(null);
+            ClearIcon();
             return;
         }
 
-        if (provider == null)
-        {
-            string path = $"WeaponIcons/{iconKey}";
-            var fallback = Resources.Load<Sprite>(path);
-            SetSprite(fallback ?? fallbackSprite);
-            Debug.LogWarning($"{LOG_PREFIX}: provider == null. Using direct Resources fallback for key '" +
-                $"{iconKey}'.");
-            currentKey = iconKey;
-            return;
-        }
-
-        if (!string.IsNullOrEmpty(currentKey) && currentKey != iconKey)
+        if (!string.IsNullOrEmpty(currentKey) && currentKey != iconKey && provider != null)
         {
             provider.ReleaseIcon(currentKey);
             currentKey = null;
         }
 
+        currentKey = iconKey;
+
+        if (provider == null)
+        {
+            string path = $"WeaponIcons/{iconKey}";
+            Sprite sprite = Resources.Load<Sprite>(path);
+            if (sprite != null)
+            {
+                CheckSprite(sprite);
+                Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}' via Resources.");
+            }
+            else
+            {
+                ClearIcon();
+                Debug.LogWarning($"{LOG_PREFIX}: provider == null. Using direct Resources fallback for key '" +
+                    $"{iconKey}'.");
+            }
+            return;
+        }
+
         provider.GetIcon(iconKey, (sprite) =>
         {
-            SetSprite(sprite ?? fallbackSprite);
-            currentKey = iconKey;
-            //Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
+            if (sprite != null)
+            {
+                CheckSprite(sprite);
+                Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
+            }
+            else
+            {
+                ClearIcon();
+                Debug.LogWarning($"{LOG_PREFIX}: provider returned null for key '{iconKey}'. Clearing icon.");
+            }
         });
     }
 
-    private void SetSprite(Sprite sprite)
+    private void CheckSprite(Sprite sprite)
+    {
+        ApplySprite(sprite);
+        visibilityController?.Show();
+    }
+
+    private void ApplySprite(Sprite sprite)
     {
         if (targetImage == null)
         {
@@ -101,6 +141,31 @@ public class WeaponIconManager : MonoBehaviour
             provider.ReleaseIcon(currentKey);
             currentKey = null;
         }
-        SetSprite(null);
+        ApplySprite(null);
+
+        if (visibilityController != null)
+        {
+            visibilityController.Hide();
+        }
+        else
+        {
+            ApplySprite(null);
+        }
+    }
+
+    public void SetVisibleImmediate(bool visible)
+    {
+        if (visibilityController != null)
+        {
+            visibilityController.SetVisibleImmediate(visible);
+            if (!visible)
+            {
+                ApplySprite(null);
+            }
+        }
+        else
+        {
+            ApplySprite(visible ? targetImage.sprite : null);
+        }
     }
 }

@@ -21,6 +21,12 @@ public class GameOverState : IGameState
             hpAmmoController.FadeOut();
         }
 
+        var weaponIconController = GameStateContext.GetOrResolveWeaponIconVisibilityController();
+        if (weaponIconController != null)
+        {
+            weaponIconController.Hide();
+        }
+
         Time.timeScale = 0f;
 
         GameStateContext.GameOverUI.ShowGameOverScreen(0.8f);
