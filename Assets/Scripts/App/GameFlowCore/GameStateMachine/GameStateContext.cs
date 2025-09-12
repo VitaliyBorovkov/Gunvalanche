@@ -6,6 +6,7 @@ public sealed class GameStateContext
 {
     public InputManager InputManager;
     public HPAmmoVisibilityController HPAmmoVisibilityController;
+    public UIVisibilityBase WeaponIconVisibilityController;
 
     public readonly InputHandler InputHandler;
     public readonly GameOverUI GameOverUI;
@@ -15,13 +16,14 @@ public sealed class GameStateContext
     public Action RequestUIMap;
 
     public GameStateContext(InputManager inputManager, InputHandler inputHandler, GameOverUI gameOverUI,
-        PauseUI pauseUI, HPAmmoVisibilityController hpAmmoVisibilityController)
+        PauseUI pauseUI, HPAmmoVisibilityController hpAmmoVisibilityController, UIVisibilityBase weaponIconVisibilityController)
     {
         InputManager = inputManager;
         InputHandler = inputHandler;
         GameOverUI = gameOverUI;
         PauseUI = pauseUI;
         HPAmmoVisibilityController = hpAmmoVisibilityController;
+        WeaponIconVisibilityController = weaponIconVisibilityController;
     }
 
     public void SetCursor(bool visible)
@@ -43,6 +45,14 @@ public sealed class GameStateContext
         }
     }
 
+    public void SetWeaponIconVisibilityController(UIVisibilityBase weaponIconVisibilityController)
+    {
+        if (weaponIconVisibilityController != null)
+        {
+            WeaponIconVisibilityController = weaponIconVisibilityController;
+        }
+    }
+
     public HPAmmoVisibilityController GetOrResolveHPAmmoVisibilityController()
     {
         if (HPAmmoVisibilityController != null)
@@ -52,5 +62,15 @@ public sealed class GameStateContext
 
         HPAmmoVisibilityController = GameObject.FindObjectOfType<HPAmmoVisibilityController>();
         return HPAmmoVisibilityController;
+    }
+
+    public UIVisibilityBase GetOrResolveWeaponIconVisibilityController()
+    {
+        if (WeaponIconVisibilityController != null)
+        {
+            return WeaponIconVisibilityController;
+        }
+        WeaponIconVisibilityController = GameObject.FindObjectOfType<UIVisibilityBase>();
+        return WeaponIconVisibilityController;
     }
 }
