@@ -37,12 +37,12 @@ public class HPAmmoVisibilityController : MonoBehaviour
     {
         if (hpFader != null)
         {
-            hpFader.PlayeFadeIn(duration);
+            hpFader.PlayFadeIn(duration);
         }
 
         if (ammoFader != null)
         {
-            ammoFader.PlayeFadeIn(duration);
+            ammoFader.PlayFadeIn(duration);
         }
     }
 
@@ -59,5 +59,4 @@ public class HPAmmoVisibilityController : MonoBehaviour
             ammoFader.SetAlpha(alpha);
         }
     }
-
 }

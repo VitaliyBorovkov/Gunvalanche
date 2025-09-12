@@ -14,7 +14,7 @@ public class GameOverUI : BaseUIScreen
         gameObject.SetActive(true);
         if (fader != null)
         {
-            fader.PlayeFadeIn(fadeDuration);
+            fader.PlayFadeIn(fadeDuration);
         }
     }
 }
