@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HPAmmoVisibilityController : MonoBehaviour
+public class HPAmmoVisibilityController : UIVisibilityBase
 {
     [SerializeField] private UIFader hpFader;
     [SerializeField] private UIFader ammoFader;
@@ -46,17 +46,17 @@ public class HPAmmoVisibilityController : MonoBehaviour
         }
     }
 
-    public void SetVisibleImmediate(bool visible)
-    {
-        float alpha = visible ? 1f : 0f;
-        if (hpFader != null)
-        {
-            hpFader.SetAlpha(alpha);
-        }
+    //public void SetVisibleImmediate(bool visible)
+    //{
+    //    float alpha = visible ? 1f : 0f;
+    //    if (hpFader != null)
+    //    {
+    //        hpFader.SetAlpha(alpha);
+    //    }
 
-        if (ammoFader != null)
-        {
-            ammoFader.SetAlpha(alpha);
-        }
-    }
+    //    if (ammoFader != null)
+    //    {
+    //        ammoFader.SetAlpha(alpha);
+    //    }
+    //}
 }

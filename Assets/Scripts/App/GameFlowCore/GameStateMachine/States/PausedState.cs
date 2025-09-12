@@ -30,6 +30,12 @@ public sealed class PausedState : IGameState
             hpAmmoController.FadeOut();
         }
 
+        var weaponIconController = GameStateContext.GetOrResolveWeaponIconVisibilityController();
+        if (weaponIconController != null)
+        {
+            weaponIconController.Hide();
+        }
+
         Time.timeScale = 0f;
 
         GameStateContext.PauseUI.ShowScreen();
@@ -48,6 +54,12 @@ public sealed class PausedState : IGameState
         if (hpAmmoController != null)
         {
             hpAmmoController.FadeIn();
+        }
+
+        var weaponIconController = GameStateContext.GetOrResolveWeaponIconVisibilityController();
+        if (weaponIconController != null)
+        {
+            weaponIconController.Show();
         }
 
         GameStateContext.SetCursor(false);
