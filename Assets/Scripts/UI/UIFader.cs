@@ -13,7 +13,7 @@ public class UIFader : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void PlayeFadeIn(float duration)
+    public void PlayFadeIn(float duration)
     {
         if (currentRoutine != null)
         {
