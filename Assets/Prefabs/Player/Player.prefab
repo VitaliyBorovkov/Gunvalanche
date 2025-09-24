@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 405447642899332520}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.063138, y: -0, z: -0, w: 0.9980048}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.55999994, z: 0.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 159355444733508386}
   - {fileID: 2737534355775875284}
   m_Father: {fileID: 7871867582529927044}
-  m_LocalEulerAnglesHint: {x: 7.24, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8794730626645773767
 Camera:
   m_ObjectHideFlags: 0
@@ -421,7 +421,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 84da9051-e82f-4e38-b5de-e13fb985b6a9
+  m_DefaultActionMap: GameplayActionMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 8794730626645773767}
 --- !u!114 &6036285002621063731
@@ -485,8 +485,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 8794730626645773767}
-  xRotation: 100
-  xSensitivity: 8
+  xRotation: 38
+  xSensitivity: 30
   ySensitivity: 30
 --- !u!114 &4946228932811068358
 MonoBehaviour:
@@ -566,6 +566,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponsHolder: {fileID: 302710563676770984}
+  keyProviderComponent: {fileID: 0}
 --- !u!114 &1608169243435678818
 MonoBehaviour:
   m_ObjectHideFlags: 0
