@@ -26,6 +26,19 @@ public class PlayerSpawner : MonoBehaviour
 
         GameObject player = Instantiate(playerPrefab, playerSpawnPoint.position, playerSpawnPoint.rotation);
 
+        player.transform.rotation = playerSpawnPoint.rotation;
+
+        var playerLook = player.GetComponentInChildren<PlayerLook>();
+        if (playerLook != null)
+        {
+            playerLook.xRotation = 0f;
+
+            if (playerLook.playerCamera != null)
+            {
+                playerLook.playerCamera.transform.localRotation = Quaternion.identity;
+            }
+        }
+
         var switcher = player.GetComponent<PlayerSwitchWeapon>();
         var iconManager = FindObjectOfType<WeaponIconManager>();
         var keyProvider = FindObjectOfType<WeaponKeyProvider>();
