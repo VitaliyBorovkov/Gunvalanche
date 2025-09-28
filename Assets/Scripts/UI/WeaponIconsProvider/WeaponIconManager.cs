@@ -107,7 +107,7 @@ public class WeaponIconManager : MonoBehaviour
             if (sprite != null)
             {
                 CheckSprite(sprite);
-                Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
+                //Debug.Log($"{LOG_PREFIX}: Set icon for '{iconKey}'.");
             }
             else
             {
