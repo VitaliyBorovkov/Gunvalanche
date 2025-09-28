@@ -28,7 +28,6 @@ public class PlayerShoot : MonoBehaviour
     {
         if (currentWeapon == weapon)
         {
-            Debug.Log("PlayerShoot: Attempted to set the same weapon.");
             return;
         }
 

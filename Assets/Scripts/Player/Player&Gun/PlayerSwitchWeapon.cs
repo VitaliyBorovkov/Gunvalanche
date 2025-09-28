@@ -13,6 +13,8 @@ public class PlayerSwitchWeapon : MonoBehaviour
     [SerializeField] private MonoBehaviour keyProviderComponent;
     private IWeaponKeyProvider keyProvider;
 
+    [SerializeField] private PlayerInventory playerInventory;
+
     private PlayerShoot playerShoot;
     private int currentWeaponIndex = 0;
 
@@ -55,6 +57,19 @@ public class PlayerSwitchWeapon : MonoBehaviour
             return;
         }
 
+        if (playerInventory == null)
+            playerInventory = GetComponent<PlayerInventory>() ?? FindObjectOfType<PlayerInventory>();
+
+        if (playerInventory != null)
+        {
+            playerInventory.OnWeaponInstantiated -= HandleWeaponInstantiated;
+            playerInventory.OnWeaponInstantiated += HandleWeaponInstantiated;
+        }
+        else
+        {
+            Debug.LogWarning($"{LOG_PREFIX}: PlayerInventory not found. Fallback to initial scan only.");
+        }
+
         CollectWeapon();
 
         if (weaponList.Count > 0)
@@ -65,6 +80,72 @@ public class PlayerSwitchWeapon : MonoBehaviour
         {
             Debug.LogWarning($"{LOG_PREFIX}:  No weapons have been added to the list.");
         }
+    }
+
+    private void OnDestroy()
+    {
+        if (playerInventory != null)
+            playerInventory.OnWeaponInstantiated -= HandleWeaponInstantiated;
+    }
+
+    private void HandleWeaponInstantiated(GunsType type, WeaponController controller, bool autoEquip)
+    {
+        if (controller == null) return;
+        var go = controller.gameObject;
+
+        if (weaponGameObjects.Contains(go)) return;
+
+        RegisterWeapon(go, controller, autoEquip);
+    }
+
+    public void RegisterWeapon(GameObject weaponGO, IWeapon weapon, bool autoEquip = false, string iconKeyOverride = null)
+    {
+        if (weaponGO == null || weapon == null)
+        {
+            return;
+        }
+
+        bool parentChanged = false;
+        if (weaponsHolder != null)
+        {
+            bool alreadyUnderHolder = weaponGO.transform.IsChildOf(weaponsHolder);
+            if (!alreadyUnderHolder)
+            {
+                weaponGO.transform.SetParent(weaponsHolder, false);
+                parentChanged = true;
+                Debug.Log($"{LOG_PREFIX}: Re-parented '{weaponGO.name}' under '{weaponsHolder.name}'.");
+            }
+        }
+        else
+        {
+            Debug.Log($"{LOG_PREFIX}: weaponsHolder is null, keeping current parent for '{weaponGO.name}'.");
+        }
+
+        if (parentChanged)
+        {
+            weaponGO.transform.localPosition = Vector3.zero;
+            weaponGO.transform.localRotation = Quaternion.identity;
+        }
+
+        weaponGO.SetActive(false);
+
+        weaponList.Add(weapon);
+        weaponGameObjects.Add(weaponGO);
+
+        int newIndex = weaponList.Count - 1;
+        if (autoEquip || weaponList.Count == 1)
+            SwitchWeaponByIndex(newIndex);
+
+        string key = null;
+        var identity = weaponGO.GetComponent<WeaponIdentity>();
+        if (!string.IsNullOrEmpty(iconKeyOverride))
+            key = iconKeyOverride;
+        else if (identity != null && !string.IsNullOrEmpty(identity.iconKey))
+            key = identity.iconKey;
+
+        OnWeaponIconKeyChanged?.Invoke(key);
+
+        Debug.Log($"{LOG_PREFIX}: Registered weapon '{weaponGO.name}', index={newIndex}, autoEquip={autoEquip}");
     }
 
     private void CollectWeapon()
@@ -168,8 +249,6 @@ public class PlayerSwitchWeapon : MonoBehaviour
     public void SetKeyProvider(IWeaponKeyProvider provider)
     {
         keyProvider = provider;
-        //Debug.Log($"{LOG_PREFIX}: Key provider set -> " +
-        //    $"{(provider is MonoBehaviour mb ? mb.name : provider?.GetType().Name)}");
     }
 
     public int GetCurrentWeaponIndex() => currentWeaponIndex;
