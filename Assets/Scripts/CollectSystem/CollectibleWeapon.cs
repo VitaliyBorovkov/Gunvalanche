@@ -1,5 +1,3 @@
-using System;
-
 using UnityEngine;
 
 [RequireComponent(typeof(Collider))]
@@ -14,21 +12,6 @@ public class CollectibleWeapon : CollectibleItems
     [SerializeField] private GameObject weaponPrefab;
     [SerializeField] private bool deactivateOnCollect = true;
     [SerializeField] private WeaponUnlockManager weaponUnlockManager;
-    [SerializeField] private string weaponsHolderName = "WeaponsHolder";
-
-    protected override void Start()
-    {
-        base.Start();
-        if (weaponUnlockManager == null)
-        {
-            weaponUnlockManager = FindObjectOfType<WeaponUnlockManager>();
-
-            //if (weaponUnlockManager != null)
-            //{
-            //    Debug.Log($"{LOG_PREFIX}: WeaponUnlockManager auto-found.");
-            //}
-        }
-    }
 
     protected override void Collect(GameObject player)
     {
@@ -39,11 +22,7 @@ public class CollectibleWeapon : CollectibleItems
 
         if (weaponUnlockManager != null && !weaponUnlockManager.IsAllowedToSpawn(gunsType))
         {
-            Debug.Log($"{LOG_PREFIX}: Collect attempt for {gunsType} denied - spawn not allowed on level {weaponUnlockManager.GetCurrentLevel()}.");
-            if (deactivateOnCollect)
-            {
-                gameObject.SetActive(false);
-            }
+            Debug.Log($"{LOG_PREFIX}: {name}: Spawn denied for {gunsType} on level {weaponUnlockManager.GetCurrentLevel()}.");
             return;
         }
 
@@ -53,106 +32,32 @@ public class CollectibleWeapon : CollectibleItems
             return;
         }
 
-        PlayerInventory playerInventory = null;
-        if (player != null)
+        if (player == null)
         {
-            playerInventory = player.GetComponent<PlayerInventory>();
+            Debug.LogWarning($"{LOG_PREFIX}: {name}: player is null in Collect().");
+            return;
         }
 
-        bool addedViaInventory = false;
-
-        if (playerInventory != null)
+        var inventory = player.GetComponent<PlayerInventory>();
+        if (inventory == null)
         {
-            try
-            {
-                addedViaInventory = playerInventory.AddWeapon(gunsType, weaponPrefab, true);
-            }
-            catch (Exception ex)
-            {
-                Debug.LogWarning($"{LOG_PREFIX}: Exception while calling PlayerInventory.AddWeapon: {ex.Message}. Falling back to direct instantiate.");
-                addedViaInventory = false;
-            }
-
-            if (addedViaInventory)
-            {
-                Debug.Log($"{LOG_PREFIX}: Sent AddWeapon request to PlayerInventory for {gunsType}.");
-                isCollected = true;
-                if (deactivateOnCollect) gameObject.SetActive(false);
-                return;
-            }
+            Debug.LogWarning($"{LOG_PREFIX}: {name}: PlayerInventory not found on player.");
+            return;
         }
 
-        GameObject instantiated = null;
-
-        try
+        bool added = inventory.AddWeapon(gunsType, weaponPrefab, autoEquip: true);
+        if (!added)
         {
-            Transform parentTransform = null;
-            if (player != null)
-            {
-                var weaponsHolder = player.transform.Find(weaponsHolderName);
-                parentTransform = weaponsHolder != null ? weaponsHolder : player.transform;
-            }
-
-            instantiated = Instantiate(weaponPrefab, parentTransform);
-            instantiated.name = weaponPrefab.name;
-
-            var rigidbody = instantiated.GetComponent<Rigidbody>();
-            if (rigidbody != null)
-            {
-                rigidbody.isKinematic = true;
-                rigidbody.detectCollisions = false;
-            }
-
-            WeaponController weaponController = instantiated.GetComponentInChildren<WeaponController>();
-            if (weaponController == null)
-            {
-                Debug.LogError($"{LOG_PREFIX}: Instantiated prefab does not contain WeaponController. Prefab path: {weaponPrefab.name}");
-            }
-            else
-            {
-                PlayerShoot playerShoot = null;
-                if (player != null)
-                {
-                    playerShoot = player.GetComponent<PlayerShoot>();
-                }
-
-                if (playerShoot == null)
-                {
-                    playerShoot = FindObjectOfType<PlayerShoot>();
-                }
-
-                if (playerShoot != null)
-                {
-                    playerShoot.SetCurrentWeapon(weaponController as IWeapon);
-                    Debug.Log($"{LOG_PREFIX}: Instantiated and equipped {gunsType} via PlayerShoot.SetCurrentWeapon.");
-                }
-                else
-                {
-                    Debug.LogWarning($"{LOG_PREFIX}: PlayerShoot not found. Weapon instantiated but not equipped.");
-                }
-
-                isCollected = true;
-                if (deactivateOnCollect)
-                {
-                    gameObject.SetActive(false);
-                }
-
-                return;
-            }
+            Debug.Log($"{LOG_PREFIX}: {name}: AddWeapon returned false (already owned or locked).");
+            return;
         }
-        catch (Exception ex)
+
+        isCollected = true;
+        if (deactivateOnCollect)
         {
-            Debug.LogError($"{LOG_PREFIX}: Exception during fallback instantiate: {ex.Message}");
-            if (instantiated != null)
-            {
-                Destroy(instantiated);
-            }
-
-            Debug.LogWarning($"{LOG_PREFIX}: Collection for {gunsType} completed with no effect. Deactivating pickup.");
-            if (deactivateOnCollect)
-            {
-                gameObject.SetActive(false);
-            }
+            gameObject.SetActive(false);
         }
+
+        Debug.Log($"{LOG_PREFIX}: {name}: Picked up {gunsType}.");
     }
 }
