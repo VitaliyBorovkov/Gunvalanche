@@ -13,6 +13,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
     [SerializeField] private MonoBehaviour keyProviderComponent;
     private IWeaponKeyProvider keyProvider;
 
+    [Header("Inventory")]
     [SerializeField] private PlayerInventory playerInventory;
 
     private PlayerShoot playerShoot;
@@ -62,8 +63,8 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (playerInventory != null)
         {
-            playerInventory.OnWeaponInstantiated -= HandleWeaponInstantiated;
-            playerInventory.OnWeaponInstantiated += HandleWeaponInstantiated;
+            playerInventory.OnWeaponAdded -= HandleWeaponAdded;
+            playerInventory.OnWeaponAdded += HandleWeaponAdded;
         }
         else
         {
@@ -85,17 +86,23 @@ public class PlayerSwitchWeapon : MonoBehaviour
     private void OnDestroy()
     {
         if (playerInventory != null)
-            playerInventory.OnWeaponInstantiated -= HandleWeaponInstantiated;
+            playerInventory.OnWeaponAdded -= HandleWeaponAdded;
     }
 
-    private void HandleWeaponInstantiated(GunsType type, WeaponController controller, bool autoEquip)
+    private void HandleWeaponAdded(GunsType gunsType, WeaponController weaponController, bool autoEquip)
     {
-        if (controller == null) return;
-        var go = controller.gameObject;
+        if (weaponController == null)
+        {
+            return;
+        }
+        var go = weaponController.gameObject;
 
-        if (weaponGameObjects.Contains(go)) return;
+        if (weaponGameObjects.Contains(go))
+        {
+            return;
+        }
 
-        RegisterWeapon(go, controller, autoEquip);
+        RegisterWeapon(go, weaponController as IWeapon, autoEquip);
     }
 
     public void RegisterWeapon(GameObject weaponGO, IWeapon weapon, bool autoEquip = false, string iconKeyOverride = null)
@@ -161,10 +168,6 @@ public class PlayerSwitchWeapon : MonoBehaviour
                 weaponList.Add(iWeapon);
                 weaponGameObjects.Add(monoBehaviour.gameObject);
                 monoBehaviour.gameObject.SetActive(false);
-
-                var identity = monoBehaviour.GetComponent<WeaponIdentity>();
-                string info = identity != null && !string.IsNullOrEmpty(identity.iconKey)
-                    ? $"(identity='{identity.iconKey}')" : "(no identity)";
 
                 //Debug.Log($"{LOG_PREFIX}: Added weapon -> name='{monoBehaviour.gameObject.name}'" +
                 //    $" component='{monoBehaviour.GetType().Name}' {info}");
