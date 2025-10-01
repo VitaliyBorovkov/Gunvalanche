@@ -23,15 +23,20 @@ public class PlayerInventory : MonoBehaviour
         public Transform socket;
     }
 
+    [Header("References")]
     [SerializeField] private WeaponUnlockManager weaponUnlockManager;
     [SerializeField] private Transform weaponsHolder;
+
+    [Header("Sockets (children of WeaponsHolder)")]
     [SerializeField] private List<WeaponSocketEntry> weaponSockets = new List<WeaponSocketEntry>();
+
+    [Header("Default prefabs mapping")]
     [SerializeField] private List<WeaponPrefabEntry> defaultWeaponPrefabs = new List<WeaponPrefabEntry>();
+
+    [Header("Startup")]
     [SerializeField] private bool givePistolOnStart = true;
 
-    public event Action<GunsType> OnWeaponAdded;//
-    public event Action<GunsType, WeaponController, bool> OnWeaponInstantiated;
-    public event Action<IWeapon> OnWeaponEquipped;
+    public event Action<GunsType, WeaponController, bool> OnWeaponAdded;
 
     private Dictionary<GunsType, WeaponController> ownedWeapons = new Dictionary<GunsType, WeaponController>();
     private Dictionary<GunsType, GameObject> prefabLookup;
@@ -44,21 +49,11 @@ public class PlayerInventory : MonoBehaviour
         if (weaponUnlockManager == null)
         {
             weaponUnlockManager = FindObjectOfType<WeaponUnlockManager>();
-            //if (weaponUnlockManager != null)
-            //{
-            //    Debug.Log($"{LOG_PREFIX}: WeaponUnlockManager auto-found.");
-            //}
         }
 
         if (weaponsHolder == null)
         {
             weaponsHolder = transform;
-        }
-
-        playerShoot = GetComponent<PlayerShoot>();
-        if (playerShoot == null)
-        {
-            Debug.LogError($"{LOG_PREFIX}: PlayerShoot component not found on {gameObject.name}. Weapon equipping will not work.");
         }
 
         BuildPrefabLookup();
@@ -99,21 +94,21 @@ public class PlayerInventory : MonoBehaviour
     private void BuildSocketLookup()
     {
         socketLookup = new Dictionary<GunsType, Transform>();
-        foreach (var s in weaponSockets)
+        foreach (var sockets in weaponSockets)
         {
-            if (s.socket == null)
+            if (sockets.socket == null)
             {
-                Debug.LogWarning($"{LOG_PREFIX}: Socket is null for {s.type}.");
+                Debug.LogWarning($"{LOG_PREFIX}: Socket is null for {sockets.type}.");
                 continue;
             }
 
-            if (weaponsHolder != null && s.socket != null && s.socket.IsChildOf(weaponsHolder) == false)
+            if (weaponsHolder != null && sockets.socket != null && sockets.socket.IsChildOf(weaponsHolder) == false)
             {
-                Debug.LogWarning($"{LOG_PREFIX}: Socket '{s.socket.name}' is not a child of WeaponsHolder. It still will work, but keep hierarchy consistent.");
+                Debug.LogWarning($"{LOG_PREFIX}: Socket '{sockets.socket.name}' is not a child of WeaponsHolder. It still will work, but keep hierarchy consistent.");
             }
 
-            if (!socketLookup.ContainsKey(s.type))
-                socketLookup[s.type] = s.socket;
+            if (!socketLookup.ContainsKey(sockets.type))
+                socketLookup[sockets.type] = sockets.socket;
         }
     }
 
@@ -162,6 +157,10 @@ public class PlayerInventory : MonoBehaviour
         }
 
         Transform parentSocket = GetSocketFor(gunsType);
+        if (parentSocket != null && parentSocket.localScale != Vector3.one)
+        {
+            Debug.LogWarning($"{LOG_PREFIX}: Socket '{parentSocket.name}' scale {parentSocket.localScale}. Prefer (1,1,1).");
+        }
 
         GameObject instantiate;
         try
@@ -195,44 +194,8 @@ public class PlayerInventory : MonoBehaviour
 
         ownedWeapons[gunsType] = weaponController;
         Debug.Log($"{LOG_PREFIX}: Added weapon {gunsType} (instance: {weaponController.gameObject.name}).");
-        OnWeaponAdded?.Invoke(gunsType);
-        OnWeaponInstantiated?.Invoke(gunsType, weaponController, autoEquip);
+        OnWeaponAdded?.Invoke(gunsType, weaponController, autoEquip);
 
-        return true;
-    }
-
-    public bool EquipWeapon(GunsType gunsType)
-    {
-        if (!ownedWeapons.TryGetValue(gunsType, out var weaponController))
-        {
-            Debug.LogWarning($"{LOG_PREFIX}: EquipWeapon({gunsType}) failed — weapon not owned.");
-            return false;
-        }
-
-        return EquipWeaponInternal(weaponController);
-    }
-
-    public bool EquipWeapon(IWeapon iweapon)
-    {
-        if (iweapon is WeaponController weaponController)
-        {
-            return EquipWeaponInternal(weaponController);
-        }
-
-        Debug.LogWarning($"{LOG_PREFIX}: EquipWeapon(IWeapon) failed — provided IWeapon is not WeaponController.");
-        return false;
-    }
-
-    private bool EquipWeaponInternal(WeaponController weaponController)
-    {
-        if (weaponController == null)
-        {
-            Debug.LogWarning($"{LOG_PREFIX}: EquipWeaponInternal called with null weaponController.");
-            return false;
-        }
-
-        OnWeaponEquipped?.Invoke(weaponController as IWeapon);
-        Debug.Log($"{LOG_PREFIX}: (Compat) EquipWeaponInternal called for {weaponController.gameObject.name}.");
         return true;
     }
 

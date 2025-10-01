@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class RocketChamberPresenter : MonoBehaviour
 {
-    private const string LOG_PREFIX = "RocketChamberPresenter";
-
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private GameObject loadedRocketVisual;
 
