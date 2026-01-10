@@ -61,7 +61,7 @@ public class PlayerDeathHandler : MonoBehaviour
         }
     }
 
-    private void OnPlayerDied()
+    private void OnPlayerDied(HealthController healthController)
     {
         if (handled)
         {

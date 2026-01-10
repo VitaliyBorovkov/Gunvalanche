@@ -2,6 +2,8 @@
 
 public class EnemyHealthController : HealthController
 {
+    private const string LOG_PREFIX = "EnemyHealthController";
+
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform damageTextSpawnPoint;
 
@@ -20,7 +22,7 @@ public class EnemyHealthController : HealthController
                 damageTextSpawnPoint.position, Quaternion.identity);
 
             //damageText.GetComponent<DamageTextUIController>().SetDamageText(damage);
-            Debug.Log($"EnemyHealthController: Spawned damage text at {damageTextSpawnPoint.position}");
+            Debug.Log($"{LOG_PREFIX}: Spawned damage text at {damageTextSpawnPoint.position}");
         }
     }
 
@@ -31,11 +33,11 @@ public class EnemyHealthController : HealthController
         if (enemyPool != null)
         {
             enemyPool.Despawn(gameObject);
-            //Debug.Log($"EnemyHealthController: {gameObject.name} был возвращён в пул.");
+            //Debug.Log($"{LOG_PREFIX}: {gameObject.name} was returnet to pool.");
         }
         else
         {
-            Debug.LogWarning($"EnemyHealthController: ObjectPool не найден для {gameObject.name}!");
+            Debug.LogWarning($"{LOG_PREFIX}: ObjectPool not found for {gameObject.name}!");
         }
     }
 }

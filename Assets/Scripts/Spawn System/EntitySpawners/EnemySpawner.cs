@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+
+using UnityEngine;
 
 public class EnemySpawner : ObjectSpawner
 {
@@ -6,10 +8,13 @@ public class EnemySpawner : ObjectSpawner
     [SerializeField] private Transform playerTransform;
     [SerializeField] private ObjectPool enemyPool;
 
+    public event Action<HealthController> OnEnemySpawned;
+
     protected override void SpawnObject()
     {
-        Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
         GameObject spawnedEnemy = enemyPool.Spawn(spawnPoint.position, Quaternion.identity);
+
         EnemyController enemyController = spawnedEnemy.GetComponent<EnemyController>();
         if (enemyController != null)
         {
@@ -21,7 +26,7 @@ public class EnemySpawner : ObjectSpawner
             }
             else
             {
-                Debug.LogWarning("EnemySpawner: Игрок не найден при спавне врага!");
+                Debug.LogWarning("EnemySpawner: Player not found when enemy spawns!");
             }
         }
 
@@ -33,10 +38,16 @@ public class EnemySpawner : ObjectSpawner
 
         ISpawnable spawnable = spawnedEnemy.GetComponent<ISpawnable>();
         spawnable?.OnSpawn();
+
+        var health = spawnedEnemy.GetComponent<HealthController>();
+        if (health != null)
+        {
+            OnEnemySpawned?.Invoke(health);
+        }
     }
 
     protected override int CountActiveObjects()
     {
-        return FindObjectsOfType<EnemyController>().Length;
+        return enemyPool.CountActiveObjects();
     }
 }
