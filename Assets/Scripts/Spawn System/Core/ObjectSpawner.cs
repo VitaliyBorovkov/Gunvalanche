@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class ObjectSpawner : MonoBehaviour
 {
+    private const string LOG_PREFIX = "ObjectSpawner";
+
     [Header("Spawn Settings")]
     [SerializeField] protected Transform[] spawnPoints;
     [SerializeField] protected int maxObjects = 10;
@@ -13,6 +15,7 @@ public abstract class ObjectSpawner : MonoBehaviour
     protected SpawnPointManager spawnPointManager;
 
     private float timer = 0f;
+    private bool manualMode = false;
 
     private void Start()
     {
@@ -21,13 +24,18 @@ public abstract class ObjectSpawner : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (manualMode)
+        {
+            return;
+        }
+
         if (spawnPointManager != null)
         {
             spawnPointManager.UpdateCooldowns();
         }
         else
         {
-            Debug.LogWarning("ObjectSpawner: spawnPointManager равен null. Кулдауны не обновляются!");
+            Debug.LogWarning($"{LOG_PREFIX}: spawnPointManager равен null. Кулдауны не обновляются!");
         }
 
         timer += Time.deltaTime;
@@ -36,6 +44,23 @@ public abstract class ObjectSpawner : MonoBehaviour
             SpawnObject();
             timer = 0f;
         }
+    }
+
+    public void SetManualMode(bool enabled)
+    {
+        manualMode = enabled;
+        timer = 0f;
+    }
+
+    public bool TrySpawnNow()
+    {
+        if (CountActiveObjects() >= maxObjects)
+        {
+            return false;
+        }
+
+        SpawnObject();
+        return true;
     }
 
     protected virtual int CountActiveObjects()
@@ -48,7 +73,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         spawnPointManager = FindObjectOfType<SpawnPointManager>();
         if (spawnPointManager == null)
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: SpawnPointManager не найден на сцене!");
+            Debug.Log($"{LOG_PREFIX}: {GetType().Name}: SpawnPointManager не найден на сцене!");
             enabled = false;
             return;
         }
@@ -62,7 +87,7 @@ public abstract class ObjectSpawner : MonoBehaviour
     {
         if (!CheckerToNull.CheckArrayNotEmpty(spawnPoints, nameof(spawnPoints)))
         {
-            Debug.Log($"ObjectSpawner: {GetType().Name}: Spawn points are not configured.");
+            Debug.Log($"{LOG_PREFIX}: {GetType().Name}: Spawn points are not configured.");
             return null;
         }
 

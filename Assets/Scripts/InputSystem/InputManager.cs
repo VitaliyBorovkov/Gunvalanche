@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerInput))]
 public class InputManager : MonoBehaviour
 {
+    private const string LOG_PREFIX = "InputManager";
+
     private const string GameplayMapName = "GameplayActionMap";
     private const string UIMapName = "UIActionMap";
 
@@ -75,20 +77,20 @@ public class InputManager : MonoBehaviour
 
         if (playerInput.actions == null)
         {
-            Debug.LogWarning($"InputManager: PlayerInput.actions is null, cannot switch to '{mapName}'.");
+            Debug.LogWarning($"{LOG_PREFIX}: PlayerInput.actions is null, cannot switch to '{mapName}'.");
             return;
         }
 
         var map = playerInput.actions.FindActionMap(mapName, throwIfNotFound: false);
         if (map == null)
         {
-            Debug.LogWarning($"InputManager: action map '{mapName}' not found in actions '{playerInput.actions.name}'. Available maps:");
+            Debug.LogWarning($"{LOG_PREFIX}: action map '{mapName}' not found in actions '{playerInput.actions.name}'. Available maps:");
             foreach (var m in playerInput.actions.actionMaps)
                 Debug.Log($"  - {m.name}");
             return;
         }
 
         playerInput.SwitchCurrentActionMap(mapName);
-        //Debug.Log($"InputManager: Switched to action map '{mapName}'.");
+        //Debug.Log($"{LOG_PREFIX}: Switched to action map '{mapName}'.");
     }
 }

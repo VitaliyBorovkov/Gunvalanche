@@ -2,15 +2,17 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    private const string LOG_PREFIX = "PlayerMovement";
+
     private const float gravityPressure = -0.5f;
 
     public CharacterController controller;
 
     public EntityData entityData;
     public Vector3 playerVelocity;
-    
+
     private PlayerRun playerRun;
-    
+
     public bool isGrounded;
 
     public float gravity = gravityPressure;
@@ -25,10 +27,10 @@ public class PlayerMovement : MonoBehaviour
 
         if (controller == null || playerRun == null)
         {
-            Debug.Log(" CharacterController or PlayerRun not found");
+            Debug.Log($"{LOG_PREFIX}: CharacterController or PlayerRun not found");
         }
     }
-    
+
     private void FixedUpdate()
     {
         walkSpeed = entityData.WalkSpeed;

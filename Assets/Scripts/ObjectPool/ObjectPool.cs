@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
+    private const string LOG_PREFIX = "ObjectPool";
+
     [SerializeField] private GameObject ObjectPrefab;
     [SerializeField] private int poolSize = 10;
 
     private Queue<GameObject> ObjectQueue;
     private int activeObjectsCount = 0;
 
-    private void Start()
+    private void Awake()
     {
         InitializePool();
     }
 
     private void InitializePool()
     {
+        if (ObjectQueue != null)
+        {
+            return;
+        }
+
         ObjectQueue = new Queue<GameObject>();
 
         for (int i = 0; i < poolSize; i++)
@@ -31,7 +38,7 @@ public class ObjectPool : MonoBehaviour
     {
         if (ObjectQueue.Count == 0)
         {
-            Debug.LogWarning($"ObjectPool: {gameObject.name} пуст, расширяем пул.");
+            Debug.LogWarning($"{LOG_PREFIX}: {gameObject.name} is empty, expanced pool.");
             ExpandPool();
         }
 
@@ -47,29 +54,29 @@ public class ObjectPool : MonoBehaviour
 
         activeObjectsCount++;
 
-        //Debug.Log($"ObjectPool: {gameObject.name} - Спавн {obj.name}. Активных: {activeObjectsCount}");
+        //Debug.Log($"{LOG_PREFIX}: {gameObject.name} - Spawn {obj.name}. Active: {activeObjectsCount}");
         return obj;
     }
 
     public void Despawn(GameObject obj)
     {
-        //Debug.Log($"ObjectPool: Вызывается метод Despawn");
+        //Debug.Log($"{LOG_PREFIX}: Called method Despawn");
 
         if (obj == null)
         {
-            Debug.LogError("ObjectPool: Попытка деспавна null объекта!");
+            Debug.LogError($"{LOG_PREFIX}: Trying to despawn 'null' object!");
             return;
         }
-        //Debug.Log($"[ObjectPool] Вызван Despawn() для {obj.name}");
+        //Debug.Log($"{LOG_PREFIX}: Called Despawn() for {obj.name}");
         obj.SetActive(false);
-        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} выключен");
+        //Debug.Log($"{LOG_PREFIX}: {gameObject.name} - {obj.name} turn off");
         obj.transform.position = transform.position;
         obj.transform.rotation = Quaternion.identity;
         ObjectQueue.Enqueue(obj);
-        //Debug.Log($"ObjectPool: {gameObject.name} - {obj.name} добавлен обратно в очередь.");
+        //Debug.Log($"{LOG_PREFIX}: {gameObject.name} - {obj.name} returned to pool.");
         activeObjectsCount--;
 
-        //Debug.Log($"ObjectPool: {gameObject.name} - Деспавн {obj.name}. Очередь пула: {ObjectQueue.Count}, Активных: {activeObjectsCount}");
+        //Debug.Log($"{LOG_PREFIX}: {gameObject.name} - Despawn {obj.name}. Queue pool: {ObjectQueue.Count}, Active: {activeObjectsCount}");
     }
 
     public int CountActiveObjects()
@@ -79,7 +86,7 @@ public class ObjectPool : MonoBehaviour
 
     private void ExpandPool()
     {
-        int currentPoolSize = ObjectQueue.Count;
+        //int currentPoolSize = ObjectQueue.Count;
 
         for (int i = 0; i < poolSize; i++)
         {
