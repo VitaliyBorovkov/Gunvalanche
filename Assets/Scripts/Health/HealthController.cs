@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class HealthController : MonoBehaviour, IDamageable
 {
+    private const string LOG_PREFIX = "HealthController";
+
     [SerializeField] protected HealthData healthData;
     [SerializeField] protected EntityData entityData;
 
@@ -11,7 +13,7 @@ public class HealthController : MonoBehaviour, IDamageable
     private bool isPlayer;
     private bool isDead = false;
 
-    public event Action OnDied;
+    public event Action<HealthController> OnDied;
     public bool IsDead => isDead;
 
     protected virtual void Start()
@@ -24,7 +26,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
             if (playerHpUI == null)
             {
-                Debug.Log("PlayerHealthController: PlayerHpUI не найден в сцене!");
+                Debug.Log($"{LOG_PREFIX}: PlayerHpUI not found in the scene!");
             }
             else
             {
@@ -38,7 +40,7 @@ public class HealthController : MonoBehaviour, IDamageable
         isDead = false;
 
         healthData.CurrentHealth = entityData.Health;
-        //Debug.Log($"HealthController: {entityData.Name} spawned with {healthData.CurrentHealth} health.");
+        //Debug.Log($"{LOG_PREFIX}: {entityData.Name} spawned with {healthData.CurrentHealth} health.");
 
         UpdateHeadUI();
     }
@@ -57,7 +59,7 @@ public class HealthController : MonoBehaviour, IDamageable
     {
         if (isDead)
         {
-            //Debug.LogWarning($"HealthController: {entityData.Name} is already dead. Cannot take damage.");
+            //Debug.LogWarning($"{LOG_PREFIX}: {entityData.Name} is already dead. Cannot take damage.");
             return;
         }
 
@@ -67,7 +69,7 @@ public class HealthController : MonoBehaviour, IDamageable
         }
 
         healthData.CurrentHealth -= damage;
-        //Debug.Log($"HealthController: {entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
+        //Debug.Log($"{LOG_PREFIX}: {entityData.Name} took {damage} damage. Health: {healthData.CurrentHealth}");
 
         UpdateHeadUI();
 
@@ -87,7 +89,7 @@ public class HealthController : MonoBehaviour, IDamageable
         }
 
         healthData.CurrentHealth = Mathf.Clamp(health, 0, entityData.Health);
-        Debug.Log($"HealthController: {entityData.Name} health set to: {healthData.CurrentHealth}");
+        Debug.Log($"{LOG_PREFIX}: {entityData.Name} health set to: {healthData.CurrentHealth}");
 
         UpdateHeadUI();
     }
@@ -101,10 +103,10 @@ public class HealthController : MonoBehaviour, IDamageable
 
         isDead = true;
 
-        //Debug.Log($"HealthController:{entityData.Name} has died.");
+        //Debug.Log($"{LOG_PREFIX}:{entityData.Name} has died.");
         healthData.OnEndedHealth?.Invoke();
 
-        OnDied?.Invoke();
+        OnDied?.Invoke(this);
     }
 
     private void UpdateHeadUI()

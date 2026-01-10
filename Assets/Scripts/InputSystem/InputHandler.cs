@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(InputManager))]
 public class InputHandler : MonoBehaviour
 {
+    private const string LOG_PREFIX = "InputHandler";
+
     private InputManager input;
 
     private PlayerMovement playerMovement;
@@ -39,7 +41,7 @@ public class InputHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("InputHandler: PlayerJump or PlayerMovement is missing on Player.");
+            Debug.LogWarning($"{LOG_PREFIX}: PlayerJump or PlayerMovement is missing on Player.");
         }
     }
 
@@ -287,6 +289,6 @@ public class InputHandler : MonoBehaviour
         {
             input.SetActionsEnabled(isEnabled);
         }
-        //Debug.Log($"InputHandler: Input is now {(isEnabled ? "enabled" : "disabled")}");
+        //Debug.Log($"{LOG_PREFIX}: Input is now {(isEnabled ? "enabled" : "disabled")}");
     }
 }

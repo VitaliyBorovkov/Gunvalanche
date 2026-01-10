@@ -2,6 +2,8 @@
 
 public class MedKit : CollectibleItems
 {
+    private const string LOG_PREFIX = "MedKit";
+
     [SerializeField] private int healAmount = 50;
 
     private ObjectPool medKitPool;
@@ -20,7 +22,7 @@ public class MedKit : CollectibleItems
             if (playerHealthController.GetCurrentHealth() < playerHealthController.GetMaxHealth())
             {
                 playerHealthController.Heal(healAmount);
-                Debug.Log($"MedKit: {gameObject.name}: {player.name} has been healed for {healAmount} HP.");
+                Debug.Log($"{LOG_PREFIX}: {gameObject.name}: {player.name} has been healed for {healAmount} HP.");
                 base.Collect(player);
 
                 if (medKitPool != null)
@@ -29,7 +31,7 @@ public class MedKit : CollectibleItems
                 }
                 else
                 {
-                    Debug.LogWarning($"MedKit: ObjectPool not set for {gameObject.name}!");
+                    Debug.LogWarning($"{LOG_PREFIX}: ObjectPool not set for {gameObject.name}!");
                 }
 
                 if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -40,12 +42,12 @@ public class MedKit : CollectibleItems
             }
             else
             {
-                Debug.Log($"MedKit: {gameObject.name}: {player.name} has full health and no first aid kit has been picked up.");
+                Debug.Log($"{LOG_PREFIX}: {gameObject.name}: {player.name} has full health and no first aid kit has been picked up.");
             }
         }
         else
         {
-            Debug.LogWarning($"MedKit: {player.name} does not have PlayerHealthController!", this);
+            Debug.LogWarning($"{LOG_PREFIX}: {player.name} does not have PlayerHealthController!", this);
         }
     }
 
