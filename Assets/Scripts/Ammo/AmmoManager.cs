@@ -96,10 +96,12 @@ public class AmmoManager : MonoBehaviour
         if (ammoStorage[type] >= amount)
         {
             ammoStorage[type] -= amount;
-            return false;
+            //return false;
+            return true;
         }
         Debug.LogWarning($"AmmoManager: Not enough ammo for {type}! Required: {amount}, available: {ammoStorage[type]}.");
-        return true;
+        //return true;
+        return false;
     }
 
     public int GetTotalAmmo(GunsType type)
