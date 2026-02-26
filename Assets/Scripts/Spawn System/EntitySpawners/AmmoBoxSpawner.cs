@@ -41,6 +41,7 @@ public class AmmoBoxSpawner : ObjectSpawner
     {
         int randomIndex = Random.Range(0, 3);
         return randomIndex switch
+
         {
             0 => pistolAmmoPool,
             1 => riffleAmmoPool,
@@ -55,4 +56,3 @@ public class AmmoBoxSpawner : ObjectSpawner
             rocketLauncherAmmoPool.CountActiveObjects();
     }
 }
-
