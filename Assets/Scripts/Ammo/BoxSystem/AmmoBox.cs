@@ -2,10 +2,10 @@
 
 public class AmmoBox : CollectibleItems
 {
-    [SerializeField] protected int ammoInBox = 10;
-    [SerializeField] protected GunsType gunsType;
-    [SerializeField] protected BulletsType bulletsType;
-    [SerializeField] protected AudioClip ammoPickUpSound;
+    private const string LOG_PREFIX = "AmmoBox: ";
+
+    [Header("Config (preferred)")]
+    [SerializeField] private AmmoBoxConfig ammoBoxConfig;
 
     private AudioSource audioSource;
     private ObjectPool ammoBoxPool;
@@ -19,34 +19,43 @@ public class AmmoBox : CollectibleItems
     {
         base.Start();
 
+        if (ammoBoxConfig == null)
+        {
+            Debug.LogError(LOG_PREFIX + $"Config is not set on '{gameObject.name}'. AmmoBox will not work correctly.");
+        }
+
         audioSource = GetComponent<AudioSource>() ?? gameObject.AddComponent<AudioSource>();
     }
 
     protected override void Collect(GameObject player)
     {
+        if (ammoBoxConfig == null)
+        {
+            Debug.LogError(LOG_PREFIX + $"Config is not set on '{gameObject.name}'. Collect aborted.");
+            return;
+        }
 
         PlayerShoot playerShoot = player.GetComponent<PlayerShoot>();
         if (playerShoot == null)
         {
-            Debug.LogWarning($"AmmoBox: {player.name} does not contain PlayerShoot!");
+            Debug.LogWarning($"{LOG_PREFIX}: {player.name} does not contain PlayerShoot!");
             return;
         }
 
         var weapon = playerShoot.GetCurrentWeapon();
         if (weapon == null)
         {
-            Debug.LogWarning($"AmmoBox: Player {player.name} has no active weapon selected..");
+            Debug.LogWarning($"{LOG_PREFIX}: Player {player.name} has no active weapon selected..");
             return;
         }
 
         WeaponData weaponData = weapon.GetWeaponData();
-        if (weaponData.Equals(default(WeaponData)))
+
+        if (weaponData/*.Equals(default(WeaponData))*/ == null)
         {
-            Debug.LogWarning($"AmmoBox: Unable to obtain WeaponData from {weapon}.");
+            Debug.LogWarning($"{LOG_PREFIX}: Unable to obtain WeaponData from {weapon}.");
             return;
         }
-
-        //int maxAmmo = GetMaxAmmoFromConfig(gunsType);
 
         PlayPickUpSound();
 
@@ -55,9 +64,9 @@ public class AmmoBox : CollectibleItems
         {
             ammoBoxPool.Despawn(gameObject);
         }
-        else
+        else if (ammoBoxPool == null)
         {
-            Debug.LogWarning($"AmmoBox: ObjectPool not set for {gameObject.name}!");
+            Debug.LogWarning($"{LOG_PREFIX}: ObjectPool not set for {gameObject.name}!");
         }
 
         if (SpawnPointManager.Instance != null && spawnPoint != null)
@@ -76,24 +85,6 @@ public class AmmoBox : CollectibleItems
         }
     }
 
-    //private int GetMaxAmmoFromConfig(GunsType gunsType)
-    //{
-    //    WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
-    //    foreach (var config in weaponConfigs)
-    //    {
-    //        foreach (var weapon in config.weaponData)
-    //        {
-    //            if (weapon.GunsType == gunsType)
-    //            {
-    //                return weapon.TotalAmmo;
-    //            }
-    //        }
-    //    }
-
-    //    Debug.LogWarning($"AmmoBox: MaxAmmo not found for {gunsType} в WeaponConfig!");
-    //    return 0;
-    //}
-
     protected virtual bool AddAmmoToPlayer(GameObject player)
     {
         WeaponConfig[] weaponConfigs = Resources.LoadAll<WeaponConfig>("ScriptableObjects/Weapons");
@@ -102,35 +93,35 @@ public class AmmoBox : CollectibleItems
         {
             foreach (var weapon in config.weaponData)
             {
-                if (weapon.BulletsType == bulletsType)
+                if (weapon.BulletsType == ammoBoxConfig.BulletsType)
                 {
                     int currentTotalAmmo = AmmoManager.Instance.GetTotalAmmo(weapon.GunsType);
                     int maxAmmo = weapon.TotalAmmo;
 
                     if (currentTotalAmmo >= maxAmmo)
                     {
-                        Debug.Log($"AmmoBox: The ammunition for {gunsType} is already full ({currentTotalAmmo}/" +
+                        Debug.Log($"{LOG_PREFIX}: The ammunition for {ammoBoxConfig.GunsType} is already full ({currentTotalAmmo}/" +
                             $"{maxAmmo}). The box does not disappear.");
                         return false;
                     }
 
-                    AmmoManager.Instance.AddAmmo(weapon.GunsType, ammoInBox, maxAmmo);
-                    Debug.Log($"AmmoBox: The player has picked up {ammoInBox} rounds of ammunition for " +
+                    AmmoManager.Instance.AddAmmo(weapon.GunsType, ammoBoxConfig.AmmoInBox, maxAmmo);
+                    Debug.Log($"{LOG_PREFIX}: The player has picked up {ammoBoxConfig.AmmoInBox} rounds of ammunition for " +
                         $"{weapon.GunsType}. Now in stock: {AmmoManager.Instance.GetTotalAmmo(weapon.GunsType)}");
                     return true;
                 }
             }
         }
 
-        Debug.LogWarning($"AmmoBox: Weapons of type {gunsType} not found in WeaponConfig!");
+        Debug.LogWarning($"{LOG_PREFIX}: Weapons of type {ammoBoxConfig.GunsType} not found in WeaponConfig!");
         return false;
     }
 
     private void PlayPickUpSound()
     {
-        if (ammoPickUpSound != null && audioSource != null)
+        if (ammoBoxConfig.AmmoPickUpSound != null && audioSource != null)
         {
-            audioSource.PlayOneShot(ammoPickUpSound);
+            audioSource.PlayOneShot(ammoBoxConfig.AmmoPickUpSound);
         }
     }
 

@@ -22,6 +22,5 @@ MonoBehaviour:
     FireRate: 8
     GunsType: 1
     BulletsType: 1
-    GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
+    GunPrefab: {fileID: 8102325553411132731, guid: 36339eac05e481640b09d2b9eeb1dfd3, type: 3}
     MuzzleFlashPrefab: {fileID: 100006, guid: 84c363ca02f582e48aa4864622cf27bd, type: 3}
-    BulletSpawnPoint: {fileID: 0}

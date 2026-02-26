@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b5898404db20d7448d5ff1e42fe7641, type: 3}
+  m_Name: ShotgunBullets
+  m_EditorClassIdentifier: 
+  bulletsData:
+  - Name: ShotgunBullets
+    Speed: 30
+    DistanceToTarget: 0.1
+    LifeTime: 4
+    BulletPrefab: {fileID: 6146473466410942735, guid: 94a9daff2d048c245bcbc58fa2d5541f, type: 3}
+    BulletsType: 3

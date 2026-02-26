@@ -77,7 +77,7 @@ public class WaveManager : MonoBehaviour
                 totalEnemiesInWave += ws.enemyCountInWave;
             }
 
-            Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex} started. " + $"{LOG_PREFIX}: {totalEnemiesInWave}");
+            Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex} started. " + $"Enemies in wave: {totalEnemiesInWave}");
 
             waveFinishedSpawning = false;
 
@@ -106,7 +106,7 @@ public class WaveManager : MonoBehaviour
                     {
                         spawnedEnemiesInWave++;
                         Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex}: " +
-                            $"{LOG_PREFIX}: {spawnedEnemiesInWave}/{totalEnemiesInWave}");
+                            $"Enemies: {spawnedEnemiesInWave}/{totalEnemiesInWave}");
                     }
 
                     yield return new WaitForSeconds(waveSpawn.timeBetweenSpawnEnemyInWave);

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BaseBulletsController : MonoBehaviour, IBullet
 {
+    private const string LOG_PREFIX = "BaseBulletsController";
+
     protected BulletsData bulletsData;
 
     protected Rigidbody rigidBody;
@@ -21,7 +23,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         rigidBody = GetComponent<Rigidbody>();
         if (rigidBody == null)
         {
-            Debug.LogWarning($"BulletsController: Rigidbody not found on {gameObject.name}");
+            Debug.LogWarning($"{LOG_PREFIX}: Rigidbody not found on {gameObject.name}");
         }
 
         enemyLayer = LayerMask.NameToLayer("Enemy");
@@ -48,7 +50,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
     {
         if (pool == null)
         {
-            Debug.LogError($"BulletsController: Received NULL pool for {gameObject.name}!");
+            Debug.LogError($"{LOG_PREFIX}: Received NULL pool for {gameObject.name}!");
             return;
         }
         objectPool = pool;
@@ -57,11 +59,14 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
         if (bulletsData.BulletPrefab == null)
         {
-            Debug.LogError($"BulletsController: Not found BulletsData for {weapon.BulletsType} in {gameObject.name}!");
+            Debug.LogError($"{LOG_PREFIX}: Not found BulletsData for {weapon.BulletsType} in {gameObject.name}!");
             return;
         }
 
-        rigidBody.velocity = direction.normalized * bulletsData.Speed;
+        if (rigidBody != null)
+        {
+            rigidBody.velocity = direction.normalized * bulletsData.Speed;
+        }
 
         if (bulletsData.LifeTime > 0)
         {
@@ -74,7 +79,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
         {
             HealthController enemyHealth = other.GetComponentInParent<HealthController>();
-            if (enemyHealth != null)
+            if (enemyHealth != null && weaponData != null)
             {
                 enemyHealth.TakeDamage(weaponData.Damage);
             }
@@ -92,7 +97,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
     {
         if (isDespawning)
         {
-            Debug.Log($"BaseBulletsController: DespawnBullet called again for {gameObject.name}, ignoring.");
+            Debug.Log($"{LOG_PREFIX}: DespawnBullet called again for {gameObject.name}, ignoring.");
             return;
         }
 
@@ -102,8 +107,6 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         {
             rigidBody.velocity = Vector3.zero;
         }
-
-        rigidBody.velocity = Vector3.zero;
 
         DespawnEffect();
 
@@ -116,7 +119,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         }
         else
         {
-            Debug.LogError($"BulletsController: ObjectPool is not assigned to {gameObject.name}!");
+            Debug.LogError($"{LOG_PREFIX}: ObjectPool is not assigned to {gameObject.name}!");
         }
     }
 
