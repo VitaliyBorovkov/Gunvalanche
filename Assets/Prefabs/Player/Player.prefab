@@ -516,7 +516,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: 
+  m_DefaultActionMap: GameplayActionMap
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 8794730626645773767}
 --- !u!114 &6036285002621063731
@@ -684,6 +684,8 @@ MonoBehaviour:
     socket: {fileID: 1081498526701958276}
   - type: 2
     socket: {fileID: 3560057923921670859}
+  - type: 3
+    socket: {fileID: 1948744837475283116}
   defaultWeaponPrefabs:
   - type: 0
     prefab: {fileID: 8168748422083441467, guid: 703c3dd3974cb0f488cbe3a4398ccd14, type: 3}
@@ -691,6 +693,8 @@ MonoBehaviour:
     prefab: {fileID: 8102325553411132731, guid: 36339eac05e481640b09d2b9eeb1dfd3, type: 3}
   - type: 2
     prefab: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
+  - type: 3
+    prefab: {fileID: 8251551236473459747, guid: 93b29ab93c9fcaf48acbb6a51fb48c7e, type: 3}
   givePistolOnStart: 1
 --- !u!114 &1608169243435678818
 MonoBehaviour:
@@ -732,6 +736,37 @@ MonoBehaviour:
   playerShoot: {fileID: 9202750033256993497}
   playerReload: {fileID: 4443374691479103321}
   inputHandler: {fileID: -8614045727428696930}
+--- !u!1 &7592271443043457075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1948744837475283116}
+  m_Layer: 0
+  m_Name: ShotgunHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1948744837475283116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7592271443043457075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 302710563676770984}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8329266339058135400
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,6 +800,7 @@ Transform:
   - {fileID: 8003592642348693465}
   - {fileID: 1081498526701958276}
   - {fileID: 3560057923921670859}
+  - {fileID: 1948744837475283116}
   m_Father: {fileID: 159355444733508386}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2333253066971991190
@@ -779,8 +815,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ad98c23a68c373418f5709d2ef5db27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
-  sensitivityMultiplier: 4
+  speed: 50
+  sensitivityMultiplier: 50
 --- !u!1 &8526074489195781117
 GameObject:
   m_ObjectHideFlags: 0

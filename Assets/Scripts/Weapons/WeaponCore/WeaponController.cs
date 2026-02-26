@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class WeaponController : MonoBehaviour, IWeapon
 {
+    private const string LOG_PREFIX = "WeaponController";
+
     [SerializeField] private WeaponConfigHolder weaponConfigHolder;
     [SerializeField] private BulletsConfig bulletsConfig;
 
@@ -14,13 +16,17 @@ public class WeaponController : MonoBehaviour, IWeapon
     private Transform spawnPoint;
     private IAutoReload autoReloadHandler;
 
+    private ShotgunBulletController shotgunBulletController;
+
     public event Action OnAmmoChanged;
 
     private void Awake()
     {
+        shotgunBulletController = GetComponent<ShotgunBulletController>();
+
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
-            Debug.LogError($"WeaponController: weaponConfigHolder or weaponConfig is not set on {gameObject.name}.");
+            Debug.LogError($"{LOG_PREFIX}: weaponConfigHolder or weaponConfig is not set on {gameObject.name}.");
             return;
         }
 
@@ -31,6 +37,10 @@ public class WeaponController : MonoBehaviour, IWeapon
         }
 
         spawnPoint = weaponConfigHolder.bulletSpawnPoint;
+        if (spawnPoint == null)
+        {
+            Debug.LogError($"{LOG_PREFIX}: Bullet spawn point is not set on {gameObject.name}.");
+        }
     }
 
     private void Start()
@@ -44,16 +54,21 @@ public class WeaponController : MonoBehaviour, IWeapon
         {
             bulletsPool = AmmoManager.Instance.GetBulletsPool(weaponData.BulletsType);
         }
+
+        if (bulletsPool == null)
+        {
+            Debug.LogError($"{LOG_PREFIX}: Bullets pool is null for BulletsType={weaponData.BulletsType}.");
+        }
     }
 
     public bool CanShoot()
     {
-        return weaponData.CurrentAmmo > 0;
+        return weaponData != null && weaponData.CurrentAmmo > 0;
     }
 
     public float GetFireRate()
     {
-        return weaponData.FireRate;
+        return weaponData != null ? weaponData.FireRate : 0f;
     }
 
     public void Shoot()
@@ -67,21 +82,34 @@ public class WeaponController : MonoBehaviour, IWeapon
 
         autoReloadHandler?.TryAutoReload();
 
-        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
+        Vector3 baseDirection = GetShootDirection();
 
-        if (bullet.TryGetComponent(out IBullet bulletsController))
+        if (shotgunBulletController != null)
         {
-            Vector3 direction = GetShootDirection();
-            bulletsController.Initialize(direction, bulletsPool, weaponData, bulletsData);
+            shotgunBulletController.Fire(bulletsPool, spawnPoint, weaponData, bulletsData, baseDirection);
         }
         else
         {
-            Debug.LogError($"WeaponController: {bullet.name} does not have BaseBulletController!");
+            ShootSingle(baseDirection);
         }
 
         PlayMuzzleFlash();
 
         OnAmmoChanged?.Invoke();
+    }
+
+    private void ShootSingle(Vector3 direction)
+    {
+        GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
+
+        if (bullet.TryGetComponent(out IBullet bulletsController))
+        {
+            bulletsController.Initialize(direction, bulletsPool, weaponData, bulletsData);
+        }
+        else
+        {
+            Debug.LogError($"{LOG_PREFIX}: {bullet.name} does not have IBullet component.");
+        }
     }
 
     public WeaponData GetWeaponData()
@@ -124,7 +152,7 @@ public class WeaponController : MonoBehaviour, IWeapon
     {
         if (weaponData == null)
         {
-            Debug.LogWarning("WeaponController: weaponData is null in GetTotalAmmo()");
+            Debug.LogWarning($"{LOG_PREFIX}: weaponData is null in GetTotalAmmo()");
             return 0;
         }
 
