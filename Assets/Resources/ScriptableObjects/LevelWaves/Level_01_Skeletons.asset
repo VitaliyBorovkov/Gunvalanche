@@ -14,8 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - waveName: Skeletons
-    startDelay: 0
+    startDelay: 3
     waveSpawns:
     - spawnerIndex: 0
-      enemyCountInWave: 5
+      enemyCountInWave: 10
+      timeBetweenSpawnEnemyInWave: 1
+  - waveName: Skeletons
+    startDelay: 3
+    waveSpawns:
+    - spawnerIndex: 0
+      enemyCountInWave: 10
       timeBetweenSpawnEnemyInWave: 1

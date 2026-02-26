@@ -12,7 +12,7 @@ using UnityEngine.SceneManagement;
 public static class PrefabIconBaker
 {
     private const string LOG_PREFIX = "PrefabIconBaker";
-    private const string OUTPUT_FOLDER = "Assets/Icons";
+    private const string OUTPUT_FOLDER = "Assets/Resources/WeaponIcons";
     private const string LAYER_NAME = "IconPreview"; // layer used for preview rendering
 
     [MenuItem("Assets/Tools/Bake Selected Prefab Icons (PNG, transparent)", false, 200)]

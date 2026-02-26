@@ -220,7 +220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2773860023382466629}
-  - component: {fileID: -1677451449397336200}
+  - component: {fileID: 3232570498656894766}
   - component: {fileID: 1019001418259302823}
   - component: {fileID: -7531674500342585047}
   m_Layer: 11
@@ -248,7 +248,7 @@ Transform:
   - {fileID: 7053695570897885552}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-1677451449397336200
+--- !u!114 &3232570498656894766
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -257,15 +257,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 5187556745157454770}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05d026d58d2448b48be4a3d4f4feebb3, type: 3}
+  m_Script: {fileID: 11500000, guid: a698fb7bcf5e30f45a8c4764ac696ecc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 43
   floatDistance: 0.5
-  ammoInBox: 14
-  gunsType: 0
-  bulletsType: 0
-  ammoPickUpSound: {fileID: 0}
+  ammoBoxConfig: {fileID: 11400000, guid: 98bcb23a0c997d241ab76792e4347e21, type: 2}
 --- !u!54 &1019001418259302823
 Rigidbody:
   m_ObjectHideFlags: 0

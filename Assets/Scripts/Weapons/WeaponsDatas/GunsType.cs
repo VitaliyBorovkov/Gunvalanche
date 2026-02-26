@@ -2,5 +2,6 @@ public enum GunsType
 {
     Pistol,
     Riffle,
-    RocketLauncher
+    RocketLauncher,
+    Shotgun
 }
