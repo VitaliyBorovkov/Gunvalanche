@@ -72,6 +72,7 @@ public class InputHandler : MonoBehaviour
         input.WeaponSlot1.performed += OnWeaponSlot1Performed;
         input.WeaponSlot2.performed += OnWeaponSlot2Performed;
         input.WeaponSlot3.performed += OnWeaponSlot3Performed;
+        input.WeaponSlot4.performed += OnWeaponSlot4Performed;
     }
 
     private void OnDisable()
@@ -96,6 +97,7 @@ public class InputHandler : MonoBehaviour
         input.WeaponSlot1.performed -= OnWeaponSlot1Performed;
         input.WeaponSlot2.performed -= OnWeaponSlot2Performed;
         input.WeaponSlot3.performed -= OnWeaponSlot3Performed;
+        input.WeaponSlot4.performed -= OnWeaponSlot4Performed;
 
         input.SetActionsEnabled(false);
 
@@ -268,6 +270,15 @@ public class InputHandler : MonoBehaviour
         }
 
         playerSwitchWeapon?.SwitchWeaponByIndex(2);
+    }
+
+    private void OnWeaponSlot4Performed(InputAction.CallbackContext ctx)
+    {
+        if (!isEnabled)
+        {
+            return;
+        }
+        playerSwitchWeapon?.SwitchWeaponByIndex(3);
     }
 
     public void SetEnabled(bool value)

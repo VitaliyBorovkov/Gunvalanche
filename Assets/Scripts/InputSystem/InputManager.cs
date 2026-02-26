@@ -21,6 +21,7 @@ public class InputManager : MonoBehaviour
     public InputAction WeaponSlot1 => playerInput.actions["WeaponSlot1"];
     public InputAction WeaponSlot2 => playerInput.actions["WeaponSlot2"];
     public InputAction WeaponSlot3 => playerInput.actions["WeaponSlot3"];
+    public InputAction WeaponSlot4 => playerInput.actions["WeaponSlot4"];
     public InputAction Pause => playerInput.actions["Pause"];
 
     private void Awake()
@@ -42,6 +43,7 @@ public class InputManager : MonoBehaviour
             WeaponSlot1.Enable();
             WeaponSlot2.Enable();
             WeaponSlot3.Enable();
+            WeaponSlot4.Enable();
         }
         else
         {
@@ -55,6 +57,7 @@ public class InputManager : MonoBehaviour
             WeaponSlot1.Disable();
             WeaponSlot2.Disable();
             WeaponSlot3.Disable();
+            WeaponSlot4.Disable();
         }
     }
 

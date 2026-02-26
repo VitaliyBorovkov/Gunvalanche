@@ -94,7 +94,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""name"": ""WeaponSlot1"",
                     ""type"": ""Button"",
                     ""id"": ""7ee1b8e5-fb8b-4351-a90b-428d2e0c7615"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -103,7 +103,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""name"": ""WeaponSlot2"",
                     ""type"": ""Button"",
                     ""id"": ""f596d0f0-4e2d-4c9c-83ea-a72ff76b0276"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -112,7 +112,16 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""name"": ""WeaponSlot3"",
                     ""type"": ""Button"",
                     ""id"": ""e757ee2a-2e60-4313-ae99-0743c8cab6f0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeaponSlot4"",
+                    ""type"": ""Button"",
+                    ""id"": ""52d9a536-0c7f-489e-b258-87bdc8b1a896"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -292,6 +301,17 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4b918bcc-3c7e-434e-bec3-b2245ba3f48d"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeaponSlot4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -338,6 +358,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         m_GameplayActionMap_WeaponSlot1 = m_GameplayActionMap.FindAction("WeaponSlot1", throwIfNotFound: true);
         m_GameplayActionMap_WeaponSlot2 = m_GameplayActionMap.FindAction("WeaponSlot2", throwIfNotFound: true);
         m_GameplayActionMap_WeaponSlot3 = m_GameplayActionMap.FindAction("WeaponSlot3", throwIfNotFound: true);
+        m_GameplayActionMap_WeaponSlot4 = m_GameplayActionMap.FindAction("WeaponSlot4", throwIfNotFound: true);
         m_GameplayActionMap_Pause = m_GameplayActionMap.FindAction("Pause", throwIfNotFound: true);
         // UIActionMap
         m_UIActionMap = asset.FindActionMap("UIActionMap", throwIfNotFound: true);
@@ -419,6 +440,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
     private readonly InputAction m_GameplayActionMap_WeaponSlot1;
     private readonly InputAction m_GameplayActionMap_WeaponSlot2;
     private readonly InputAction m_GameplayActionMap_WeaponSlot3;
+    private readonly InputAction m_GameplayActionMap_WeaponSlot4;
     private readonly InputAction m_GameplayActionMap_Pause;
     public struct GameplayActionMapActions
     {
@@ -434,6 +456,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         public InputAction @WeaponSlot1 => m_Wrapper.m_GameplayActionMap_WeaponSlot1;
         public InputAction @WeaponSlot2 => m_Wrapper.m_GameplayActionMap_WeaponSlot2;
         public InputAction @WeaponSlot3 => m_Wrapper.m_GameplayActionMap_WeaponSlot3;
+        public InputAction @WeaponSlot4 => m_Wrapper.m_GameplayActionMap_WeaponSlot4;
         public InputAction @Pause => m_Wrapper.m_GameplayActionMap_Pause;
         public InputActionMap Get() { return m_Wrapper.m_GameplayActionMap; }
         public void Enable() { Get().Enable(); }
@@ -474,6 +497,9 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @WeaponSlot3.started += instance.OnWeaponSlot3;
             @WeaponSlot3.performed += instance.OnWeaponSlot3;
             @WeaponSlot3.canceled += instance.OnWeaponSlot3;
+            @WeaponSlot4.started += instance.OnWeaponSlot4;
+            @WeaponSlot4.performed += instance.OnWeaponSlot4;
+            @WeaponSlot4.canceled += instance.OnWeaponSlot4;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -511,6 +537,9 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
             @WeaponSlot3.started -= instance.OnWeaponSlot3;
             @WeaponSlot3.performed -= instance.OnWeaponSlot3;
             @WeaponSlot3.canceled -= instance.OnWeaponSlot3;
+            @WeaponSlot4.started -= instance.OnWeaponSlot4;
+            @WeaponSlot4.performed -= instance.OnWeaponSlot4;
+            @WeaponSlot4.canceled -= instance.OnWeaponSlot4;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -589,6 +618,7 @@ public partial class @PlayerMove: IInputActionCollection2, IDisposable
         void OnWeaponSlot1(InputAction.CallbackContext context);
         void OnWeaponSlot2(InputAction.CallbackContext context);
         void OnWeaponSlot3(InputAction.CallbackContext context);
+        void OnWeaponSlot4(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIActionMapActions

@@ -72,7 +72,7 @@
                     "name": "WeaponSlot1",
                     "type": "Button",
                     "id": "7ee1b8e5-fb8b-4351-a90b-428d2e0c7615",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -81,7 +81,7 @@
                     "name": "WeaponSlot2",
                     "type": "Button",
                     "id": "f596d0f0-4e2d-4c9c-83ea-a72ff76b0276",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -90,7 +90,16 @@
                     "name": "WeaponSlot3",
                     "type": "Button",
                     "id": "e757ee2a-2e60-4313-ae99-0743c8cab6f0",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeaponSlot4",
+                    "type": "Button",
+                    "id": "52d9a536-0c7f-489e-b258-87bdc8b1a896",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -268,6 +277,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b918bcc-3c7e-434e-bec3-b2245ba3f48d",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeaponSlot4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

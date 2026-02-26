@@ -33,7 +33,7 @@ MonoBehaviour:
     FireRate: 8
     GunsType: 1
     BulletsType: 1
-    GunPrefab: {fileID: 7999502956162509473, guid: 9df7bfba9d8564549843584fc7a9cf66, type: 3}
+    GunPrefab: {fileID: 8102325553411132731, guid: 36339eac05e481640b09d2b9eeb1dfd3, type: 3}
     MuzzleFlashPrefab: {fileID: 100006, guid: 84c363ca02f582e48aa4864622cf27bd, type: 3}
   - Name: RocketLauncher
     Damage: 100
@@ -46,3 +46,14 @@ MonoBehaviour:
     BulletsType: 2
     GunPrefab: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
     MuzzleFlashPrefab: {fileID: 8541957050630807375, guid: 635a2bdcdc360ef49b4df8017e21184d, type: 3}
+  - Name: Shotgun
+    Damage: 8
+    TotalAmmo: 30
+    CurrentAmmo: 6
+    MagazineSize: 6
+    Range: 20
+    FireRate: 2
+    GunsType: 3
+    BulletsType: 3
+    GunPrefab: {fileID: 8251551236473459747, guid: 93b29ab93c9fcaf48acbb6a51fb48c7e, type: 3}
+    MuzzleFlashPrefab: {fileID: 0}

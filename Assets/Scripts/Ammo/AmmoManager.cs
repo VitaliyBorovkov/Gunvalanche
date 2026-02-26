@@ -8,10 +8,12 @@ public class AmmoManager : MonoBehaviour
 
     [SerializeField] private GameObject pistolBulletsPoolPrefab;
     [SerializeField] private GameObject riffleBulletsPoolPrefab;
+    [SerializeField] private GameObject shotgunBulletsPoolPrefub;
     [SerializeField] private GameObject rocketsPoolPrefab;
 
     private ObjectPool pistolBulletsPool;
     private ObjectPool riffleBulletsPool;
+    private ObjectPool shotgunBulletsPool;
     private ObjectPool rocketsPool;
 
     private Dictionary<GunsType, int> ammoStorage = new Dictionary<GunsType, int>();
@@ -36,6 +38,7 @@ public class AmmoManager : MonoBehaviour
     {
         pistolBulletsPool = InstantiatePool(pistolBulletsPoolPrefab, "PistolBulletsPool");
         riffleBulletsPool = InstantiatePool(riffleBulletsPoolPrefab, "RiffleBulletsPool");
+        shotgunBulletsPool = InstantiatePool(shotgunBulletsPoolPrefub, "ShotgunBulletsPool");
         rocketsPool = InstantiatePool(rocketsPoolPrefab, "RocketsPool");
     }
 
@@ -50,6 +53,7 @@ public class AmmoManager : MonoBehaviour
         GameObject poolObject = Instantiate(poolPrefab);
         //Debug.Log($"AmmoManager: PistolBulletsPool = {pistolBulletsPool?.gameObject.name}");
         //Debug.Log($"AmmoManager: RiffleBulletsPool = {riffleBulletsPool?.gameObject.name}");
+        //Debug.Log($"AmmoManager: ShotgunBulletsPool = {shotgunBulletsPool?.gameObject.name}");
         //Debug.Log($"AmmoManager: RocketsPool = {rocketsPool?.gameObject.name}");
         poolObject.name = poolName;
         return poolObject.GetComponent<ObjectPool>();
@@ -96,11 +100,9 @@ public class AmmoManager : MonoBehaviour
         if (ammoStorage[type] >= amount)
         {
             ammoStorage[type] -= amount;
-            //return false;
             return true;
         }
         Debug.LogWarning($"AmmoManager: Not enough ammo for {type}! Required: {amount}, available: {ammoStorage[type]}.");
-        //return true;
         return false;
     }
 
@@ -123,6 +125,7 @@ public class AmmoManager : MonoBehaviour
         {
             BulletsType.Pistol => pistolBulletsPool,
             BulletsType.Riffle => riffleBulletsPool,
+            BulletsType.Shotgun => shotgunBulletsPool,
             BulletsType.Rocket => rocketsPool,
             _ => null
         };
