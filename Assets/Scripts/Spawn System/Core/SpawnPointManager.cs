@@ -9,13 +9,15 @@ public class SpawnPointManager : MonoBehaviour
     private Dictionary<Transform, float> spawnCooldown;
     private Dictionary<Transform, string> occupiedPoints;
 
+    private readonly List<Transform> cooldownKeysCache = new List<Transform>(128);
+
     public static SpawnPointManager Instance { get; private set; }
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Debug.LogError($"SpawnPointManager: Найден ещё один экземпляр SpawnPointManager на объекте {gameObject.name}. Он будет уничтожен.");
+            Debug.LogError($"SpawnPointManager: Another instance was found on '{gameObject.name}'. It will be destroyed.");
             Destroy(gameObject);
             return;
         }
@@ -23,6 +25,11 @@ public class SpawnPointManager : MonoBehaviour
 
         spawnCooldown = new Dictionary<Transform, float>();
         occupiedPoints = new Dictionary<Transform, string>();
+    }
+
+    private void Update()
+    {
+        UpdateCooldowns();
     }
 
     public void InitializeSpawnPoint(Transform[] spawnPoints)
@@ -39,17 +46,18 @@ public class SpawnPointManager : MonoBehaviour
 
     public void UpdateCooldowns()
     {
-        List<Transform> keys = new List<Transform>(spawnCooldown.Keys);
+        cooldownKeysCache.Clear();
+        cooldownKeysCache.AddRange(spawnCooldown.Keys);
 
-        foreach (Transform spawnPoint in keys)
+        for (int i = 0; i < cooldownKeysCache.Count; i++)
         {
-            if (spawnCooldown[spawnPoint] > 0)
+            Transform spawnPoint = cooldownKeysCache[i];
+
+            if (spawnCooldown[spawnPoint] > 0f)
             {
                 spawnCooldown[spawnPoint] -= Time.deltaTime;
-            }
-            else
-            {
-                if (occupiedPoints[spawnPoint] != null)
+
+                if (spawnCooldown[spawnPoint] < 0f)
                 {
                     spawnCooldown[spawnPoint] = 0f;
                 }
