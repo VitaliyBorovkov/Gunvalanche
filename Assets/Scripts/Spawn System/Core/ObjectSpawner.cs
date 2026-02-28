@@ -29,15 +29,6 @@ public abstract class ObjectSpawner : MonoBehaviour
             return;
         }
 
-        if (spawnPointManager != null)
-        {
-            spawnPointManager.UpdateCooldowns();
-        }
-        else
-        {
-            Debug.LogWarning($"{LOG_PREFIX}: spawnPointManager равен null. Кулдауны не обновляются!");
-        }
-
         timer += Time.deltaTime;
         if (timer >= spawnInterval && CountActiveObjects() < maxObjects)
         {
@@ -73,7 +64,7 @@ public abstract class ObjectSpawner : MonoBehaviour
         spawnPointManager = FindObjectOfType<SpawnPointManager>();
         if (spawnPointManager == null)
         {
-            Debug.Log($"{LOG_PREFIX}: {GetType().Name}: SpawnPointManager не найден на сцене!");
+            Debug.Log($"{LOG_PREFIX}: {GetType().Name}: SpawnPointManager was not found in the scene!");
             enabled = false;
             return;
         }
