@@ -42,8 +42,6 @@ public class PlayerInventory : MonoBehaviour
     private Dictionary<GunsType, GameObject> prefabLookup;
     private Dictionary<GunsType, Transform> socketLookup;
 
-    private PlayerShoot playerShoot;
-
     private void Awake()
     {
         if (weaponUnlockManager == null)
@@ -62,12 +60,12 @@ public class PlayerInventory : MonoBehaviour
 
     private void Start()
     {
-        if (givePistolOnStart && HasWeapon(GunsType.Pistol))
+        if (givePistolOnStart && !HasWeapon(GunsType.Pistol))
         {
-            var prefub = GetPrefabFor(GunsType.Pistol);
-            if (prefub != null)
+            var prefab = GetPrefabFor(GunsType.Pistol);
+            if (prefab != null)
             {
-                AddWeapon(GunsType.Pistol, prefub, autoEquip: true);
+                AddWeapon(GunsType.Pistol, prefab, autoEquip: true, ignoreUnlock: true);
             }
             else
             {
@@ -135,9 +133,10 @@ public class PlayerInventory : MonoBehaviour
         return ownedWeapons.ContainsKey(gunsType);
     }
 
-    public bool AddWeapon(GunsType gunsType, UnityEngine.Object optionalConfig = null, bool autoEquip = true)
+    public bool AddWeapon(GunsType gunsType, UnityEngine.Object optionalConfig = null, bool autoEquip = true,
+        bool ignoreUnlock = false)
     {
-        if (weaponUnlockManager != null && !weaponUnlockManager.IsUnlocked(gunsType))
+        if (!ignoreUnlock && weaponUnlockManager != null && !weaponUnlockManager.IsUnlocked(gunsType))
         {
             Debug.Log($"{LOG_PREFIX}: AddWeapon({gunsType}) denied — not unlocked for current level.");
             return false;
