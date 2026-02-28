@@ -6,6 +6,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ammo/AmmoSpawnRules", menuName = "AmmoSpawnRules")]
 public class AmmoSpawnRules : ScriptableObject
 {
+    private const string LOG_PREFIX = "AmmoSpawnRules";
+
     [Serializable]
     public struct AmmoSpawnEntry
     {
@@ -27,6 +29,14 @@ public class AmmoSpawnRules : ScriptableObject
         RebuildLookup();
     }
 
+    private void EnsureLookup()
+    {
+        if (lookup == null)
+        {
+            RebuildLookup();
+        }
+    }
+
     private void RebuildLookup()
     {
         lookup = new Dictionary<GunsType, AmmoSpawnEntry>();
@@ -40,6 +50,7 @@ public class AmmoSpawnRules : ScriptableObject
         {
             if (lookup.ContainsKey(entry.gunsType))
             {
+                Debug.LogWarning($"{LOG_PREFIX}: Duplicate entry for GunsType '{entry.gunsType}'. First entry will be used.", this);
                 continue;
             }
 
@@ -49,16 +60,13 @@ public class AmmoSpawnRules : ScriptableObject
 
     public bool IsAmmoEnabled(GunsType gunsType)
     {
-        if (lookup == null)
+        EnsureLookup();
+
+        if (lookup != null && lookup.TryGetValue(gunsType, out var entry))
         {
-            RebuildLookup();
+            return entry.isEnabled;
         }
 
-        if (lookup == null || lookup.TryGetValue(gunsType, out var entry))
-        {
-            return true;
-        }
-
-        return entry.isEnabled;
+        return true;
     }
 }
