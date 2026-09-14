@@ -11,6 +11,7 @@ public class WeaponController : MonoBehaviour, IWeapon
     [SerializeField] private BulletsConfig bulletsConfig;
 
     private WeaponData weaponData;
+    private WeaponRuntimeData runtimeData;
     private BulletsData bulletsData;
     private ObjectPool bulletsPool;
     private Transform spawnPoint;
@@ -31,10 +32,11 @@ public class WeaponController : MonoBehaviour, IWeapon
         }
 
         weaponData = weaponConfigHolder.weaponConfig.weaponData[0];
-        if (weaponData.CurrentAmmo <= 0)
-        {
-            weaponData.CurrentAmmo = weaponData.MagazineSize;
-        }
+
+        // Ammo is per-instance runtime state, never written back onto weaponData/the
+        // ScriptableObject asset — see WeaponRuntimeData and DECISIONS.md.
+        int initialAmmo = weaponData.CurrentAmmo > 0 ? weaponData.CurrentAmmo : weaponData.MagazineSize;
+        runtimeData = new WeaponRuntimeData(initialAmmo);
 
         spawnPoint = weaponConfigHolder.bulletSpawnPoint;
         if (spawnPoint == null)
@@ -63,7 +65,7 @@ public class WeaponController : MonoBehaviour, IWeapon
 
     public bool CanShoot()
     {
-        return weaponData != null && weaponData.CurrentAmmo > 0;
+        return weaponData != null && runtimeData != null && runtimeData.CurrentAmmo > 0;
     }
 
     public float GetFireRate()
@@ -78,7 +80,7 @@ public class WeaponController : MonoBehaviour, IWeapon
             return;
         }
 
-        weaponData.CurrentAmmo--;
+        runtimeData.Decrement();
 
         autoReloadHandler?.TryAutoReload();
 
@@ -145,7 +147,17 @@ public class WeaponController : MonoBehaviour, IWeapon
 
     public int GetCurrentAmmoInClip()
     {
-        return weaponData != null ? weaponData.CurrentAmmo : 0;
+        return runtimeData != null ? runtimeData.CurrentAmmo : 0;
+    }
+
+    public void AddAmmoToMagazine(int amount)
+    {
+        if (runtimeData == null || weaponData == null)
+        {
+            return;
+        }
+
+        runtimeData.Add(amount, weaponData.MagazineSize);
     }
 
     public int GetTotalAmmo()

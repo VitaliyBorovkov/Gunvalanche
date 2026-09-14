@@ -49,8 +49,7 @@ public class RocketChamberPresenter : MonoBehaviour
 
     private void HandleAmmoChanged()
     {
-        var data = weaponController != null ? weaponController.GetWeaponData() : null;
-        int currentAmmo = data != null ? data.CurrentAmmo : 0;
+        int currentAmmo = weaponController != null ? weaponController.GetCurrentAmmoInClip() : 0;
 
         if (currentAmmo == lastAmmo)
         {
@@ -68,8 +67,7 @@ public class RocketChamberPresenter : MonoBehaviour
 
     private void SuncVisualImmediate()
     {
-        var data = weaponController != null ? weaponController.GetWeaponData() : null;
-        lastAmmo = data != null ? data.CurrentAmmo : 0;
+        lastAmmo = weaponController != null ? weaponController.GetCurrentAmmoInClip() : 0;
 
         if (loadedRocketVisual != null)
         {
