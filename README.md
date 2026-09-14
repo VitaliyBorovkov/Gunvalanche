@@ -1,15 +1,17 @@
-# Gunvananch
+# Gunvalanche
 
-Gunvananch is a small shooter prototype built with Unity. The repository contains all Unity assets and sources needed to open and run the project.
+Gunvalanche is a small Serious Sam-like shooter prototype built with Unity. The repository contains all Unity assets and sources needed to open and run the project.
+
+For the reasoning behind architectural choices (and known open issues), see [`DECISIONS.md`](DECISIONS.md).
 
 ## Prerequisites
-- **Unity 2022.3.5f1** or newer (see `ProjectSettings/ProjectVersion.txt`).
+- **Unity 2022.3.59f1** or newer (see `ProjectSettings/ProjectVersion.txt`).
 - Unity Hub installed to manage Unity editors and open the project.
 
 ## Opening the Project
 1. Clone or download this repository.
-2. In **Unity Hub**, choose **Add project** and select the `SeriousVetal` folder.
-3. When prompted, open the project using Unity 2022.3.5f1 or a compatible version.
+2. In **Unity Hub**, choose **Add project** and select the `Gunvalanche` folder.
+3. When prompted, open the project using Unity 2022.3.59f1 or a compatible version.
 
 ## Running in the Editor
 1. Open the `Menu.unity` scene located in `Assets/Scenes`.
