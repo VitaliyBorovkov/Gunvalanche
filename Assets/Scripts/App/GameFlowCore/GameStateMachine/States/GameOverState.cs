@@ -29,14 +29,14 @@ public class GameOverState : IGameState
 
         Time.timeScale = 0f;
 
-        GameStateContext.GameOverUI.ShowGameOverScreen(0.8f);
+        GameStateContext.GameOverUI?.ShowGameOverScreen(0.8f);
         GameStateContext.SetCursor(true);
         //Debug.Log("GameOverState: Entered.");
     }
 
     public void ExitState()
     {
-        GameStateContext.GameOverUI.HideScreen();
+        GameStateContext.GameOverUI?.HideScreen();
 
         //Debug.Log("GameOverState: Exited.");
     }

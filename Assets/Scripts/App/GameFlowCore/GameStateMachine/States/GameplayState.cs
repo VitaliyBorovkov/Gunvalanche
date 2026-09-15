@@ -15,7 +15,7 @@ public sealed class GameplayState : IGameState
         GameStateContext.InputHandler.SetEnabled(true);
         GameStateContext.RequestGameplayMap?.Invoke();
         GameStateContext.PauseUI.HideScreen();
-        GameStateContext.GameOverUI.HideScreen();
+        GameStateContext.GameOverUI?.HideScreen();
         GameStateContext.SetCursor(false);
         //Debug.Log("GameplayState: Entered.");
     }
