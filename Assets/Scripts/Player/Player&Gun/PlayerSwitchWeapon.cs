@@ -63,23 +63,28 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (playerInventory != null)
         {
+            // PlayerInventory is the single source of truth for owned weapons: every
+            // weapon it instantiates is reported through OnWeaponAdded -> RegisterWeapon.
+            // Do NOT also CollectWeapon() here, or the same weapon gets added twice
+            // (once via the event, once via the raw hierarchy scan below).
             playerInventory.OnWeaponAdded -= HandleWeaponAdded;
             playerInventory.OnWeaponAdded += HandleWeaponAdded;
         }
         else
         {
+            // No PlayerInventory to report additions through the event — fall back to
+            // scanning whatever weapons are already sitting under weaponsHolder.
             Debug.LogWarning($"{LOG_PREFIX}: PlayerInventory not found. Fallback to initial scan only.");
-        }
+            CollectWeapon();
 
-        CollectWeapon();
-
-        if (weaponList.Count > 0)
-        {
-            SwitchWeaponByIndex(0);
-        }
-        else
-        {
-            Debug.LogWarning($"{LOG_PREFIX}:  No weapons have been added to the list.");
+            if (weaponList.Count > 0)
+            {
+                SwitchWeaponByIndex(0);
+            }
+            else
+            {
+                Debug.LogWarning($"{LOG_PREFIX}:  No weapons have been added to the list.");
+            }
         }
     }
 
