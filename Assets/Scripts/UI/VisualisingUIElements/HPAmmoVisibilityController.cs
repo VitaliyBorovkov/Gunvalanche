@@ -5,7 +5,7 @@ public class HPAmmoVisibilityController : UIVisibilityBase
     [SerializeField] private UIFader hpFader;
     [SerializeField] private UIFader ammoFader;
     [SerializeField] private UIFader waveFader;
-    [SerializeField] private PortalMessageUI portalMessageUI;
+    [SerializeField] private UIFader objectivesFader;
 
     public bool HasHpFader => hpFader != null;
     public bool HasAmmoFader => ammoFader != null;
@@ -28,9 +28,9 @@ public class HPAmmoVisibilityController : UIVisibilityBase
             waveFader.SetAlpha(0f);
         }
 
-        if (portalMessageUI != null)
+        if (objectivesFader != null)
         {
-            portalMessageUI.PauseHideImmediate();
+            objectivesFader.SetAlpha(0f);
         }
     }
 
@@ -51,9 +51,9 @@ public class HPAmmoVisibilityController : UIVisibilityBase
             waveFader.SetAlpha(1f);
         }
 
-        if (portalMessageUI != null)
+        if (objectivesFader != null)
         {
-            portalMessageUI.PauseShowImmediate();
+            objectivesFader.SetAlpha(1f);
         }
     }
 }

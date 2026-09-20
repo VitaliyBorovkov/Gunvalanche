@@ -19,6 +19,7 @@ public class GameStateController
         states[GameStateId.Pause] = new PausedState(gameStateContext);
         states[GameStateId.Gameplay] = new GameplayState(gameStateContext);
         states[GameStateId.GameOver] = new GameOverState(gameStateContext);
+        states[GameStateId.LevelComplete] = new LevelCompleteState(gameStateContext);
     }
 
     public void Update()
@@ -65,6 +66,11 @@ public class GameStateController
     public void ToGameOver()
     {
         SetState(GameStateId.GameOver);
+    }
+
+    public void ToLevelComplete()
+    {
+        SetState(GameStateId.LevelComplete);
     }
 
     public void ToPause()

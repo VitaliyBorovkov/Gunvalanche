@@ -55,6 +55,11 @@ public class GameStateMachine : MonoBehaviour
         gameStateController.ToGameOver();
     }
 
+    public void ToLevelComplete()
+    {
+        gameStateController.ToLevelComplete();
+    }
+
     public void ToPause()
     {
         gameStateController.ToPause();

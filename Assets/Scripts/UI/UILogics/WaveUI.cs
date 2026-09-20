@@ -12,8 +12,6 @@ public class WaveUI : MonoBehaviour
 
     private int currentWave;
     private int totalWaves;
-    private int aliveEnemies;
-    private int totalEnemiesInWave;
 
     private void Awake()
     {
@@ -24,13 +22,6 @@ public class WaveUI : MonoBehaviour
     {
         this.currentWave = currentWave;
         this.totalWaves = totalWaves;
-        Refresh();
-    }
-
-    public void SetEnemies(int aliveEnemies, int totalEnemiesInWave)
-    {
-        this.aliveEnemies = aliveEnemies;
-        this.totalEnemiesInWave = totalEnemiesInWave;
         Refresh();
     }
 
@@ -48,6 +39,6 @@ public class WaveUI : MonoBehaviour
 
     private void Refresh()
     {
-        waveInfoText.text = $"WAVE {currentWave}/{totalWaves}\nENEMIES {aliveEnemies}/{totalEnemiesInWave}";
+        waveInfoText.text = $"WAVE {currentWave}/{totalWaves}";
     }
 }
