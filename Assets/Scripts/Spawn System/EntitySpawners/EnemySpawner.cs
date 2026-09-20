@@ -7,6 +7,7 @@ public class EnemySpawner : ObjectSpawner
     [Header("Player Settings")]
     [SerializeField] private Transform playerTransform;
     [SerializeField] private ObjectPool enemyPool;
+    [SerializeField] private ObjectPool damageTextPool;
 
     public event Action<HealthController> OnEnemySpawned;
 
@@ -34,6 +35,7 @@ public class EnemySpawner : ObjectSpawner
         if (enemyHealthController != null)
         {
             enemyHealthController.SetEnemyPool(enemyPool);
+            enemyHealthController.SetDamageTextPool(damageTextPool);
         }
 
         ISpawnable spawnable = spawnedEnemy.GetComponent<ISpawnable>();

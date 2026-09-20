@@ -6,6 +6,7 @@ using UnityEngine;
 public class WeaponController : MonoBehaviour, IWeapon
 {
     private const string LOG_PREFIX = "WeaponController";
+    private const float MaxAimCorrectionAngle = 60f;
 
     [SerializeField] private WeaponConfigHolder weaponConfigHolder;
     [SerializeField] private BulletsConfig bulletsConfig;
@@ -84,15 +85,29 @@ public class WeaponController : MonoBehaviour, IWeapon
 
         autoReloadHandler?.TryAutoReload();
 
-        Vector3 baseDirection = GetShootDirection();
+        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        bool hasAimHit = Physics.Raycast(ray, out var aimHit, weaponData.Range);
+
+        // Past this distance the projectile's own clamped direction (see GetShootDirection)
+        // reliably converges close enough to hit a normal-sized target on its own. Closer
+        // than the muzzle's own offset from the camera, no forward-ish direction fired from
+        // the muzzle can geometrically reach a point that's effectively behind it — resolve
+        // the shot immediately at the aim raycast's own (unoffset, always exact) hit point
+        // instead of trusting the fired projectile to physically reach it.
+        bool isPointBlank = hasAimHit
+            && aimHit.distance <= Vector3.Distance(ray.origin, spawnPoint.position);
+        RaycastHit? pointBlankHit = isPointBlank ? aimHit : (RaycastHit?)null;
+
+        Vector3 baseDirection = GetShootDirection(ray, hasAimHit, aimHit);
 
         if (shotgunBulletController != null)
         {
-            shotgunBulletController.Fire(bulletsPool, spawnPoint, weaponData, bulletsData, baseDirection);
+            shotgunBulletController.Fire(bulletsPool, spawnPoint, weaponData, bulletsData, baseDirection,
+                pointBlankHit);
         }
         else
         {
-            ShootSingle(baseDirection);
+            ShootSingle(baseDirection, pointBlankHit);
         }
 
         PlayMuzzleFlash();
@@ -100,17 +115,24 @@ public class WeaponController : MonoBehaviour, IWeapon
         OnAmmoChanged?.Invoke();
     }
 
-    private void ShootSingle(Vector3 direction)
+    private void ShootSingle(Vector3 direction, RaycastHit? pointBlankHit)
     {
         GameObject bullet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
 
-        if (bullet.TryGetComponent(out IBullet bulletsController))
+        if (!bullet.TryGetComponent(out IBullet bulletsController))
         {
-            bulletsController.Initialize(direction, bulletsPool, weaponData, bulletsData);
+            Debug.LogError($"{LOG_PREFIX}: {bullet.name} does not have IBullet component.");
+            return;
+        }
+
+        if (pointBlankHit.HasValue)
+        {
+            bulletsController.ResolveImmediately(bulletsPool, weaponData,
+                pointBlankHit.Value.point, pointBlankHit.Value.collider);
         }
         else
         {
-            Debug.LogError($"{LOG_PREFIX}: {bullet.name} does not have IBullet component.");
+            bulletsController.Initialize(direction, bulletsPool, weaponData, bulletsData);
         }
     }
 
@@ -119,11 +141,26 @@ public class WeaponController : MonoBehaviour, IWeapon
         return weaponData;
     }
 
-    private Vector3 GetShootDirection()
+    private Vector3 GetShootDirection(Ray ray, bool hasHit, RaycastHit hit)
     {
-        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        return Physics.Raycast(ray, out var hit, weaponData.Range) ? (hit.point - spawnPoint.position).normalized
+        Vector3 rawDirection = hasHit
+            ? (hit.point - spawnPoint.position).normalized
             : ray.direction;
+
+        // The muzzle sits offset from the camera (viewmodel), so converging exactly on the
+        // aimed-at point needs a sharper turn the closer the target is. Past some point that
+        // turn becomes absurd (firing sideways or even back towards the player) — clamp how
+        // far the shot is allowed to deviate from where the player is actually looking.
+        // Deliberately clamped against the CAMERA's own forward, not spawnPoint.forward:
+        // WeaponSway continuously rotates the weapon's visual transform based on smoothed
+        // mouse input, independently of the camera, so spawnPoint.forward can lag well
+        // behind the camera's real aim after a quick turn — clamping against it would let
+        // the shot fly toward that stale direction instead of towards the target.
+        // Normal-range shots need only a few degrees of correction and are unaffected; only
+        // extreme point-blank targets get capped — and those are resolved immediately instead
+        // of relying on this direction at all, see Shoot()/ResolveImmediately.
+        return Vector3.RotateTowards(ray.direction, rawDirection,
+            MaxAimCorrectionAngle * Mathf.Deg2Rad, 0f);
     }
 
     private void PlayMuzzleFlash()

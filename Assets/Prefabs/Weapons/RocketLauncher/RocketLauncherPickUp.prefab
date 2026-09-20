@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2901763252424374121}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: RocketLauncherBulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: -9024324312006844679}
   - component: {fileID: -3606179375731577792}
   - component: {fileID: 5252006316389689110}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: RocketLauncherPickUp
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7520169971860667317}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -175,7 +175,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 368613170787771682}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}

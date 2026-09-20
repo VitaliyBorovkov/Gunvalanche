@@ -7,6 +7,7 @@ public sealed class GameStateContext
     public InputManager InputManager;
     public HPAmmoVisibilityController HPAmmoVisibilityController;
     public UIVisibilityBase WeaponIconVisibilityController;
+    public CrosshairVisibility CrosshairVisibility;
 
     public readonly InputHandler InputHandler;
     public readonly GameOverUI GameOverUI;
@@ -72,5 +73,16 @@ public sealed class GameStateContext
         }
         WeaponIconVisibilityController = GameObject.FindObjectOfType<UIVisibilityBase>();
         return WeaponIconVisibilityController;
+    }
+
+    public CrosshairVisibility GetOrResolveCrosshairVisibility()
+    {
+        if (CrosshairVisibility != null)
+        {
+            return CrosshairVisibility;
+        }
+
+        CrosshairVisibility = GameObject.FindObjectOfType<CrosshairVisibility>();
+        return CrosshairVisibility;
     }
 }

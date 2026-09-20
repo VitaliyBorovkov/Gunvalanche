@@ -1,28 +1,31 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class EnemyHealthController : HealthController
 {
     private const string LOG_PREFIX = "EnemyHealthController";
 
-    [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform damageTextSpawnPoint;
 
     private ObjectPool enemyPool;
+    private ObjectPool damageTextPool;
 
     public void SetEnemyPool(ObjectPool pool)
     {
         enemyPool = pool;
     }
 
+    public void SetDamageTextPool(ObjectPool pool)
+    {
+        damageTextPool = pool;
+    }
+
     protected override void OnDamageTaken(int damage)
     {
-        if (damageTextPrefab != null && damageTextSpawnPoint != null)
+        if (damageTextPool != null && damageTextSpawnPoint != null)
         {
-            GameObject damageText = Instantiate(damageTextPrefab,
-                damageTextSpawnPoint.position, Quaternion.identity);
+            GameObject damageText = damageTextPool.Spawn(damageTextSpawnPoint.position, Quaternion.identity);
 
-            //damageText.GetComponent<DamageTextUIController>().SetDamageText(damage);
-            Debug.Log($"{LOG_PREFIX}: Spawned damage text at {damageTextSpawnPoint.position}");
+            damageText.GetComponent<DamageTextUIController>().Initialize(damageTextPool, damage);
         }
     }
 

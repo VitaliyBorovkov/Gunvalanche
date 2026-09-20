@@ -11,8 +11,14 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private EnemySpawner[] enemySpawners;
 
     public event Action OnAllWavesCompleted;
+    public event Action<int, int, int> OnWaveStarted;
+    public event Action<int, int> OnEnemyCountChanged;
 
     public bool AreAllWavesCompleted { get; private set; }
+
+    public int TotalWaves => levelWavesConfig != null && levelWavesConfig.waves != null
+        ? levelWavesConfig.waves.Count
+        : 0;
 
     private int currentWaveIndex;
     private int totalEnemiesInWave;
@@ -78,6 +84,8 @@ public class WaveManager : MonoBehaviour
             }
 
             Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex} started. " + $"Enemies in wave: {totalEnemiesInWave}");
+
+            OnWaveStarted?.Invoke(currentWaveIndex, TotalWaves, totalEnemiesInWave);
 
             waveFinishedSpawning = false;
 
@@ -169,6 +177,8 @@ public class WaveManager : MonoBehaviour
 
         aliveEnemies++;
         healthController.OnDied += OnEnemyDied;
+
+        OnEnemyCountChanged?.Invoke(aliveEnemies, totalEnemiesInWave);
     }
 
     private void OnEnemyDied(HealthController healthController)
@@ -181,5 +191,7 @@ public class WaveManager : MonoBehaviour
         aliveEnemies = Mathf.Max(0, aliveEnemies - 1);
 
         Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex}: Enemy died. Remaining: {aliveEnemies}");
+
+        OnEnemyCountChanged?.Invoke(aliveEnemies, totalEnemiesInWave);
     }
 }
