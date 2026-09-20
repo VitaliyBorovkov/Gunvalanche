@@ -63,9 +63,17 @@ public class BaseBulletsController : MonoBehaviour, IBullet
             return;
         }
 
+        // The bullet always travels from the muzzle towards the aimed-at point (needed so
+        // it actually reaches whatever is under the crosshair, including targets standing
+        // right next to the player). It spawns facing the muzzle's own orientation though,
+        // so at steep angles (close targets) the model visibly flew off in a direction it
+        // wasn't facing — fixed by orienting the model to match its real travel direction.
+        Vector3 velocityDirection = direction.normalized;
+        transform.rotation = Quaternion.LookRotation(velocityDirection);
+
         if (rigidBody != null)
         {
-            rigidBody.velocity = direction.normalized * bulletsData.Speed;
+            rigidBody.velocity = velocityDirection * bulletsData.Speed;
         }
 
         if (bulletsData.LifeTime > 0)
@@ -74,8 +82,44 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         }
     }
 
+    // Used for point-blank shots: the muzzle sits offset from the camera, so a target
+    // standing right next to the player can be closer than that offset — no direction fired
+    // from the muzzle can geometrically reach such a target (see DECISIONS.md). Rather than
+    // let the projectile fly on an approximated direction and possibly hit something else
+    // entirely, it's resolved immediately at the aim raycast's own (unoffset, always exact)
+    // hit point, going through the exact same hit-resolution path a normal collision would.
+    public virtual void ResolveImmediately(ObjectPool pool, WeaponData weapon, Vector3 position, Collider hitCollider)
+    {
+        objectPool = pool;
+        weaponData = weapon;
+
+        transform.position = position;
+
+        if (rigidBody != null)
+        {
+            rigidBody.velocity = Vector3.zero;
+        }
+
+        HandleHit(hitCollider);
+    }
+
     protected virtual void OnTriggerEnter(Collider other)
     {
+        HandleHit(other);
+    }
+
+    protected virtual void HandleHit(Collider other)
+    {
+        // Bullets never interact with each other — without this, a weapon that spawns
+        // several projectiles from the same point in the same frame (the shotgun's 8
+        // pellets) sees them all overlapping one another the instant they appear, and
+        // DespawnBullet() below runs unconditionally on any trigger hit regardless of
+        // layer, so they'd wipe each other out before ever leaving the muzzle.
+        if (other.gameObject.layer == gameObject.layer)
+        {
+            return;
+        }
+
         if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
         {
             HealthController enemyHealth = other.GetComponentInParent<HealthController>();

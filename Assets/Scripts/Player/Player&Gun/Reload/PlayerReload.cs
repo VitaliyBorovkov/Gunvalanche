@@ -48,7 +48,7 @@ public class PlayerReload : MonoBehaviour
             return;
         }
 
-        if (weaponData.CurrentAmmo == weaponData.MagazineSize)
+        if (weapon.GetCurrentAmmoInClip() == weaponData.MagazineSize)
         {
             Debug.Log(" PlayerReload. Magazine is full");
             return;
@@ -69,20 +69,20 @@ public class PlayerReload : MonoBehaviour
         OnReloadStarted?.Invoke();
 
         Debug.Log(" PlayerReload. Starting reload...");
-        reloadCoroutine = StartCoroutine(ReloadRoutine(weaponData));
+        reloadCoroutine = StartCoroutine(ReloadRoutine(weapon, weaponData));
     }
 
-    private IEnumerator ReloadRoutine(WeaponData weaponData)
+    private IEnumerator ReloadRoutine(IWeapon weapon, WeaponData weaponData)
     {
         isReloading = true;
 
         yield return new WaitForSeconds(2f);
 
-        int ammoNeeded = weaponData.MagazineSize - weaponData.CurrentAmmo;
+        int ammoNeeded = weaponData.MagazineSize - weapon.GetCurrentAmmoInClip();
         int ammoAvailable = AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType);
         int ammoToReload = Mathf.Min(ammoNeeded, ammoAvailable);
 
-        weaponData.CurrentAmmo += ammoToReload;
+        weapon.AddAmmoToMagazine(ammoToReload);
         AmmoManager.Instance.UseAmmo(weaponData.GunsType, ammoToReload);
 
         isReloading = false;

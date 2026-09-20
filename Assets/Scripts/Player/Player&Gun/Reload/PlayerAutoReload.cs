@@ -33,7 +33,7 @@ public class PlayerAutoReload : MonoBehaviour, IAutoReload
             return;
         }
 
-        if (weaponData.CurrentAmmo <= 0 && AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) > 0 &&
+        if (weapon.GetCurrentAmmoInClip() <= 0 && AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) > 0 &&
             !playerReload.IsReloading())
         {
             //Debug.Log("PlayerAutoReload: Auto reload triggered.");

@@ -187,8 +187,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pelletsPerShot: 8
-  uneRadiuseSpread: 1
-  spreadAngle: 15
+  uneRadiuseSpread: 0
+  spreadAngle: 12
   spreadRadiusAtDistance: 10
   spreadDistance: 10
 --- !u!114 &4691935881589541829
@@ -204,10 +204,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 6192455437741682269}
-  useRadiusSpread: 1
+  useRadiusSpread: 0
   spreadRadiusAtDistance: 10
   spreadDistance: 10
-  spreadAngle: 15
+  spreadAngle: 12
   centerRayColor: {r: 0, g: 1, b: 0, a: 1}
   spreadRayColor: {r: 1, g: 0.8194418, b: 0, a: 1}
   circleColor: {r: 1, g: 0.015686274, b: 0.12479308, a: 1}

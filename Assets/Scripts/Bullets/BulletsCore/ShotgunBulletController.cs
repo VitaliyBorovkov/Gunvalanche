@@ -11,7 +11,7 @@ public class ShotgunBulletController : MonoBehaviour
     [SerializeField] private float spreadDistance = 10f;
 
     public void Fire(ObjectPool bulletsPool, Transform spawnPoint, WeaponData weaponData, BulletsData bulletsData,
-        Vector3 baseDirection)
+        Vector3 baseDirection, RaycastHit? pointBlankHit = null)
     {
         if (bulletsPool == null || spawnPoint == null || weaponData == null)
         {
@@ -33,35 +33,59 @@ public class ShotgunBulletController : MonoBehaviour
 
         for (int i = 0; i < pelletsPerShot; i++)
         {
-            Vector3 pelletDirection = GetPelletDirection(spawnPoint, baseDirection);
-
             GameObject pellet = bulletsPool.Spawn(spawnPoint.position, spawnPoint.rotation, true);
-            if (pellet.TryGetComponent(out IBullet pelletController))
+
+            if (!pellet.TryGetComponent(out IBullet pelletController))
             {
-                pelletController.Initialize(pelletDirection, bulletsPool, weaponData, bulletsData);
+                Debug.LogError($"{LOG_PREFIX}: {pellet.name} does not have IBullet component.");
+                continue;
+            }
+
+            if (pointBlankHit.HasValue)
+            {
+                // See BaseBulletsController.ResolveImmediately — a target standing this
+                // close can be nearer to the camera than the muzzle's own offset from it,
+                // so no pellet direction fired from the muzzle can reliably reach it.
+                pelletController.ResolveImmediately(bulletsPool, weaponData,
+                    pointBlankHit.Value.point, pointBlankHit.Value.collider);
             }
             else
             {
-                Debug.LogError($"{LOG_PREFIX}: {pellet.name} does not have IBullet component.");
+                Vector3 pelletDirection = GetPelletDirection(spawnPoint, baseDirection);
+                pelletController.Initialize(pelletDirection, bulletsPool, weaponData, bulletsData);
             }
         }
     }
 
     private Vector3 GetPelletDirection(Transform spawnPoint, Vector3 baseDirection)
     {
-        float angleDeg = spreadAngle;
+        float maxAngleDeg = spreadAngle;
 
         if (uneRadiuseSpread)
         {
             float angleRad = Mathf.Atan(spreadRadiusAtDistance / spreadDistance);
-            angleDeg = angleRad * Mathf.Rad2Deg;
+            maxAngleDeg = angleRad * Mathf.Rad2Deg;
         }
 
-        Vector2 offset = Random.insideUnitCircle * angleDeg;
+        // Uniform spread over a circular cone around baseDirection: tilt away from the
+        // center by a random angle (sqrt of a uniform value keeps the density even across
+        // the disk, not bunched up near the center), then spin that tilt fully around
+        // baseDirection itself by a random azimuth. Spinning around baseDirection — not
+        // some fixed external axis — is what makes the pattern an actual circle regardless
+        // of which way the weapon is pointed; the previous yaw/pitch-around-fixed-axes
+        // approach skewed the spread toward the horizontal/vertical axes instead.
+        float tiltDeg = maxAngleDeg * Mathf.Sqrt(Random.value);
+        float spinDeg = Random.value * 360f;
 
-        Quaternion yaw = Quaternion.AngleAxis(offset.x, spawnPoint.up);
-        Quaternion pitch = Quaternion.AngleAxis(offset.y, spawnPoint.right);
+        Vector3 tiltAxis = Vector3.Cross(baseDirection, spawnPoint.up);
+        if (tiltAxis.sqrMagnitude < 0.0001f)
+        {
+            tiltAxis = spawnPoint.right;
+        }
 
-        return ((yaw * pitch) * baseDirection).normalized;
+        Quaternion tilt = Quaternion.AngleAxis(tiltDeg, tiltAxis.normalized);
+        Quaternion spin = Quaternion.AngleAxis(spinDeg, baseDirection);
+
+        return (spin * tilt * baseDirection).normalized;
     }
 }

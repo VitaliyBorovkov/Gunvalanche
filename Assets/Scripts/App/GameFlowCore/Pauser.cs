@@ -8,6 +8,7 @@ public class Pauser : MonoBehaviour
 
     private bool subscribedToSpawner;
     private bool subscribedToInput;
+    private InputAction subscribedPauseAction;
 
     private void Awake()
     {
@@ -92,26 +93,24 @@ public class Pauser : MonoBehaviour
         pause.Enable();
         pause.performed += OnPausePerformed;
         subscribedToInput = true;
+        subscribedPauseAction = pause;
         //Debug.Log($"Pauser: subscribed to Pause action '{pause.name}' on '{inputManager.gameObject.name}'.");
     }
 
     private void Unregister()
     {
-        if (!subscribedToInput || inputManager == null)
+        // Unsubscribe using the action reference captured at subscribe time, not by
+        // re-deriving it through inputManager.GetComponent<PlayerInput>(). Destroy order
+        // on scene unload is not guaranteed: if inputManager's GameObject is already
+        // destroyed by the time OnDestroy() runs here, inputManager == null becomes true
+        // and we would silently skip unsubscribing, leaving OnPausePerformed subscribed
+        // and firing against a stale GameStateMachine after the scene reloads.
+        if (subscribedToInput && subscribedPauseAction != null)
         {
-            subscribedToInput = false; return;
+            subscribedPauseAction.performed -= OnPausePerformed;
         }
 
-        var playerInpyt = inputManager.GetComponent<PlayerInput>();
-        if (playerInpyt?.actions != null)
-        {
-            var pause = playerInpyt.actions.FindAction("Pause", throwIfNotFound: false);
-            if (pause != null)
-            {
-                pause.performed -= OnPausePerformed;
-            }
-        }
-
+        subscribedPauseAction = null;
         subscribedToInput = false;
         //Debug.Log("Pauser: unsubscribed from Pause action.");
     }

@@ -42,7 +42,7 @@ public class RocketBulletController : BaseBulletsController
         }
     }
 
-    protected override void OnTriggerEnter(Collider other)
+    protected override void HandleHit(Collider other)
     {
         if (hasExploded)
         {

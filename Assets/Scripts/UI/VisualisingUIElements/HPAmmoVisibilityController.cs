@@ -4,59 +4,56 @@ public class HPAmmoVisibilityController : UIVisibilityBase
 {
     [SerializeField] private UIFader hpFader;
     [SerializeField] private UIFader ammoFader;
-
-    [SerializeField] private float fadeDuration = 0.5f;
+    [SerializeField] private UIFader waveFader;
+    [SerializeField] private UIFader objectivesFader;
 
     public bool HasHpFader => hpFader != null;
     public bool HasAmmoFader => ammoFader != null;
+    public bool HasWaveFader => waveFader != null;
 
-    public void FadeOut()
-    {
-        FadeOut(fadeDuration);
-    }
-
-    public void FadeOut(float duration)
+    public void HideImmediate()
     {
         if (hpFader != null)
         {
-            hpFader.PlayFadeOut(duration);
+            hpFader.SetAlpha(0f);
         }
 
         if (ammoFader != null)
         {
-            ammoFader.PlayFadeOut(duration);
+            ammoFader.SetAlpha(0f);
+        }
+
+        if (waveFader != null)
+        {
+            waveFader.SetAlpha(0f);
+        }
+
+        if (objectivesFader != null)
+        {
+            objectivesFader.SetAlpha(0f);
         }
     }
 
-    public void FadeIn()
-    {
-        FadeIn(fadeDuration);
-    }
-
-    public void FadeIn(float duration)
+    public void ShowImmediate()
     {
         if (hpFader != null)
         {
-            hpFader.PlayFadeIn(duration);
+            hpFader.SetAlpha(1f);
         }
 
         if (ammoFader != null)
         {
-            ammoFader.PlayFadeIn(duration);
+            ammoFader.SetAlpha(1f);
+        }
+
+        if (waveFader != null)
+        {
+            waveFader.SetAlpha(1f);
+        }
+
+        if (objectivesFader != null)
+        {
+            objectivesFader.SetAlpha(1f);
         }
     }
-
-    //public void SetVisibleImmediate(bool visible)
-    //{
-    //    float alpha = visible ? 1f : 0f;
-    //    if (hpFader != null)
-    //    {
-    //        hpFader.SetAlpha(alpha);
-    //    }
-
-    //    if (ammoFader != null)
-    //    {
-    //        ammoFader.SetAlpha(alpha);
-    //    }
-    //}
 }

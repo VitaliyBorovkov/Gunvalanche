@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6121040584727060231}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: machinegun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8082799472352599103}
   - component: {fileID: 5706241817712008460}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: RiffleBulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3594466715988785281}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 7999430615116420886}
   - component: {fileID: 7191829875986773652}
   - component: {fileID: 7004353675579687705}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Mesh2_Group3_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -207,7 +207,7 @@ GameObject:
   - component: {fileID: 3396590035716215214}
   - component: {fileID: 2906679617174419436}
   - component: {fileID: 2213942307162335}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: RifflePickUp
   m_TagString: Weapon
   m_Icon: {fileID: 0}
@@ -307,7 +307,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8780372150571093271}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 4225081373392629419}
   - component: {fileID: 5414962513938476747}
   - component: {fileID: 6151691442043667568}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Mesh1_Group2_Group1_Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

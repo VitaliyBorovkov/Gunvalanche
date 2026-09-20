@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2680760799172533489}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Design
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6192455437741682269}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: ShotgunBulletSpawnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 925148607103116567}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: Resources
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: -3416009655248938251}
   - component: {fileID: -8855343816726071636}
   - component: {fileID: 2667184379182819764}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: ShotgunPickUp
   m_TagString: Weapon
   m_Icon: {fileID: 0}

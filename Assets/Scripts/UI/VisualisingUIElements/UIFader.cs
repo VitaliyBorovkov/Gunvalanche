@@ -15,6 +15,11 @@ public class UIFader : MonoBehaviour
 
     public void PlayFadeIn(float duration)
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
+
         if (currentRoutine != null)
         {
             StopCoroutine(currentRoutine);
@@ -24,6 +29,11 @@ public class UIFader : MonoBehaviour
 
     public void PlayFadeOut(float duration)
     {
+        if (!isActiveAndEnabled)
+        {
+            return;
+        }
+
         if (currentRoutine != null)
         {
             StopCoroutine(currentRoutine);

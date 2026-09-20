@@ -18,25 +18,31 @@ public class GameOverState : IGameState
         var hpAmmoController = GameStateContext.GetOrResolveHPAmmoVisibilityController();
         if (hpAmmoController != null)
         {
-            hpAmmoController.FadeOut();
+            hpAmmoController.HideImmediate();
         }
 
         var weaponIconController = GameStateContext.GetOrResolveWeaponIconVisibilityController();
         if (weaponIconController != null)
         {
-            weaponIconController.Hide();
+            weaponIconController.SetVisibleImmediate(false);
+        }
+
+        var crosshair = GameStateContext.GetOrResolveCrosshairVisibility();
+        if (crosshair != null)
+        {
+            crosshair.HideImmediate();
         }
 
         Time.timeScale = 0f;
 
-        GameStateContext.GameOverUI.ShowGameOverScreen(0.8f);
+        GameStateContext.GameOverUI?.ShowGameOverScreen(0.8f);
         GameStateContext.SetCursor(true);
         //Debug.Log("GameOverState: Entered.");
     }
 
     public void ExitState()
     {
-        GameStateContext.GameOverUI.HideScreen();
+        GameStateContext.GameOverUI?.HideScreen();
 
         //Debug.Log("GameOverState: Exited.");
     }

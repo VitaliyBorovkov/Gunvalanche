@@ -19,6 +19,7 @@ public class GameStateController
         states[GameStateId.Pause] = new PausedState(gameStateContext);
         states[GameStateId.Gameplay] = new GameplayState(gameStateContext);
         states[GameStateId.GameOver] = new GameOverState(gameStateContext);
+        states[GameStateId.LevelComplete] = new LevelCompleteState(gameStateContext);
     }
 
     public void Update()
@@ -28,6 +29,13 @@ public class GameStateController
 
     public void SetState(GameStateId stateId)
     {
+        if (CurrentStateId == stateId)
+        {
+            // Already in this state — ignore duplicate requests (e.g. a death firing
+            // two separate "player died" signals in the same frame).
+            return;
+        }
+
         if (!states.TryGetValue(stateId, out var next))
         {
             Debug.LogError($"GameStateController: state {stateId} not registered.");
@@ -58,6 +66,11 @@ public class GameStateController
     public void ToGameOver()
     {
         SetState(GameStateId.GameOver);
+    }
+
+    public void ToLevelComplete()
+    {
+        SetState(GameStateId.LevelComplete);
     }
 
     public void ToPause()

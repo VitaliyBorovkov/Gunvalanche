@@ -6,4 +6,5 @@ public interface IWeapon
     WeaponData GetWeaponData();
     int GetCurrentAmmoInClip();
     int GetTotalAmmo();
+    void AddAmmoToMagazine(int amount);
 }
