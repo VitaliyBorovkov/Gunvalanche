@@ -110,6 +110,16 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     protected virtual void HandleHit(Collider other)
     {
+        // Bullets never interact with each other — without this, a weapon that spawns
+        // several projectiles from the same point in the same frame (the shotgun's 8
+        // pellets) sees them all overlapping one another the instant they appear, and
+        // DespawnBullet() below runs unconditionally on any trigger hit regardless of
+        // layer, so they'd wipe each other out before ever leaving the muzzle.
+        if (other.gameObject.layer == gameObject.layer)
+        {
+            return;
+        }
+
         if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
         {
             HealthController enemyHealth = other.GetComponentInParent<HealthController>();
