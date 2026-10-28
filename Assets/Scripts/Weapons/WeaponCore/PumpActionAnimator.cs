@@ -31,6 +31,19 @@ public class PumpActionAnimator : WeaponAnimatorBase
         restLocalRotation = transform.localRotation;
     }
 
+    private void OnDisable()
+    {
+        // Unity stops all coroutines on disable but doesn't null the reference —
+        // IsPlaying would stay true forever after a weapon switch, blocking CanShoot().
+        pumpCoroutine = null;
+
+        if (slideTransform != null)
+        {
+            slideTransform.localPosition = restSlideLocalPosition;
+        }
+        transform.localRotation = restLocalRotation;
+    }
+
     public void PlayPumpAction()
     {
         if (pumpCoroutine != null)
@@ -52,10 +65,10 @@ public class PumpActionAnimator : WeaponAnimatorBase
         Quaternion raisedRotation = restLocalRotation * Quaternion.Euler(raisedLocalEulerAngles);
         Vector3 slideOutPosition = restSlideLocalPosition + slideLocalOffset;
 
-        yield return AnimateRotation(restLocalRotation, raisedRotation, raiseDuration);
+        yield return AnimateRotation(transform, restLocalRotation, raisedRotation, raiseDuration);
         yield return AnimatePosition(slideTransform, restSlideLocalPosition, slideOutPosition, slideOutDuration);
         yield return AnimatePosition(slideTransform, slideOutPosition, restSlideLocalPosition, slideInDuration);
-        yield return AnimateRotation(raisedRotation, restLocalRotation, lowerDuration);
+        yield return AnimateRotation(transform, raisedRotation, restLocalRotation, lowerDuration);
 
         pumpCoroutine = null;
     }

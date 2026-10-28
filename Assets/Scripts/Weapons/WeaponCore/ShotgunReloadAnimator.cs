@@ -97,7 +97,7 @@ public class ShotgunReloadAnimator : WeaponAnimatorBase
         }
 
         Quaternion tiltedRotation = restLocalRotation * Quaternion.Euler(tiltLocalEulerAngles);
-        yield return AnimateRotation(restLocalRotation, tiltedRotation, tiltDuration);
+        yield return AnimateRotation(transform, restLocalRotation, tiltedRotation, tiltDuration);
 
         if (shellCount > 0)
         {
@@ -110,7 +110,7 @@ public class ShotgunReloadAnimator : WeaponAnimatorBase
             }
         }
 
-        yield return AnimateRotation(tiltedRotation, restLocalRotation, untiltDuration);
+        yield return AnimateRotation(transform, tiltedRotation, restLocalRotation, untiltDuration);
 
         if (weaponSway != null)
         {

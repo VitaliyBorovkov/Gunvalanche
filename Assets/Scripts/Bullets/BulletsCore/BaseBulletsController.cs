@@ -19,6 +19,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     private bool isDespawning = false;
     private Vector3 previousPosition;
+    private int tunnelCheckLayerMask;
 
     protected virtual void Awake()
     {
@@ -31,6 +32,11 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         enemyLayer = LayerMask.NameToLayer("Enemy");
         environmentLayer = LayerMask.NameToLayer("Environment");
         ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
+
+        // Only check the layers that bullets are supposed to stop at.
+        // Without this mask, Physics.Raycast ignores the project's Layer Collision Matrix
+        // and can hit the player or other unintended colliders, silently despawning the bullet.
+        tunnelCheckLayerMask = LayerMask.GetMask("Enemy", "Environment");
     }
 
     protected virtual void OnEnable()
@@ -57,7 +63,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         Vector3 delta = currentPosition - previousPosition;
         float distance = delta.magnitude;
 
-        if (distance > 0.0001f && Physics.Raycast(previousPosition, delta.normalized, out RaycastHit hit, distance))
+        if (distance > 0.0001f && Physics.Raycast(previousPosition, delta.normalized, out RaycastHit hit, distance, tunnelCheckLayerMask))
         {
             HandleHit(hit.collider);
         }
@@ -140,6 +146,11 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     protected virtual void HandleHit(Collider other)
     {
+        if (isDespawning)
+        {
+            return;
+        }
+
         // Bullets never interact with each other — without this, a weapon that spawns
         // several projectiles from the same point in the same frame (the shotgun's 8
         // pellets) sees them all overlapping one another the instant they appear, and

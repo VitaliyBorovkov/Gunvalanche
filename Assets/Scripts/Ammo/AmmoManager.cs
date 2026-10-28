@@ -64,7 +64,13 @@ public class AmmoManager : MonoBehaviour
 
         GameObject poolObject = Instantiate(poolPrefab);
         poolObject.name = poolName;
-        return poolObject.GetComponent<ObjectPool>();
+
+        var pool = poolObject.GetComponent<ObjectPool>();
+        if (pool == null)
+        {
+            Debug.LogError($"AmmoManager: {poolName} prefab has no ObjectPool component!");
+        }
+        return pool;
     }
 
     private void InitializeAmmoStorage()

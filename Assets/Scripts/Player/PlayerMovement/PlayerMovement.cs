@@ -6,19 +6,21 @@ public class PlayerMovement : MonoBehaviour
 
     private const float gravityPressure = -0.5f;
 
-    public CharacterController controller;
+    [SerializeField] private EntityData entityData;
 
-    public EntityData entityData;
-    public Vector3 playerVelocity;
-
+    private CharacterController controller;
     private PlayerRun playerRun;
+    private Vector3 playerVelocity;
+    private bool isGrounded;
+    [SerializeField] private float gravity = gravityPressure;
+    private float walkSpeed;
+    private float runSpeed;
 
-    public bool isGrounded;
+    public bool IsGrounded => isGrounded;
+    public float Gravity => gravity;
 
-    public float gravity = gravityPressure;
-
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float runSpeed;
+    public void SetVelocityY(float y) => playerVelocity.y = y;
+    public void SetWalkSpeed(float speed) => walkSpeed = speed;
 
     private void Awake()
     {
@@ -31,10 +33,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
         walkSpeed = entityData.WalkSpeed;
         runSpeed = entityData.RunSpeed;
+    }
+
+    private void FixedUpdate()
+    {
         isGrounded = controller.isGrounded;
     }
 

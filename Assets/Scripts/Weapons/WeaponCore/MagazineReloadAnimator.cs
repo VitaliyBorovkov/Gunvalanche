@@ -108,7 +108,7 @@ public class MagazineReloadAnimator : WeaponAnimatorBase
         // (as if the mag release is pressed partway through the motion) rather than the instant
         // the reload begins — a tiny stagger reads as more natural than both starting at once.
         Quaternion tiltedRotation = restLocalRotation * Quaternion.Euler(tiltLocalEulerAngles);
-        Coroutine tiltInRoutine = StartCoroutine(AnimateRotation(restLocalRotation, tiltedRotation, ejectTime));
+        Coroutine tiltInRoutine = StartCoroutine(AnimateRotation(transform, restLocalRotation, tiltedRotation, ejectTime));
 
         float clampedEjectDelay = Mathf.Clamp(ejectDelay, 0f, ejectTime);
         if (clampedEjectDelay > 0f)
@@ -143,7 +143,7 @@ public class MagazineReloadAnimator : WeaponAnimatorBase
         }
 
         yield return AnimatePosition(magazineTransform, insertStartPosition, restLocalPosition, insertTime);
-        yield return AnimateRotation(tiltedRotation, restLocalRotation, untiltTime);
+        yield return AnimateRotation(transform, tiltedRotation, restLocalRotation, untiltTime);
 
         if (weaponSway != null)
         {

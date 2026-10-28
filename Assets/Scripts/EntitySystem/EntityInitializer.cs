@@ -31,7 +31,7 @@ public class EntityInitializer : MonoBehaviour
     public void Initialize(EntityData data)
     {
         if (playerMovement != null)
-            playerMovement.walkSpeed = data.WalkSpeed;
+            playerMovement.SetWalkSpeed(data.WalkSpeed);
 
         if (navMeshAgent != null)
         {

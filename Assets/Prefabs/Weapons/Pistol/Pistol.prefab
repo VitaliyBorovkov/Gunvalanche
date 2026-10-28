@@ -1,5 +1,119 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &20778753899881033
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17153106129728127}
+  - component: {fileID: 60299413076620830}
+  - component: {fileID: 26188896814832891}
+  m_Layer: 9
+  m_Name: PistolMagazine
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &17153106129728127
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20778753899881033}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.107084215, y: -0.0008517788, z: 0.0026473608, w: 0.99424607}
+  m_LocalPosition: {x: 0.881, y: -0.369, z: 0.585}
+  m_LocalScale: {x: 0.07229971, y: 0.37977165, z: 0.12201026}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3954676435129316596}
+  m_LocalEulerAnglesHint: {x: 12.295, y: -0.066, z: 0.298}
+--- !u!33 &60299413076620830
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20778753899881033}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &26188896814832891
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20778753899881033}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 28491cc04abf14e4d8bfa3d3c9774802, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &66985008963306677
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 48161501348628588}
+  m_Layer: 9
+  m_Name: PistolCasingEjectPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &48161501348628588
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 66985008963306677}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9704, y: -0.047, z: 0.593}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3954676435129316596}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &570985353699635007
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,6 +222,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9076481797280149114}
+  - {fileID: 48161501348628588}
+  - {fileID: 17153106129728127}
   m_Father: {fileID: 6834337222945441097}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8168748422083441467
@@ -122,6 +238,9 @@ GameObject:
   - component: {fileID: 303869807103424676}
   - component: {fileID: 3013873378800758759}
   - component: {fileID: -1878318702655009249}
+  - component: {fileID: 20872029004674879}
+  - component: {fileID: 56779213592070848}
+  - component: {fileID: 49622395385725644}
   m_Layer: 9
   m_Name: Pistol
   m_TagString: Weapon
@@ -187,6 +306,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   iconKey: Pistol
+--- !u!114 &20872029004674879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8168748422083441467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3696bb2f6a2a6ac61dc2844c87cecff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletsType: 0
+  ejectPoint: {fileID: 48161501348628588}
+  ejectSpeed: 1.5
+  ejectSpeedVariance: 0.3
+  ejectUpwardAngle: 55
+  ejectSpreadAngle: 12
+  maxAngularSpeed: 540
+--- !u!114 &56779213592070848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8168748422083441467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11bd8886c2d0ddba01a3a8a4f013b0d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slideTransform: {fileID: 3502324059316794633}
+  recoilLocalOffset: {x: 0, y: 0, z: -0.05}
+  recoilDuration: 0.04
+  returnDuration: 0.08
+--- !u!114 &49622395385725644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8168748422083441467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63c7921c9f8258148d4e87465fb211e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  magazineTransform: {fileID: 17153106129728127}
+  insertStartLocalOffset: {x: 0, y: -0.1, z: 0}
+  ejectDelay: 0.05
+  ejectPhaseFraction: 0.15
+  insertPhaseFraction: 0.2
+  untiltPhaseFraction: 0.15
+  tiltLocalEulerAngles: {x: 0, y: 0, z: -10}
+  magazinePoolPrefab: {fileID: 4475349987902632083, guid: 8770a272fce5e776e6cacde38f48b931, type: 3}
+  dropSpeed: 1
+  dropSpeedVariance: 0.2
+  maxAngularSpeed: 360
 --- !u!1001 &3502324059317186441
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -276,6 +453,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1232b0a1b78ddf44bd877453fb7a84c, type: 3}
+--- !u!4 &3502324059316794633 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: c1232b0a1b78ddf44bd877453fb7a84c, type: 3}
+  m_PrefabInstance: {fileID: 3502324059317186441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3502324059316794637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400004, guid: c1232b0a1b78ddf44bd877453fb7a84c, type: 3}

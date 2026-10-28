@@ -62,6 +62,7 @@ public class WeaponController : MonoBehaviour, IWeapon
     {
         mainCamera = Camera.main;
 
+        bool bulletsDataFound = false;
         if (bulletsConfig != null)
         {
             foreach (var bd in bulletsConfig.bulletsData)
@@ -69,9 +70,15 @@ public class WeaponController : MonoBehaviour, IWeapon
                 if (bd.BulletsType == weaponData.BulletsType)
                 {
                     bulletsData = bd;
+                    bulletsDataFound = true;
                     break;
                 }
             }
+        }
+
+        if (!bulletsDataFound)
+        {
+            Debug.LogError($"{LOG_PREFIX}: No BulletsData found for BulletsType={weaponData.BulletsType} on {gameObject.name}.");
         }
 
         if (AmmoManager.Instance != null)

@@ -19,10 +19,10 @@ public class PlayerJump : MonoBehaviour
 
     public void Jump()
     {
-        if (playerMovement.isGrounded)
+        if (playerMovement.IsGrounded)
         {
-            float jumpVelocity = Mathf.Sqrt(accelerationOfGravity * playerMovement.gravity * jumpHeight);
-            playerMovement.playerVelocity.y = jumpVelocity;
+            float jumpVelocity = Mathf.Sqrt(accelerationOfGravity * playerMovement.Gravity * jumpHeight);
+            playerMovement.SetVelocityY(jumpVelocity);
         }
     }
 }

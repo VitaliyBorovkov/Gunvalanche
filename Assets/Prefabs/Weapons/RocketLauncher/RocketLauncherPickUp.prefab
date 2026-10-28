@@ -113,8 +113,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.030973572, y: 0.03837785, z: 0.12680739}
-  m_Center: {x: 0.0006036173, y: 0.0058636786, z: -0.000009556612}
+  m_Size: {x: 0.030973572, y: 0.03837785, z: 0.14641365}
+  m_Center: {x: 0.0006036173, y: 0.0058636786, z: -0.009812435}
 --- !u!114 &5252006316389689110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,7 +133,6 @@ MonoBehaviour:
   weaponPrefab: {fileID: 3059680616655201781, guid: 1a13965616c56d44c9a97c303b3477d2, type: 3}
   deactivateOnCollect: 1
   weaponUnlockManager: {fileID: 0}
-  weaponsHolderName: RocketLauncherHolder
 --- !u!1 &4866659970225455259
 GameObject:
   m_ObjectHideFlags: 0

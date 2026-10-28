@@ -46,12 +46,6 @@ public class PlayerReload : MonoBehaviour
         }
 
         var weapon = playerShoot.GetCurrentWeapon();
-        if (weapon == null)
-        {
-            Debug.LogWarning($"{LOG_PREFIX}: No current weapon found.");
-            return;
-        }
-
         WeaponData weaponData = weapon.GetWeaponData();
 
         if (isReloading)

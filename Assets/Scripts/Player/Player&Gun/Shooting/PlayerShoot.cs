@@ -12,15 +12,17 @@ public class PlayerShoot : MonoBehaviour
     private IWeapon currentWeapon;
     private Coroutine shootingCoroutine;
     private HealthController playerHealth;
+    private PlayerReload playerReload;
 
     private bool isBlockedByReload = false;
 
     private void Awake()
     {
-        if (TryGetComponent<PlayerReload>(out var reload))
+        playerReload = GetComponent<PlayerReload>();
+        if (playerReload != null)
         {
-            reload.OnReloadStarted += () => isBlockedByReload = true;
-            reload.OnReloadEnded += () => isBlockedByReload = false;
+            playerReload.OnReloadStarted += () => isBlockedByReload = true;
+            playerReload.OnReloadEnded += () => isBlockedByReload = false;
         }
 
         playerHealth = GetComponent<HealthController>();
@@ -40,10 +42,7 @@ public class PlayerShoot : MonoBehaviour
             weaponController.SetAutoReloadHandler(autoReload);
         }
 
-        if (TryGetComponent<PlayerReload>(out var reload))
-        {
-            reload.CancelReload();
-        }
+        playerReload?.CancelReload();
 
         OnWeaponChanged?.Invoke(currentWeapon);
     }
@@ -62,19 +61,19 @@ public class PlayerShoot : MonoBehaviour
 
         if (playerHealth != null && playerHealth.IsDead)
         {
-            Debug.Log("PlayerShoot: Can't shoot when player is dead.");
+            Debug.Log($"{LOG_PREFIX}: Can't shoot when player is dead.");
             return;
         }
 
         if (isBlockedByReload)
         {
-            Debug.Log("PlayerShoot: Can't shoot while reloading.");
+            Debug.Log($"{LOG_PREFIX}: Can't shoot while reloading.");
             return;
         }
 
         if (currentWeapon == null || !currentWeapon.CanShoot())
         {
-            Debug.Log("PlayerShoot: No ammo or reload processing.");
+            Debug.Log($"{LOG_PREFIX}: No ammo or reload processing.");
             return;
         }
 
