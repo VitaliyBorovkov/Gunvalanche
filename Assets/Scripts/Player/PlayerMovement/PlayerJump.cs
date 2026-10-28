@@ -4,8 +4,6 @@ public class PlayerJump : MonoBehaviour
 {
     private PlayerMovement playerMovement;
 
-    private const float accelerationOfGravity = -2f;
-
     private bool isJumping;
 
     public float jumpHeight = 3f;
@@ -21,7 +19,7 @@ public class PlayerJump : MonoBehaviour
     {
         if (playerMovement.IsGrounded)
         {
-            float jumpVelocity = Mathf.Sqrt(accelerationOfGravity * playerMovement.Gravity * jumpHeight);
+            float jumpVelocity = Mathf.Sqrt(2f * Mathf.Abs(playerMovement.Gravity) * jumpHeight);
             playerMovement.SetVelocityY(jumpVelocity);
         }
     }

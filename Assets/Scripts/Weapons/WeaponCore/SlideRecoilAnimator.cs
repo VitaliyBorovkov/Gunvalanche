@@ -20,6 +20,19 @@ public class SlideRecoilAnimator : WeaponAnimatorBase
         }
     }
 
+    private void OnDisable()
+    {
+        // Unity stops all coroutines on disable but doesn't null the reference —
+        // PlayRecoil() would skip every shot after a weapon switch because the guard
+        // `recoilCoroutine != null` would always be true. Same issue as PumpActionAnimator.
+        recoilCoroutine = null;
+
+        if (slideTransform != null)
+        {
+            slideTransform.localPosition = restLocalPosition;
+        }
+    }
+
     public void PlayRecoil()
     {
         if (slideTransform == null || recoilCoroutine != null)
