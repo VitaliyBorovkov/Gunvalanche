@@ -15,8 +15,10 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
     protected int enemyLayer;
     protected int environmentLayer;
+    protected int ignoreRaycastLayer;
 
     private bool isDespawning = false;
+    private Vector3 previousPosition;
 
     protected virtual void Awake()
     {
@@ -28,11 +30,39 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
         enemyLayer = LayerMask.NameToLayer("Enemy");
         environmentLayer = LayerMask.NameToLayer("Environment");
+        ignoreRaycastLayer = LayerMask.NameToLayer("Ignore Raycast");
     }
 
     protected virtual void OnEnable()
     {
         isDespawning = false;
+        previousPosition = transform.position;
+    }
+
+    // Trigger colliders never benefit from Rigidbody Continuous Collision Detection — CCD
+    // only prevents tunneling for real (non-trigger) collision resolution, not for trigger
+    // overlap checks, which Unity still does with a discrete per-step test regardless of
+    // the collision detection mode. A fast bullet (dozens of units/sec) can fully cross a
+    // thin floor/wall collider within a single physics step and never overlap it, flying on
+    // forever below the level. Sweeping a raycast from last frame's position to this frame's
+    // catches that gap without needing to touch project-wide physics settings.
+    protected virtual void FixedUpdate()
+    {
+        if (isDespawning)
+        {
+            return;
+        }
+
+        Vector3 currentPosition = transform.position;
+        Vector3 delta = currentPosition - previousPosition;
+        float distance = delta.magnitude;
+
+        if (distance > 0.0001f && Physics.Raycast(previousPosition, delta.normalized, out RaycastHit hit, distance))
+        {
+            HandleHit(hit.collider);
+        }
+
+        previousPosition = transform.position;
     }
 
     protected virtual void OnDisable()
@@ -115,17 +145,19 @@ public class BaseBulletsController : MonoBehaviour, IBullet
         // pellets) sees them all overlapping one another the instant they appear, and
         // DespawnBullet() below runs unconditionally on any trigger hit regardless of
         // layer, so they'd wipe each other out before ever leaving the muzzle.
-        if (other.gameObject.layer == gameObject.layer)
+        // Ejected casings (layer "Ignore Raycast", see CasingEjector/EjectedCasing) spawn
+        // from the same muzzle at the same moment for the same reason and must be ignored
+        // too — they're cosmetic, not a target.
+        if (other.gameObject.layer == gameObject.layer || other.gameObject.layer == ignoreRaycastLayer)
         {
             return;
         }
 
-        if (other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer)
+        if ((other.gameObject.layer == enemyLayer || other.gameObject.layer == environmentLayer) && weaponData != null)
         {
-            HealthController enemyHealth = other.GetComponentInParent<HealthController>();
-            if (enemyHealth != null && weaponData != null)
+            if (other.TryGetComponent(out DamageReceiver damageReceiver))
             {
-                enemyHealth.TakeDamage(weaponData.Damage);
+                damageReceiver.TakeDamage(weaponData.Damage);
             }
         }
         DespawnBullet();

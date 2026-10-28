@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class PlayerReload : MonoBehaviour
 {
+    private const string LOG_PREFIX = "PlayerReload";
+
+    [SerializeField] private float reloadDuration = 2f;
+
     private PlayerShoot playerShoot;
+    private HealthController playerHealth;
     private Coroutine reloadCoroutine;
 
     private bool isReloading = false;
@@ -13,30 +18,37 @@ public class PlayerReload : MonoBehaviour
     public event Action OnReloadStarted;
     public event Action OnReloadEnded;
 
+    public float ReloadDuration => reloadDuration;
+
+    // How many rounds this reload will actually add — computed up front (before the wait) so
+    // per-shot reload animations (e.g. the shotgun loading shells one at a time) know how many
+    // cycles to play instead of guessing a fixed count.
+    public int PendingReloadAmount { get; private set; }
+
     private void Awake()
     {
         playerShoot = GetComponent<PlayerShoot>();
+        playerHealth = GetComponent<HealthController>();
     }
 
     public void Reload()
     {
         if (playerShoot == null || playerShoot.GetCurrentWeapon() == null)
         {
-            Debug.LogWarning("PlayerReload: No active weapons!");
+            Debug.LogWarning($"{LOG_PREFIX}: No active weapons!");
             return;
         }
 
-        var playerHealth = GetComponent<HealthController>();
         if (playerHealth != null && playerHealth.IsDead)
         {
-            Debug.Log("PlayerReload: Can't reload when player is dead.");
+            Debug.Log($"{LOG_PREFIX}: Can't reload when player is dead.");
             return;
         }
 
         var weapon = playerShoot.GetCurrentWeapon();
         if (weapon == null)
         {
-            Debug.LogWarning("PlayerReload: No current weapon found.");
+            Debug.LogWarning($"{LOG_PREFIX}: No current weapon found.");
             return;
         }
 
@@ -44,49 +56,41 @@ public class PlayerReload : MonoBehaviour
 
         if (isReloading)
         {
-            Debug.Log(" PlayerReload. Already reloading");
+            Debug.Log($"{LOG_PREFIX}: Already reloading.");
             return;
         }
 
         if (weapon.GetCurrentAmmoInClip() == weaponData.MagazineSize)
         {
-            Debug.Log(" PlayerReload. Magazine is full");
+            Debug.Log($"{LOG_PREFIX}: Magazine is full.");
             return;
         }
 
         if (AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType) <= 0)
         {
-            Debug.Log("PlayerReload: No ammo in reserve");
+            Debug.Log($"{LOG_PREFIX}: No ammo in reserve.");
             return;
         }
 
-        if (TryGetComponent<PlayerShoot>(out var shoot))
-        {
-            shoot.StopFiring();
-        }
+        playerShoot.StopFiring();
+
+        int ammoNeeded = weaponData.MagazineSize - weapon.GetCurrentAmmoInClip();
+        int ammoAvailable = AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType);
+        PendingReloadAmount = Mathf.Min(ammoNeeded, ammoAvailable);
 
         isReloading = true;
         OnReloadStarted?.Invoke();
 
-        Debug.Log(" PlayerReload. Starting reload...");
+        Debug.Log($"{LOG_PREFIX}: Starting reload...");
         reloadCoroutine = StartCoroutine(ReloadRoutine(weapon, weaponData));
     }
 
     private IEnumerator ReloadRoutine(IWeapon weapon, WeaponData weaponData)
     {
-        isReloading = true;
+        yield return new WaitForSeconds(reloadDuration);
 
-        yield return new WaitForSeconds(2f);
-
-        int ammoNeeded = weaponData.MagazineSize - weapon.GetCurrentAmmoInClip();
-        int ammoAvailable = AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType);
-        int ammoToReload = Mathf.Min(ammoNeeded, ammoAvailable);
-
-        weapon.AddAmmoToMagazine(ammoToReload);
-        AmmoManager.Instance.UseAmmo(weaponData.GunsType, ammoToReload);
-
-        isReloading = false;
-        //Debug.Log($"PlayerReload: Reload {ammoToReload} ammo. Left: {AmmoManager.Instance.GetTotalAmmo(weaponData.GunsType)}");
+        weapon.AddAmmoToMagazine(PendingReloadAmount);
+        AmmoManager.Instance.UseAmmo(weaponData.GunsType, PendingReloadAmount);
 
         if (playerShoot.GetCurrentWeapon() is WeaponController weaponController)
         {
@@ -118,6 +122,6 @@ public class PlayerReload : MonoBehaviour
         isReloading = false;
         OnReloadEnded?.Invoke();
 
-        Debug.Log("PlayerReload: Reload cancelled due to weapon switch.");
+        Debug.Log($"{LOG_PREFIX}: Reload cancelled due to weapon switch.");
     }
 }
