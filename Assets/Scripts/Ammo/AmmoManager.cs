@@ -11,10 +11,18 @@ public class AmmoManager : MonoBehaviour
     [SerializeField] private GameObject shotgunBulletsPoolPrefub;
     [SerializeField] private GameObject rocketsPoolPrefab;
 
+    [SerializeField] private GameObject pistolCasingPoolPrefab;
+    [SerializeField] private GameObject riffleCasingPoolPrefab;
+    [SerializeField] private GameObject shotgunCasingPoolPrefab;
+
     private ObjectPool pistolBulletsPool;
     private ObjectPool riffleBulletsPool;
     private ObjectPool shotgunBulletsPool;
     private ObjectPool rocketsPool;
+
+    private ObjectPool pistolCasingPool;
+    private ObjectPool riffleCasingPool;
+    private ObjectPool shotgunCasingPool;
 
     private Dictionary<GunsType, int> ammoStorage = new Dictionary<GunsType, int>();
 
@@ -40,6 +48,10 @@ public class AmmoManager : MonoBehaviour
         riffleBulletsPool = InstantiatePool(riffleBulletsPoolPrefab, "RiffleBulletsPool");
         shotgunBulletsPool = InstantiatePool(shotgunBulletsPoolPrefub, "ShotgunBulletsPool");
         rocketsPool = InstantiatePool(rocketsPoolPrefab, "RocketsPool");
+
+        pistolCasingPool = InstantiatePool(pistolCasingPoolPrefab, "PistolCasingPool");
+        riffleCasingPool = InstantiatePool(riffleCasingPoolPrefab, "RiffleCasingPool");
+        shotgunCasingPool = InstantiatePool(shotgunCasingPoolPrefab, "ShotgunCasingPool");
     }
 
     private ObjectPool InstantiatePool(GameObject poolPrefab, string poolName)
@@ -51,10 +63,6 @@ public class AmmoManager : MonoBehaviour
         }
 
         GameObject poolObject = Instantiate(poolPrefab);
-        //Debug.Log($"AmmoManager: PistolBulletsPool = {pistolBulletsPool?.gameObject.name}");
-        //Debug.Log($"AmmoManager: RiffleBulletsPool = {riffleBulletsPool?.gameObject.name}");
-        //Debug.Log($"AmmoManager: ShotgunBulletsPool = {shotgunBulletsPool?.gameObject.name}");
-        //Debug.Log($"AmmoManager: RocketsPool = {rocketsPool?.gameObject.name}");
         poolObject.name = poolName;
         return poolObject.GetComponent<ObjectPool>();
     }
@@ -110,13 +118,10 @@ public class AmmoManager : MonoBehaviour
     {
         if (!ammoStorage.ContainsKey(type))
         {
-            //Debug.LogError($"AmmoManager: {type} not found in ammoStorage.");
             return 0;
         }
 
-        int totalAmmo = ammoStorage[type];
-        //Debug.Log($"AmmoManager: Receive ammo for {type}: {totalAmmo}");
-        return totalAmmo;
+        return ammoStorage[type];
     }
 
     public ObjectPool GetBulletsPool(BulletsType bulletsType)
@@ -127,6 +132,18 @@ public class AmmoManager : MonoBehaviour
             BulletsType.Riffle => riffleBulletsPool,
             BulletsType.Shotgun => shotgunBulletsPool,
             BulletsType.Rocket => rocketsPool,
+            _ => null
+        };
+        return pool;
+    }
+
+    public ObjectPool GetCasingPool(BulletsType bulletsType)
+    {
+        ObjectPool pool = bulletsType switch
+        {
+            BulletsType.Pistol => pistolCasingPool,
+            BulletsType.Riffle => riffleCasingPool,
+            BulletsType.Shotgun => shotgunCasingPool,
             _ => null
         };
         return pool;

@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 
 using UnityEngine;
 
@@ -19,16 +18,29 @@ public class WeaponController : MonoBehaviour, IWeapon
     private IAutoReload autoReloadHandler;
 
     private ShotgunBulletController shotgunBulletController;
+    private CasingEjector casingEjector;
+    private SlideRecoilAnimator slideRecoilAnimator;
+    private PumpActionAnimator pumpActionAnimator;
+    private Camera mainCamera;
 
     public event Action OnAmmoChanged;
 
     private void Awake()
     {
         shotgunBulletController = GetComponent<ShotgunBulletController>();
+        casingEjector = GetComponent<CasingEjector>();
+        slideRecoilAnimator = GetComponent<SlideRecoilAnimator>();
+        pumpActionAnimator = GetComponent<PumpActionAnimator>();
 
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
             Debug.LogError($"{LOG_PREFIX}: weaponConfigHolder or weaponConfig is not set on {gameObject.name}.");
+            return;
+        }
+
+        if (weaponConfigHolder.weaponConfig.weaponData == null || weaponConfigHolder.weaponConfig.weaponData.Length == 0)
+        {
+            Debug.LogError($"{LOG_PREFIX}: weaponData array is empty on {gameObject.name}.");
             return;
         }
 
@@ -48,9 +60,18 @@ public class WeaponController : MonoBehaviour, IWeapon
 
     private void Start()
     {
+        mainCamera = Camera.main;
+
         if (bulletsConfig != null)
         {
-            bulletsData = bulletsConfig.bulletsData.FirstOrDefault(b => b.BulletsType == weaponData.BulletsType);
+            foreach (var bd in bulletsConfig.bulletsData)
+            {
+                if (bd.BulletsType == weaponData.BulletsType)
+                {
+                    bulletsData = bd;
+                    break;
+                }
+            }
         }
 
         if (AmmoManager.Instance != null)
@@ -62,10 +83,19 @@ public class WeaponController : MonoBehaviour, IWeapon
         {
             Debug.LogError($"{LOG_PREFIX}: Bullets pool is null for BulletsType={weaponData.BulletsType}.");
         }
+
     }
 
     public bool CanShoot()
     {
+        if (pumpActionAnimator != null && pumpActionAnimator.IsPlaying)
+        {
+            // Weapons with a pump/chamber action (currently only the shotgun) physically can't
+            // fire again until it's finished — unlike the pistol's rapid-click behavior, this is
+            // a real gameplay gate, not just a skipped visual. See DECISIONS.md.
+            return false;
+        }
+
         return weaponData != null && runtimeData != null && runtimeData.CurrentAmmo > 0;
     }
 
@@ -83,9 +113,7 @@ public class WeaponController : MonoBehaviour, IWeapon
 
         runtimeData.Decrement();
 
-        autoReloadHandler?.TryAutoReload();
-
-        var ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        var ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         bool hasAimHit = Physics.Raycast(ray, out var aimHit, weaponData.Range);
 
         // Past this distance the projectile's own clamped direction (see GetShootDirection)
@@ -111,6 +139,17 @@ public class WeaponController : MonoBehaviour, IWeapon
         }
 
         PlayMuzzleFlash();
+        casingEjector?.Eject();
+        slideRecoilAnimator?.PlayRecoil();
+        pumpActionAnimator?.PlayPumpAction();
+
+        // Must run after the per-shot animations above, not before: TryAutoReload() can
+        // synchronously kick off a reload animation (e.g. ShotgunReloadAnimator), which waits on
+        // this shot's own pump action to finish first — that only works if the pump action has
+        // actually been started already (StartCoroutine runs synchronously up to its first yield,
+        // so an out-of-order call here would let the reload's wait-check run before PlayPumpAction
+        // ever set anything to wait for).
+        autoReloadHandler?.TryAutoReload();
 
         OnAmmoChanged?.Invoke();
     }

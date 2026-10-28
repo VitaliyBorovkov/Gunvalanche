@@ -94,13 +94,14 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator ShootRoutine()
     {
-        var wait = new WaitForSeconds(GetSecondsPerShotSafe());
-
         while (currentWeapon != null && currentWeapon.CanShoot())
         {
             currentWeapon.Shoot();
 
-            yield return wait;
+            // Recomputed every iteration (not cached once at coroutine start) — the player can
+            // switch weapons while still holding the fire button, and the new weapon's own fire
+            // rate must take effect immediately instead of inheriting the old one's timing.
+            yield return new WaitForSeconds(GetSecondsPerShotSafe());
         }
 
         StopFiring();
@@ -120,9 +121,5 @@ public class PlayerShoot : MonoBehaviour
         }
 
         return 1f / fireRate;
-    }
-
-    public void UpdateWeaponData()
-    {
     }
 }

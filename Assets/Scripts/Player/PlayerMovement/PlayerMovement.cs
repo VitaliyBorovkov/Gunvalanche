@@ -40,7 +40,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void Move(Vector2 input)
     {
-        playerRun.moveInput = input;
+        playerRun.SetMoveInput(input);
         Vector3 moveDirection = transform.TransformDirection(new Vector3(input.x, 0f, input.y));
         float targetSpeed = playerRun.IsRunning() ? runSpeed : walkSpeed;
         controller.Move(targetSpeed * Time.deltaTime * moveDirection);

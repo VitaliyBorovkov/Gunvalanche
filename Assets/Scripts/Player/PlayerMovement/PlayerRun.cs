@@ -4,10 +4,10 @@ public class PlayerRun : MonoBehaviour
 {
     private CharacterController controller;
 
-    public Vector2 moveInput;
+    private Vector2 moveInput;
 
-    public bool isRunning;
-    public bool isHoldingRunButton;
+    private bool isRunning;
+    private bool isHoldingRunButton;
 
     public bool IsRunning() => isRunning;
     public bool IsHoldingRunButton() => isHoldingRunButton;
@@ -30,7 +30,17 @@ public class PlayerRun : MonoBehaviour
 
     public bool CanRun()
     {
-        return moveInput != Vector2.zero && isHoldingRunButton && controller.isGrounded;
+        if (controller.isGrounded)
+        {
+            return moveInput != Vector2.zero && isHoldingRunButton;
+        }
+
+        // Airborne: don't require isGrounded here too, or a jump instantly cancels the sprint
+        // speed it was launched with (PlayerMovement recomputes horizontal speed from IsRunning()
+        // every frame — there's no separate momentum to preserve, so the run flag itself has to
+        // survive the jump). Only keeps sprinting if it was already running before leaving the
+        // ground — holding the run button while airborne can't start a sprint that wasn't there.
+        return isRunning && isHoldingRunButton;
     }
     
     public void OnTryRunStart()

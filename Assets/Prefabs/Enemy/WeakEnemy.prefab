@@ -1222,6 +1222,7 @@ GameObject:
   - component: {fileID: 5900193467192041230}
   - component: {fileID: 7328357691089129980}
   - component: {fileID: 8368261954108782077}
+  - component: {fileID: 7037755754999027956}
   m_Layer: 8
   m_Name: AttackZone
   m_TagString: Enemy
@@ -1281,6 +1282,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   attackCooldown: 1.5
+--- !u!114 &7037755754999027956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8703580726538783375}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feb2a1fcff21b824e906683570530cf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8852898211134629139
 GameObject:
   m_ObjectHideFlags: 0
