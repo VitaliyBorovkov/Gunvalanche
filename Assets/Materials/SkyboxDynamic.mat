@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SkyboxDynamic
+  m_Shader: {fileID: 4800000, guid: 0213de4567317d7498eddeef9f3dd2ba, type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _BumpMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailAlbedoMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailMask:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DetailNormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _EmissionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MetallicGlossMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _OcclusionMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ParallaxMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _BumpScale: 1
+    - _CloudCoverage: 0.47
+    - _CloudScale: 2.1
+    - _CloudSharpness: 12.1
+    - _CloudSpeed: 0.0356
+    - _CloudWarpStrength: 1.5
+    - _Cutoff: 0.5
+    - _DayNightBlend: 1
+    - _DetailNormalMapScale: 1
+    - _DstBlend: 0
+    - _GlossMapScale: 1
+    - _Glossiness: 0.5
+    - _GlossyReflections: 1
+    - _HorizonBlend: 7
+    - _Metallic: 0
+    - _Mode: 0
+    - _MoonDiscSize: 0.014
+    - _OcclusionStrength: 1
+    - _Parallax: 0.02
+    - _SmoothnessTextureChannel: 0
+    - _SpecularHighlights: 1
+    - _SrcBlend: 1
+    - _StarDensity: 180
+    - _StarIntensity: 0
+    - _SunDiscSize: 0.02
+    - _SunGlowSpread: 0.25
+    - _SunsetBlend: 0
+    - _UVSec: 0
+    - _ZWrite: 1
+    m_Colors:
+    - _CloudColorDay: {r: 0.95, g: 0.95, b: 1, a: 1}
+    - _CloudColorNight: {r: 0.1572198, g: 0.15332857, b: 0.2754717, a: 0.972549}
+    - _CloudColorSunset: {r: 1, g: 0.55, b: 0.25, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DayGround: {r: 0.25, g: 0.22, b: 0.18, a: 1}
+    - _DayHorizon: {r: 0.62, g: 0.82, b: 0.97, a: 1}
+    - _DayMidSky: {r: 0.36, g: 0.64, b: 0.9, a: 1}
+    - _DayZenith: {r: 0.08, g: 0.37, b: 0.73, a: 1}
+    - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _MoonDiscColor: {r: 0.82, g: 0.85, b: 0.92, a: 1}
+    - _NightGround: {r: 0.008, g: 0.008, b: 0.01, a: 1}
+    - _NightHorizon: {r: 0.02, g: 0.03, b: 0.06, a: 1}
+    - _NightZenith: {r: 0.005, g: 0.008, b: 0.025, a: 1}
+    - _SunDir: {r: -0.21525553, g: 0.9025853, b: 0.3728335, a: 0}
+    - _SunDiscColor: {r: 1, g: 0.97, b: 0.85, a: 1}
+    - _SunGlowColor: {r: 1, g: 0.8, b: 0.4, a: 1}
+    - _SunsetHorizon: {r: 0.98, g: 0.3, b: 0.04, a: 1}
+    - _SunsetZenith: {r: 0.25, g: 0.08, b: 0.18, a: 1}
+  m_BuildTextureStacks: []
