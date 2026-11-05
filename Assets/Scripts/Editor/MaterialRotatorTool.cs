@@ -192,7 +192,7 @@ public class MaterialRotatorTool : EditorWindow
                 .ToArray();
         }
 
-        return Object.FindObjectsOfType<MeshRenderer>(includeInactive: true)
+        return Object.FindObjectsByType<MeshRenderer>(FindObjectsInactive.Include, FindObjectsSortMode.None)
             .Where(r => r.gameObject.name.Contains(nameFilter))
             .ToArray();
     }
