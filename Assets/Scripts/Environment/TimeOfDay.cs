@@ -25,6 +25,7 @@ public class TimeOfDay : MonoBehaviour
     [Header("References")]
     public Material skyMaterial;
     public Light    sun;
+    public Light    moon;
 
     // ── Sun arc ───────────────────────────────────────────────────────────────
     [Header("Sun Arc")]
@@ -58,6 +59,10 @@ public class TimeOfDay : MonoBehaviour
     public Color sunGlowSunset  = new Color(1.00f, 0.35f, 0.05f);
 
     // ── Lighting ──────────────────────────────────────────────────────────────
+    [Header("Moon Light")]
+    [Range(0f, 1f)] public float moonIntensity = 0.08f;
+    public Color moonColor = new Color(0.55f, 0.65f, 0.85f);
+
     [Header("Ambient Light")]
     public Color ambientDay    = new Color(0.50f, 0.55f, 0.60f);
     public Color ambientSunset = new Color(0.60f, 0.40f, 0.30f);
@@ -138,8 +143,17 @@ public class TimeOfDay : MonoBehaviour
         sun.color     = Color.Lerp(sunGlowSunset, sunDiscColor, dayBlend);
         sun.intensity = Mathf.Clamp01(sunY * 4f + 0.1f);
 
+        // ── Moon light ────────────────────────────────────────────────────────
+        if (moon != null)
+        {
+            moon.transform.forward = -sun.transform.forward;
+            moon.color     = moonColor;
+            moon.intensity = moonIntensity * (1f - dayBlend);
+        }
+
         // ── Ambient / fog ─────────────────────────────────────────────────────
         Color ambient = Color.Lerp(ambientNight, Color.Lerp(ambientDay, ambientSunset, duskBlend), dayBlend);
+        RenderSettings.ambientMode  = UnityEngine.Rendering.AmbientMode.Flat;
         RenderSettings.ambientLight = ambient;
 
         if (RenderSettings.fog)

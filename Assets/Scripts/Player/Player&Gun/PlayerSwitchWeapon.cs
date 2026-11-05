@@ -39,7 +39,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
 
         if (keyProvider == null)
         {
-            var found = FindObjectOfType<WeaponKeyProvider>();
+            var found = FindFirstObjectByType<WeaponKeyProvider>();
             if (found != null)
             {
                 keyProvider = found;
@@ -59,7 +59,7 @@ public class PlayerSwitchWeapon : MonoBehaviour
         }
 
         if (playerInventory == null)
-            playerInventory = GetComponent<PlayerInventory>() ?? FindObjectOfType<PlayerInventory>();
+            playerInventory = GetComponent<PlayerInventory>() ?? FindFirstObjectByType<PlayerInventory>();
 
         if (playerInventory != null)
         {

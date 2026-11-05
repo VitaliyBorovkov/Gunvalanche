@@ -61,7 +61,7 @@ public abstract class ObjectSpawner : MonoBehaviour
 
     private void InitializeSpawnPointManager()
     {
-        spawnPointManager = FindObjectOfType<SpawnPointManager>();
+        spawnPointManager = FindFirstObjectByType<SpawnPointManager>();
         if (spawnPointManager == null)
         {
             Debug.Log($"{LOG_PREFIX}: {GetType().Name}: SpawnPointManager was not found in the scene!");

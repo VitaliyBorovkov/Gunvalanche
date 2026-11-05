@@ -22,7 +22,7 @@ public class HealthController : MonoBehaviour, IDamageable
 
         if (isPlayer)
         {
-            playerHpUI = FindObjectOfType<PlayerHpUI>();
+            playerHpUI = FindFirstObjectByType<PlayerHpUI>();
 
             if (playerHpUI == null)
             {

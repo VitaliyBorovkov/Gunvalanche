@@ -46,7 +46,7 @@ public class PlayerInventory : MonoBehaviour
     {
         if (weaponUnlockManager == null)
         {
-            weaponUnlockManager = FindObjectOfType<WeaponUnlockManager>();
+            weaponUnlockManager = FindFirstObjectByType<WeaponUnlockManager>();
         }
 
         if (weaponsHolder == null)

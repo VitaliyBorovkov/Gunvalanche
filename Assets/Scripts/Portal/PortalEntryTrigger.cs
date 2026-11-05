@@ -6,6 +6,7 @@ public class PortalEntryTrigger : MonoBehaviour
 
     [SerializeField] private GameStateMachine gameStateMachine;
     [SerializeField] private ObjectivesManager objectivesManager;
+    [SerializeField] private WaveManager waveManager;
     [SerializeField] private int findPortalObjectiveIndex = 1;
 
     private bool hasEntered = false;
@@ -13,6 +14,11 @@ public class PortalEntryTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (hasEntered || !other.CompareTag("Player"))
+        {
+            return;
+        }
+
+        if (waveManager != null && !waveManager.AreAllWavesCompleted)
         {
             return;
         }
