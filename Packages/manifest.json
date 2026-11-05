@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.coplaydev.unity-mcp": "file:D:/umcp/MCPForUnity",
+    "com.ramenvr.autopilot": "file:C:/Users/TheSe/OneDrive/Рабочий стол/Autopilot-Unity/com.ramenvr.autopilot-1.0.1/package",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.addressables": "2.7.4",
     "com.unity.ai.navigation": "2.0.9",

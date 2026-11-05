@@ -16,6 +16,14 @@
         "com.unity.test-framework": "1.1.31"
       }
     },
+    "com.ramenvr.autopilot": {
+      "version": "file:C:/Users/TheSe/OneDrive/Рабочий стол/Autopilot-Unity/com.ramenvr.autopilot-1.0.1/package",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {
+        "com.unity.nuget.mono-cecil": "1.11.6"
+      }
+    },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
       "depth": 0,
@@ -114,6 +122,13 @@
       "dependencies": {
         "com.unity.modules.uielements": "1.0.0"
       }
+    },
+    "com.unity.nuget.mono-cecil": {
+      "version": "1.11.6",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.2.1",
