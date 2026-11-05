@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
@@ -6,15 +6,29 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private Transform playerTransform;
     [SerializeField] private float attackRange = 2f;
 
+    [Header("Navigation")]
+    [SerializeField] private float pathUpdateInterval = 0.2f;
+    [SerializeField] private float wanderInterval = 2.5f;
+    [SerializeField] private float wanderRadius = 5f;
+
     private NavMeshAgent navMeshAgent;
     private Animator animator;
 
     private bool hasLoggedMissingPlayer = false;
     private bool isPlayerDead = false;
 
+    private float pathUpdateTimer = 0f;
+    private float wanderTimer = 0f;
+    private Vector3 lastFallbackDestination = Vector3.positiveInfinity;
+
     private void OnEnable()
     {
         PlayerDeathHandler.PlayerDied += OnPlayerDied;
+
+        // Сбрасываем таймеры — после respawn даём агенту кадр на инициализацию
+        pathUpdateTimer = 0f;
+        wanderTimer = 0f;
+        lastFallbackDestination = Vector3.positiveInfinity;
 
         if (playerTransform == null)
         {
@@ -71,7 +85,12 @@ public class EnemyController : MonoBehaviour
         }
         hasLoggedMissingPlayer = false;
 
-        navMeshAgent.SetDestination(playerTransform.position);
+        pathUpdateTimer += Time.deltaTime;
+        if (pathUpdateTimer >= pathUpdateInterval)
+        {
+            pathUpdateTimer = 0f;
+            UpdateDestination();
+        }
 
         float distanceToPlayer = Vector3.Distance(transform.position, playerTransform.position);
 
@@ -89,6 +108,35 @@ public class EnemyController : MonoBehaviour
         {
             SetWalking(false);
             SetAttacking(false);
+        }
+    }
+
+    private void UpdateDestination()
+    {
+        // Пробуем дойти прямо до игрока
+        if (NavMesh.SamplePosition(playerTransform.position, out NavMeshHit hit, 1.5f, NavMesh.AllAreas))
+        {
+            lastFallbackDestination = Vector3.positiveInfinity;
+            navMeshAgent.SetDestination(playerTransform.position);
+            return;
+        }
+
+        // Игрок недоступен (на камне/горе) — бродим рядом, чтобы не стоять болванчиком
+        wanderTimer += pathUpdateInterval;
+        if (wanderTimer >= wanderInterval)
+        {
+            wanderTimer = 0f;
+            TrySetWanderDestination();
+        }
+    }
+
+    private void TrySetWanderDestination()
+    {
+        Vector2 randomCircle = Random.insideUnitCircle * wanderRadius;
+        Vector3 candidate = transform.position + new Vector3(randomCircle.x, 0f, randomCircle.y);
+        if (NavMesh.SamplePosition(candidate, out NavMeshHit wanderHit, wanderRadius, NavMesh.AllAreas))
+        {
+            navMeshAgent.SetDestination(wanderHit.position);
         }
     }
 
@@ -118,4 +166,3 @@ public class EnemyController : MonoBehaviour
         isPlayerDead = true;
     }
 }
-

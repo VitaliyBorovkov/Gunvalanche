@@ -1,6 +1,7 @@
 ﻿using System;
 
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemySpawner : ObjectSpawner
 {
@@ -14,7 +15,24 @@ public class EnemySpawner : ObjectSpawner
     protected override void SpawnObject()
     {
         Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
-        GameObject spawnedEnemy = enemyPool.Spawn(spawnPoint.position, Quaternion.identity);
+        Quaternion spawnRotation = Quaternion.identity;
+        if (playerTransform != null)
+        {
+            Vector3 dir = playerTransform.position - spawnPoint.position;
+            dir.y = 0f;
+            if (dir.sqrMagnitude > 0.001f)
+                spawnRotation = Quaternion.LookRotation(dir);
+        }
+        GameObject spawnedEnemy = enemyPool.Spawn(spawnPoint.position, spawnRotation);
+
+        // Warp the NavMeshAgent to the exact spawn position so it starts on the NavMesh
+        var agent = spawnedEnemy.GetComponent<NavMeshAgent>();
+        if (agent != null)
+        {
+            agent.Warp(spawnPoint.position);
+            agent.ResetPath();
+            spawnedEnemy.transform.rotation = spawnRotation;
+        }
 
         EnemyController enemyController = spawnedEnemy.GetComponent<EnemyController>();
         if (enemyController != null)
