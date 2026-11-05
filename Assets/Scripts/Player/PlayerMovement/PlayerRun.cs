@@ -8,6 +8,8 @@ public class PlayerRun : MonoBehaviour
 
     private bool isRunning;
     private bool isHoldingRunButton;
+    private bool wasRunningOnLaunch;
+    private bool prevGrounded;
 
     public bool IsRunning() => isRunning;
     public bool IsHoldingRunButton() => isHoldingRunButton;
@@ -20,7 +22,20 @@ public class PlayerRun : MonoBehaviour
 
     private void Update()
     {
-        isRunning = isHoldingRunButton && CanRun();
+        bool grounded = controller.isGrounded;
+
+        // Snapshot sprint state the moment the player leaves the ground.
+        if (prevGrounded && !grounded)
+            wasRunningOnLaunch = isRunning;
+
+        if (grounded)
+            isRunning = isHoldingRunButton && moveInput != Vector2.zero;
+        else
+            // Airborne: preserve whatever sprint state was active at launch — releasing
+            // Shift mid-air shouldn't kill the horizontal inertia until landing.
+            isRunning = wasRunningOnLaunch;
+
+        prevGrounded = grounded;
     }
 
     public void SetMoveInput(Vector2 input)

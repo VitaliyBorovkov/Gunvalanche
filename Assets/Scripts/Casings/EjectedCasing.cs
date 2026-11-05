@@ -21,7 +21,7 @@ public class EjectedCasing : MonoBehaviour
 
         if (rb != null)
         {
-            rb.velocity = velocity;
+            rb.linearVelocity = velocity;
             rb.angularVelocity = angularVelocity;
         }
 

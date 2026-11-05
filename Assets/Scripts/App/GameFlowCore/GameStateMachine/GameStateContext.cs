@@ -71,7 +71,7 @@ public sealed class GameStateContext
         {
             return WeaponIconVisibilityController;
         }
-        WeaponIconVisibilityController = UnityEngine.Object.FindFirstObjectByType<UIVisibilityBase>();
+        WeaponIconVisibilityController = UnityEngine.Object.FindFirstObjectByType<WeaponIconVisibilityController>();
         return WeaponIconVisibilityController;
     }
 

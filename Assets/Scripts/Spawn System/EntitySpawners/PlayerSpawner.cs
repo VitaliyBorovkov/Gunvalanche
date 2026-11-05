@@ -40,7 +40,6 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         var switcher = player.GetComponent<PlayerSwitchWeapon>();
-        var iconManager = FindFirstObjectByType<WeaponIconManager>();
         var keyProvider = FindFirstObjectByType<WeaponKeyProvider>();
 
         if (switcher != null)
@@ -48,33 +47,10 @@ public class PlayerSpawner : MonoBehaviour
             if (keyProvider != null)
             {
                 switcher.SetKeyProvider(keyProvider);
-                //Debug.Log($"{LOG_PREFIX}: Injected KeyProvider '{keyProvider.name}' into PlayerSwitchWeapon.");
             }
             else
             {
                 Debug.LogWarning($"{LOG_PREFIX}: WeaponKeyProvider not found in the scene!");
-            }
-
-            if (iconManager != null)
-            {
-                switcher.OnWeaponIconKeyChanged += (keyProvider) =>
-                {
-                    if (string.IsNullOrEmpty(keyProvider))
-                    {
-                        iconManager.ClearIcon();
-                    }
-                    else
-                    {
-                        iconManager.ShowIconForKey(keyProvider);
-                    }
-                };
-
-                //Debug.Log($"{LOG_PREFIX}: Subscribed PlayerSwitchWeapon.OnWeaponIconKeyChanged -> " +
-                //        $"WeaponIconManager '{iconManager.name}'.");
-            }
-            else
-            {
-                Debug.LogWarning($"{LOG_PREFIX}: WeaponIconManager not found in the scene!");
             }
         }
         else

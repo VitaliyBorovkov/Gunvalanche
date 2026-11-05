@@ -7,6 +7,12 @@ public class CollectibleItems : MonoBehaviour, ICollectible
     [SerializeField] private float rotationSpeed = 43f;
     [SerializeField] private float floatDistance = 0.5f;
 
+    [Header("Pickup Light")]
+    [SerializeField] private Light pickupLight;
+    [SerializeField] private float lightMinIntensity = 0.6f;
+    [SerializeField] private float lightMaxIntensity = 1.4f;
+    [SerializeField] private float lightPulseSpeed = 2f;
+
     protected Transform spawnPoint;
 
     private bool floatingUp = true;
@@ -38,6 +44,12 @@ public class CollectibleItems : MonoBehaviour, ICollectible
         else if (transform.position.y < initialPosition.y)
         {
             floatingUp = true;
+        }
+
+        if (pickupLight != null)
+        {
+            float t = Mathf.Sin(Time.time * lightPulseSpeed) * 0.5f + 0.5f;
+            pickupLight.intensity = Mathf.Lerp(lightMinIntensity, lightMaxIntensity, t);
         }
     }
 

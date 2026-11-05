@@ -109,7 +109,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
         if (rigidBody != null)
         {
-            rigidBody.velocity = velocityDirection * bulletsData.Speed;
+            rigidBody.linearVelocity = velocityDirection * bulletsData.Speed;
         }
 
         if (bulletsData.LifeTime > 0)
@@ -133,7 +133,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
         if (rigidBody != null)
         {
-            rigidBody.velocity = Vector3.zero;
+            rigidBody.linearVelocity = Vector3.zero;
         }
 
         HandleHit(hitCollider);
@@ -192,7 +192,7 @@ public class BaseBulletsController : MonoBehaviour, IBullet
 
         if (rigidBody != null)
         {
-            rigidBody.velocity = Vector3.zero;
+            rigidBody.linearVelocity = Vector3.zero;
         }
 
         DespawnEffect();

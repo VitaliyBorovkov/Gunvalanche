@@ -21,6 +21,7 @@ public class WeaponController : MonoBehaviour, IWeapon
     private CasingEjector casingEjector;
     private SlideRecoilAnimator slideRecoilAnimator;
     private PumpActionAnimator pumpActionAnimator;
+    private ShotgunReloadAnimator shotgunReloadAnimator;
     private Camera mainCamera;
 
     public event Action OnAmmoChanged;
@@ -31,6 +32,7 @@ public class WeaponController : MonoBehaviour, IWeapon
         casingEjector = GetComponent<CasingEjector>();
         slideRecoilAnimator = GetComponent<SlideRecoilAnimator>();
         pumpActionAnimator = GetComponent<PumpActionAnimator>();
+        shotgunReloadAnimator = GetComponent<ShotgunReloadAnimator>();
 
         if (weaponConfigHolder == null || weaponConfigHolder.weaponConfig == null)
         {
@@ -100,6 +102,16 @@ public class WeaponController : MonoBehaviour, IWeapon
             // Weapons with a pump/chamber action (currently only the shotgun) physically can't
             // fire again until it's finished — unlike the pistol's rapid-click behavior, this is
             // a real gameplay gate, not just a skipped visual. See DECISIONS.md.
+            return false;
+        }
+
+        if (shotgunReloadAnimator != null && shotgunReloadAnimator.IsPlaying)
+        {
+            // The reload timer (PlayerReload) can finish before the visual animation does because
+            // ShotgunReloadAnimator waits for the pump action to complete before tilting — that
+            // wait pushes the total visual duration past reloadDuration. Block firing until the
+            // animation is fully done to prevent PumpActionAnimator from fighting it over the
+            // same transform.
             return false;
         }
 

@@ -12,6 +12,7 @@ public class PumpActionAnimator : WeaponAnimatorBase
     [SerializeField] private float slideOutDuration = 0.05f;
     [SerializeField] private float slideInDuration = 0.05f;
     [SerializeField] private float lowerDuration = 0.12f;
+    [SerializeField] private float postPumpDelay = 0.08f;
 
     private Vector3 restSlideLocalPosition;
     private Quaternion restLocalRotation;
@@ -69,6 +70,7 @@ public class PumpActionAnimator : WeaponAnimatorBase
         yield return AnimatePosition(slideTransform, restSlideLocalPosition, slideOutPosition, slideOutDuration);
         yield return AnimatePosition(slideTransform, slideOutPosition, restSlideLocalPosition, slideInDuration);
         yield return AnimateRotation(transform, raisedRotation, restLocalRotation, lowerDuration);
+        yield return new WaitForSeconds(postPumpDelay);
 
         pumpCoroutine = null;
     }

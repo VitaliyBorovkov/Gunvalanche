@@ -8,6 +8,7 @@ public class PlayerReload : MonoBehaviour
     private const string LOG_PREFIX = "PlayerReload";
 
     [SerializeField] private float reloadDuration = 2f;
+    [SerializeField] private float postReloadDelay = 0.1f;
 
     private PlayerShoot playerShoot;
     private HealthController playerHealth;
@@ -92,6 +93,7 @@ public class PlayerReload : MonoBehaviour
         }
 
         isReloading = false;
+        yield return new WaitForSeconds(postReloadDelay);
         OnReloadEnded?.Invoke();
     }
 

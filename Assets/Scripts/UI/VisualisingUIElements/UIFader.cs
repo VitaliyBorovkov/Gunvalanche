@@ -43,6 +43,11 @@ public class UIFader : MonoBehaviour
 
     public void SetAlpha(float value)
     {
+        if (canvasGroup == null)
+            canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup == null)
+            return;
+
         if (currentRoutine != null)
         {
             StopCoroutine(currentRoutine);

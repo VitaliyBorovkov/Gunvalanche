@@ -21,6 +21,8 @@ public class ShotgunReloadAnimator : WeaponAnimatorBase
     private PumpActionAnimator pumpActionAnimator;
     private Coroutine reloadCoroutine;
 
+    public bool IsPlaying => reloadCoroutine != null;
+
     private void Awake()
     {
         if (shellTransform != null)

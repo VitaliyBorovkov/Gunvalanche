@@ -15,6 +15,7 @@ public class PlayerShoot : MonoBehaviour
     private PlayerReload playerReload;
 
     private bool isBlockedByReload = false;
+    private bool isFiringHeld = false;
 
     private void Awake()
     {
@@ -54,6 +55,8 @@ public class PlayerShoot : MonoBehaviour
 
     public void StartFiring()
     {
+        isFiringHeld = true;
+
         if (shootingCoroutine != null)
         {
             return;
@@ -82,6 +85,8 @@ public class PlayerShoot : MonoBehaviour
 
     public void StopFiring()
     {
+        isFiringHeld = false;
+
         if (shootingCoroutine == null)
         {
             return;
@@ -93,8 +98,21 @@ public class PlayerShoot : MonoBehaviour
 
     private IEnumerator ShootRoutine()
     {
-        while (currentWeapon != null && currentWeapon.CanShoot())
+        while (isFiringHeld)
         {
+            if (currentWeapon == null || isBlockedByReload)
+                break;
+
+            if (currentWeapon.GetCurrentAmmoInClip() <= 0)
+                break;
+
+            if (!currentWeapon.CanShoot())
+            {
+                // Temporarily blocked (e.g. pump-action animation in progress) — keep waiting.
+                yield return null;
+                continue;
+            }
+
             currentWeapon.Shoot();
 
             // Recomputed every iteration (not cached once at coroutine start) — the player can
@@ -103,7 +121,7 @@ public class PlayerShoot : MonoBehaviour
             yield return new WaitForSeconds(GetSecondsPerShotSafe());
         }
 
-        StopFiring();
+        shootingCoroutine = null;
     }
 
     private float GetSecondsPerShotSafe()
