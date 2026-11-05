@@ -174,6 +174,13 @@ Shader "Skybox/Dynamic"
                     col = lerp(col, sunsetCol, saturate(sunsetFactor));
                 }
 
+                // ── Stars ────────────────────────────────────────────────────────────
+                if (_StarIntensity > 0.001 && y > -0.05)
+                {
+                    float s = starField(dir, _StarDensity);
+                    col += s * _StarIntensity * (1.0 - _DayNightBlend);
+                }
+
                 // ── Sun disc + atmospheric glow ──────────────────────────────────────
                 {
                     float3 sunDir = normalize(_SunDir.xyz);
@@ -234,13 +241,6 @@ Shader "Skybox/Dynamic"
                     cloudColor *= lerp(0.70, 1.0, saturate(n * 3.0 - 0.5));
 
                     col = lerp(col, cloudColor, cloud);
-                }
-
-                // ── Stars ────────────────────────────────────────────────────────────
-                if (_StarIntensity > 0.001 && y > -0.05)
-                {
-                    float s = starField(dir, _StarDensity);
-                    col += s * _StarIntensity * (1.0 - _DayNightBlend);
                 }
 
                 return half4(col, 1.0);

@@ -24,6 +24,7 @@ public class WaveManager : MonoBehaviour
     private int totalEnemiesInWave;
     private int spawnedEnemiesInWave;
     private int aliveEnemies = 0;
+    private int killedEnemies = 0;
     private bool waveFinishedSpawning;
 
     private void Start()
@@ -55,6 +56,16 @@ public class WaveManager : MonoBehaviour
             yield break;
         }
 
+        // Lock all spawners immediately so none auto-spawn before wave registration
+        if (enemySpawners != null)
+        {
+            foreach (var spawner in enemySpawners)
+            {
+                if (spawner != null)
+                    spawner.SetManualMode(true);
+            }
+        }
+
         for (int i = 0; i < levelWavesConfig.waves.Count; i++)
         {
             var wave = levelWavesConfig.waves[i];
@@ -64,18 +75,10 @@ public class WaveManager : MonoBehaviour
                 yield return new WaitForSeconds(wave.startDelay);
             }
 
-            foreach (var waveSpawn in wave.waveSpawns)
-            {
-                var spawner = GetSpawner(waveSpawn.spawnerIndex);
-                if (spawner != null)
-                {
-                    spawner.SetManualMode(true);
-                }
-            }
-
             currentWaveIndex = i + 1;
             spawnedEnemiesInWave = 0;
             aliveEnemies = 0;
+            killedEnemies = 0;
 
             totalEnemiesInWave = 0;
             foreach (var ws in wave.waveSpawns)
@@ -178,7 +181,7 @@ public class WaveManager : MonoBehaviour
         aliveEnemies++;
         healthController.OnDied += OnEnemyDied;
 
-        OnEnemyCountChanged?.Invoke(aliveEnemies, totalEnemiesInWave);
+        OnEnemyCountChanged?.Invoke(killedEnemies, totalEnemiesInWave);
     }
 
     private void OnEnemyDied(HealthController healthController)
@@ -189,9 +192,10 @@ public class WaveManager : MonoBehaviour
         }
 
         aliveEnemies = Mathf.Max(0, aliveEnemies - 1);
+        killedEnemies++;
 
         Debug.Log($"{LOG_PREFIX}: Wave {currentWaveIndex}: Enemy died. Remaining: {aliveEnemies}");
 
-        OnEnemyCountChanged?.Invoke(aliveEnemies, totalEnemiesInWave);
+        OnEnemyCountChanged?.Invoke(killedEnemies, totalEnemiesInWave);
     }
 }
