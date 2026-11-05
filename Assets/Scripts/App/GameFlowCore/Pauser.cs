@@ -14,7 +14,7 @@ public class Pauser : MonoBehaviour
     {
         if (gameStateMachine == null)
         {
-            gameStateMachine = FindObjectOfType<GameStateMachine>();
+            gameStateMachine = FindFirstObjectByType<GameStateMachine>();
         }
     }
 
@@ -22,7 +22,7 @@ public class Pauser : MonoBehaviour
     {
         if (inputManager == null)
         {
-            inputManager = FindObjectOfType<InputManager>(true);
+            inputManager = FindFirstObjectByType<InputManager>(FindObjectsInactive.Include);
         }
 
         if (inputManager != null)

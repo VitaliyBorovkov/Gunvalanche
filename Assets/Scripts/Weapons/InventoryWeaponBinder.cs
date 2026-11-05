@@ -19,7 +19,7 @@ public class InventoryWeaponBinder : MonoBehaviour
     {
         if (playerInventory == null)
         {
-            playerInventory = GetComponent<PlayerInventory>() ?? FindObjectOfType<PlayerInventory>();
+            playerInventory = GetComponent<PlayerInventory>() ?? FindFirstObjectByType<PlayerInventory>();
             if (playerInventory != null)
             {
                 Debug.Log($"{LOG_PREFIX}: PlayerInventory auto-found.");
@@ -28,7 +28,7 @@ public class InventoryWeaponBinder : MonoBehaviour
 
         if (playerSwitchWeapon == null)
         {
-            playerSwitchWeapon = GetComponent<PlayerSwitchWeapon>() ?? FindObjectOfType<PlayerSwitchWeapon>();
+            playerSwitchWeapon = GetComponent<PlayerSwitchWeapon>() ?? FindFirstObjectByType<PlayerSwitchWeapon>();
             if (playerSwitchWeapon != null)
             {
                 Debug.Log($"{LOG_PREFIX}: PlayerSwitchWeapon auto-found.");

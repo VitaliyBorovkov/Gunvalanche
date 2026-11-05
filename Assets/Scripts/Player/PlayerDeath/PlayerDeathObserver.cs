@@ -16,7 +16,7 @@ public class PlayerDeathObserver : MonoBehaviour
         PlayerDeathHandler.PlayerDied += HandleStaticPlayerDeath;
         subscribedToStaticEvent = true;
 
-        playerDeathHandler = FindObjectOfType<PlayerDeathHandler>(true);
+        playerDeathHandler = FindFirstObjectByType<PlayerDeathHandler>(FindObjectsInactive.Include);
         if (playerDeathHandler != null)
         {
             RegisterPlayerDeathHandler(playerDeathHandler);
@@ -24,7 +24,7 @@ public class PlayerDeathObserver : MonoBehaviour
 
         if (gameStateMachine == null)
         {
-            gameStateMachine = FindObjectOfType<GameStateMachine>();
+            gameStateMachine = FindFirstObjectByType<GameStateMachine>();
             if (gameStateMachine != null)
             {
                 Debug.Log($"PlayerDeathObserver: found GameStateMachine -> {gameStateMachine.gameObject.name}");
@@ -98,7 +98,7 @@ public class PlayerDeathObserver : MonoBehaviour
     {
         if (gameStateMachine == null)
         {
-            gameStateMachine = FindObjectOfType<GameStateMachine>(true);
+            gameStateMachine = FindFirstObjectByType<GameStateMachine>(FindObjectsInactive.Include);
             if (gameStateMachine == null)
             {
                 Debug.LogWarning("PlayerDeathObserver: GameStateMachine not found, cannot request GameOver.");

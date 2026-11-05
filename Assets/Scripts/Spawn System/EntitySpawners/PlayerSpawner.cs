@@ -40,8 +40,8 @@ public class PlayerSpawner : MonoBehaviour
         }
 
         var switcher = player.GetComponent<PlayerSwitchWeapon>();
-        var iconManager = FindObjectOfType<WeaponIconManager>();
-        var keyProvider = FindObjectOfType<WeaponKeyProvider>();
+        var iconManager = FindFirstObjectByType<WeaponIconManager>();
+        var keyProvider = FindFirstObjectByType<WeaponKeyProvider>();
 
         if (switcher != null)
         {
@@ -98,7 +98,7 @@ public class PlayerSpawner : MonoBehaviour
 
     private void AssignPlayerToEnemies(Transform playerTransform)
     {
-        EnemyController[] enemies = FindObjectsOfType<EnemyController>();
+        EnemyController[] enemies = FindObjectsByType<EnemyController>(FindObjectsSortMode.None);
         foreach (var enemy in enemies)
         {
             enemy.SetPlayerTransform(playerTransform);

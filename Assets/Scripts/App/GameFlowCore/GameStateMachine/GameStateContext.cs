@@ -61,7 +61,7 @@ public sealed class GameStateContext
             return HPAmmoVisibilityController;
         }
 
-        HPAmmoVisibilityController = GameObject.FindObjectOfType<HPAmmoVisibilityController>();
+        HPAmmoVisibilityController = UnityEngine.Object.FindFirstObjectByType<HPAmmoVisibilityController>();
         return HPAmmoVisibilityController;
     }
 
@@ -71,7 +71,7 @@ public sealed class GameStateContext
         {
             return WeaponIconVisibilityController;
         }
-        WeaponIconVisibilityController = GameObject.FindObjectOfType<UIVisibilityBase>();
+        WeaponIconVisibilityController = UnityEngine.Object.FindFirstObjectByType<UIVisibilityBase>();
         return WeaponIconVisibilityController;
     }
 
@@ -82,7 +82,7 @@ public sealed class GameStateContext
             return CrosshairVisibility;
         }
 
-        CrosshairVisibility = GameObject.FindObjectOfType<CrosshairVisibility>();
+        CrosshairVisibility = UnityEngine.Object.FindFirstObjectByType<CrosshairVisibility>();
         return CrosshairVisibility;
     }
 }
